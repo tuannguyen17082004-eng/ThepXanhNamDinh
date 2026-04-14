@@ -1,0 +1,671 @@
+#background {
+    position: relative;
+    width: 100%;
+    height: 107vh;
+    overflow: hidden;
+
+    #filter{
+        height: 107vh;
+        inset: 0;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+        z-index: 1;
+
+        #left{
+            padding-left: 50px;
+            p, h1 {
+                font-family: "Barlow", sans-serif;
+                font-weight: 700;
+            }
+        }   
+    }
+
+    button {
+        color: white;
+        font-family: "Be Vietnam Pro", sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        width: 150px;
+        background-color: transparent;
+        border: 2px white solid;
+        border-radius: 25px;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        color: rgb(0, 133, 205);
+        background-color: white;
+        transition: 0.3s ease;
+    }   
+}
+
+#score_background{
+    background-color: rgb(0, 133, 205);
+    width: max-content;
+    border-radius: 13px;
+
+    #previous_match, #next_match {
+        background-color: white;
+        border-radius: 10px;
+        width: 260px;
+
+         p {
+            height: max-content;
+            font-family: "Barlow", sans-serif;
+            font-size: small;
+            font-weight: 600;
+        }
+
+        img {
+            height: 60px;
+            width: auto;
+        }
+    }
+
+   #previous_match h1, #next_match h2{
+        height: max-content;
+        font-family: "Barlow", sans-serif;
+        font-weight: 700;
+    }
+
+    #rankings_table{
+        border-radius: 10px;
+        width: max-content;
+        overflow: hidden;
+
+        th{
+            font-family: "Barlow", sans-serif;
+            color: rgb(0, 133, 205);
+            text-align: center;
+        }
+
+        td{
+            font-family: "Barlow", sans-serif;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        td:nth-child(2){
+            text-align: left !important;
+        }
+        
+        #clblogo{
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+#banner {
+    position: relative;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../pictures/Đăng\ ký\ thành\ viên.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    aspect-ratio: 20 / 9;
+
+    #banner_content {
+        width: 45%;
+        font-family: 'Barlow', sans-serif;
+        background-color: rgba(0, 133, 205, 0.9);
+        color: white;
+        bottom: 20px;
+        right: 60px;
+        aspect-ratio: 2 / 1;
+        justify-content: space-around;
+        align-items: start;
+
+        h2{
+            font-weight: 700;
+            font-size: clamp(20px, 2vw, 40px);
+        }
+
+        p {
+            font-size: clamp(15px, 2vw, 20px);
+            font-weight: 500;
+        }
+
+        button {
+            align-self: center;
+            border: 2px white solid;
+            width: 150px;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 600;
+            color: white;
+            
+        }
+
+        button:hover {
+            color: rgb(0, 133, 205);
+            background-color: white;
+        }
+    }
+}
+
+#top_left {
+    aspect-ratio: 1 / 1;
+
+    h1{
+        font-family: "Barlow", sans-serif;
+        color: rgb(0, 133, 205);
+        font-weight: 700;
+        font-size: clamp(30px, 3vw, 50px);
+    }
+
+    button {
+        height: 45px;
+        width: 150px;
+        font-family: "Barlow", sans-serif;
+        color: rgb(0, 133, 205);
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        background-color: white;
+        border: 2px rgb(0, 133, 205) solid;
+        border-radius: 10px;
+    }
+
+    button:hover {
+        color: white;
+        background-color: rgb(0, 133, 205);
+        transition: 0.3s ease;
+    }
+}
+
+#top_right {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    z-index: 2;
+
+    #filter_new{
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,0.6));
+        z-index: 1;
+    
+        h1 {
+            color: white;
+            font-family: "Barlow", sans-serif;
+            font-size: clamp(15px, 3vw, 30px);
+            font-weight: 700;
+            border-bottom: 3px rgb(0, 133, 205) solid;
+        }
+
+        p{
+            color: white;
+            font-family: "Barlow", sans-serif;
+            font-weight: 500;
+        }
+    }
+}
+
+#bottom_left, #top_1 {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    z-index: 2;
+
+    #filter_new{
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,0.6));
+        z-index: 1;
+    }
+
+    h1 {
+        color: white;
+        font-family: "Barlow", sans-serif;
+        font-size: clamp(15px, 3vw, 30px);
+        font-weight: 700;
+        border-bottom: 3px rgb(0, 133, 205) solid;
+    }
+
+    p{
+        color: white;
+        font-family: "Barlow", sans-serif;
+        font-weight: 500;
+    }
+
+}
+
+#bottom_right {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    z-index: 2;
+    aspect-ratio: 2 / 1;
+
+    #filter_new{
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,0.6));
+        z-index: 1;
+    }
+
+    h1 {
+        color: white;
+        font-family: "Barlow", sans-serif;
+        font-size: clamp(15px, 3vw, 30px);
+        font-weight: 700;
+        border-bottom: 3px rgb(0, 133, 205) solid;
+    }
+
+    p{
+        color: white;
+        font-family: "Barlow", sans-serif;
+        font-weight: 500;
+    }
+
+}
+
+#top_right:hover, #top_1:hover, #bottom_left:hover, #bottom_right:hover {
+    img {
+        transition: ease 0.5s;
+        transform: scale(1.05);
+    }
+
+    h1 {
+        border-bottom: 5px rgb(0, 133, 205) solid;
+        transition: ease 0.2s;
+    }
+}
+
+#new_menu{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 45%);
+    gap: 1rem;
+    justify-content: center;
+    justify-items: start;
+
+    #new_card {
+        overflow: hidden;
+        width: 100%;
+        border-radius: 10px;
+        font-family: "Barlow", sans-serif;
+
+        h4{
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-weight: 700;
+            color: rgb(0, 133, 205);
+        }
+        
+        p{
+            color: black;
+            font-weight: 500;
+        }
+    }
+
+    #new_card:hover {
+        background-color: rgb(0, 133, 205);
+        transition: 0.3s ease;
+        border: none;
+
+        h4 {
+            transition: 0.3s ease;
+            color: white;
+        }
+
+        p {
+            color: white;
+            transition: ease 0.3s;
+        }
+
+        img:first-child {
+            transform: scale(1.05);
+            transition: 0.3s ease;
+        }
+    }
+}
+
+#new_for_mobile {
+    display: none;
+
+    h1 {
+        font-family: "Barlow", sans-serif;
+        color: rgb(0, 133, 205);
+        font-weight: 700;
+        padding: 0 !important;
+        text-align: center;
+        font-size: clamp(30px, 1rem + 3vw, 40px);
+    }
+
+    button {
+        font-size: 16px;
+        font-weight: 600;
+        font-family: "Barlow", sans-serif;
+        color: rgb(0, 133, 205);
+        text-align: center;
+        border: 2px rgb(0, 133, 205) solid;
+        border-radius: 25px;
+    }
+
+    button:hover {
+        color: white;
+        background-color: rgb(0, 133, 205);
+        transition: 0.3s ease;
+    }
+}
+
+#new_for_laptop {
+    display: block;
+}
+
+#schedule_background {
+    background-color: rgb(0, 133, 205);
+
+    h1 {
+        color: white;
+        font-family: "Barlow", sans-serif;
+        font-weight: 700;
+        font-size: clamp(30px, 1rem + 3vw, 50px);
+    }
+
+    button {
+        color: white;
+        font-family: "Barlow", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        border: 2px white solid;
+        border-radius: 25px;
+    }
+
+    button:hover {
+        color: rgb(0, 133, 205);
+        background-color: white;
+        transition: 0.3s ease;
+    }
+}
+
+#schedule_list {
+
+    #schedule_card {
+        background-color: white;
+        border-radius: clamp(10px, 2vw, 20px);
+
+        #league {
+            width: auto;
+            height: 30px;
+        }
+
+        p {
+            color: gray;
+            font-family: "Barlow", sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        #team {
+            height: 50px;
+            width: auto;
+        }
+
+        h1 {
+            color: rgb(0, 133, 205);
+            font-family: "Barlow", sans-serif;
+            font-weight: 700;
+            font-size: clamp(23px, 3vw, 30px);
+        }
+    }
+}
+
+#nickname {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: rgb(0, 133, 205);
+    overflow: hidden;
+}
+
+#nickname_content {
+    font-size: 90px;
+    font-weight: 800;
+    white-space: nowrap;
+    width: 100%;
+    animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-130%); }
+}
+
+#about_team {
+    max-width: 2000px;
+
+    #introduction {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('../pictures/Giới\ thiệu.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        aspect-ratio: 1.5 / 1;
+        color: white;
+        font-family: 'Barlow', sans-serif;
+
+
+        h1 {
+            font-weight: 700;
+            font-size: clamp(20px, 1rem + 3vw, 50px);
+        }
+
+        p {
+            font-weight: 500;
+            font-size: clamp(10px, 1rem + 3vw, 20px);
+        }
+    }
+
+    #history {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('../pictures/Lịch\ sử.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        aspect-ratio: 1.5 / 1;
+        color: white;
+        font-family: 'Barlow', sans-serif;
+
+        h1 {
+            font-weight: 700;
+            font-size: clamp(20px, 1rem + 3vw, 50px);
+        }
+
+        p {
+            font-weight: 500;
+            font-size: clamp(10px, 1rem + 2vw, 20px);
+        }
+    }
+}
+
+#video {
+    max-width: 2000px;
+
+    #phone_button {
+        display: none;
+        color: rgb(0, 133, 205);
+        font-family: "Barlow", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        border: 2px rgb(0, 133, 205) solid;
+        border-radius: 25px;
+    }
+
+    #phone_button:hover {
+        color: white;
+        background-color: rgb(0, 133, 205);
+        transition: 0.3s ease;
+    }
+
+    #video_title{
+        overflow: hidden;
+        
+        h1 {
+            font-family: "Barlow", sans-serif;
+            font-weight: 700;
+            font-size: clamp(30px, 1rem + 3vw, 50px);
+            color: rgb(0, 133, 205);
+        }
+
+        p {
+            font-family: "Barlow", sans-serif;
+            font-size: clamp(15px, 3vw, 25px);
+            color: rgb(0, 133, 205);
+        }
+
+        button {
+            height: 45px;
+            width: 150px;
+            font-family: "Barlow", sans-serif;
+            color: rgb(0, 133, 205);
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            background-color: white;
+            border: 2px rgb(0, 133, 205) solid;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            color: white;
+            background-color: rgb(0, 133, 205);
+        }
+    }
+
+    #video_menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 45%);
+        gap: 1rem;
+        justify-content: space-evenly;
+
+        #video_card {
+            overflow: hidden;
+            width: 100%;
+            font-family: "Barlow", sans-serif;
+
+            h4 {
+                color: rgb(0, 133, 205);
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                font-weight: 700;
+            }
+
+            p {
+                color: black;
+                font-weight: 500;
+            }
+        }
+
+        #video_card:hover {
+            border: none;
+            background-color: rgb(0, 133, 205);
+            color: white;
+            transition: 0.3s ease;
+
+            h4, p {
+                color: white;
+                transition: ease 0.3s;
+            }
+
+            img {
+                transform: scale(1.05);
+                transition: 0.3s ease;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #bottom_left, #top_1 {
+        aspect-ratio: 2 / 1;
+
+        #pic_1, #pic_2 {
+            position: absolute;
+        }
+    }  
+}
+
+@media screen and (max-width: 992px) {
+    #background {
+        height: 100dvh;
+        height: 100svh;
+        
+        #filter {
+            height: 100dvh;
+            height: 100svh;
+        }
+
+        #left {
+            margin-bottom: 30px !important;
+        }
+
+        .row {
+            margin-bottom: 20px !important;
+        }
+    }
+
+    #video {
+        #video_title {
+            flex-direction: row !important;
+            justify-content: space-between;
+        }
+    }
+}
+
+@media screen and (max-width: 767.5px) {
+
+    #left {
+        width: 100%;
+        padding: 0 20px !important;
+    }
+
+    #schedule_list {
+        padding: 5px 5px !important;
+
+        #schedule_list_col{
+            padding-left: 0 !important;
+        }
+    }
+
+    #video {
+        #phone_button {
+            display: block !important;
+        }
+
+        #video_title {
+            justify-content: center;
+            padding: 0 !important;
+            
+            h1 {
+                padding: 10px 0 !important;
+            }
+            
+            button {
+                display: none;
+            }
+        }
+        #video_menu {
+            padding: 10px !important;
+        }
+    }
+
+    #fanbase_banner {
+        display: none !important;
+    }
+
+    #introduction, #history {
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    #new_menu {
+        display: flex !important;
+        flex-direction: column;
+
+        #new_card {
+            max-width: none !important;
+        }
+    }
+}

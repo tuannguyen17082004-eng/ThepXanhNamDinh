@@ -1,0 +1,180 @@
+#player_background {
+    width: 100%;
+    height: 400px;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5), rgba(0,0,0,0.7)), url(../pictures/Đội\ hình.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    h2 {
+        font-family: "Barlow", sans-serif;
+        color: white;
+        font-size: clamp(40px, 3vw, 50vw);
+        font-weight: 700;
+    }
+
+    p {
+        font-family: "Barlow", sans-serif;
+        color: white;
+        font-size: clamp(15px, 3vw, 20px);
+        font-weight: 500;
+    }
+}
+
+#player_content ul {
+    list-style-type: none;
+    height: 60px;
+
+    li {
+        width: 150px;
+        height: 100%;
+        font-family: "Barlow", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+#player_content ul li:hover {
+    border-bottom: 4px rgb(0, 133, 205) solid;
+    cursor: pointer;
+}
+
+#title h3{
+    font-family: "Barlow", sans-serif;
+    font-size: 40px;
+    color: rgb(0, 133, 205);
+    font-weight: 600;
+}
+
+#player_menu {
+    width: 100%;
+    max-width: 1600px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 350px));
+    column-gap: 2rem;
+    row-gap: 8rem;
+    justify-content: center;
+    justify-items: start;
+}
+
+#player_card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+    box-shadow: 5px 5px 10px rgb(224, 220, 220); 
+    min-width: 300px;
+    max-width: 350px;
+    border-radius: 5px;
+    z-index: 1;
+
+    #card_img {
+        position: relative;
+        margin-top: -70px;
+        overflow: hidden;
+        height: auto;
+        aspect-ratio: 1 / 1.1;
+
+        img {
+            bottom: 0;
+            left: 0;
+        }
+    }
+
+    h1 {
+        z-index: -1 !important;
+        color: rgb(0, 133, 205);
+        font-family: "Be Vietnam Pro", sans-serif;
+        font-weight: 900;
+        font-size: 180px;
+        top: -110px;
+        background: linear-gradient(to top, rgba(0, 133, 205, 0.2), rgba(0, 133, 205, 1), rgba(0, 133, 205, 1));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    #card_inf {
+        background-color: rgb(0, 133, 205);
+        color: white;
+        font-family: "Barlow", sans-serif;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        height: 100px;
+
+        p {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 23px;
+            font-weight: 600;
+        }
+    }
+
+    #national {
+        width: 50px;
+        border-radius: 5px;
+        right: 10px;
+        bottom: 15px;
+    }
+}
+
+#player_card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#player_card:hover {
+    img:first-child
+    {
+        transform: scale(1.05);
+        transition: ease 0.5s;
+        transform-origin: center;
+    }
+}
+
+#coach_card {
+    background-color: rgb(0, 133, 205);
+    color: white;
+    font-family: "Barlow", sans-serif;
+    img {
+        background-color: white;
+        border-radius: 50%;
+        width: 60px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    strong {
+        font-size: 40px;
+    }
+
+    #position_list {
+        display: none;
+    }
+
+    #player_background {
+        border-bottom: 10px solid rgb(0, 133, 205);
+    }
+
+    #title {
+        margin-top: 30px !important;
+    }
+
+
+    #player_menu {
+        margin-top: 100px !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    #player_background {
+        h2, p {
+            padding-left: 20px !important;
+        }
+    }
+}
