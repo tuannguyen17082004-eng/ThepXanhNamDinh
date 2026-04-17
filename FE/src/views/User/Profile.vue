@@ -22,7 +22,7 @@ const GetUser = async () => {
 }
 
 onMounted(async () => {
-    await(GetUser());
+    await GetUser();
 })
 
 </script>
@@ -31,7 +31,7 @@ onMounted(async () => {
     <main id="profile_background" class="row w-100 p-0 pt-5 pt-md-0 m-0 d-flex justify-content-start align-items-end">
         <img src="/pictures/Ảnh nền.jpg" class="p-0 w-100 d-none d-md-block" style="mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);">
         <section class="col-md-5 px-2">
-            <div id="profile_menu" class="container-fluid my-2 px-4">
+            <div id="profile_menu" class="container-fluid my-2 px-4 d-flex flex-column" style="justify-content: space-evenly;">
                 <div class="container-fluid p-0 py-4 d-flex">
                     <div class="container p-0 d-flex justify-content-center align-items-center" style="width: max-content;">
                         <img :src="u?.avatar" style="border-radius: 50%;">
@@ -47,6 +47,9 @@ onMounted(async () => {
                         <li>Chỉnh sửa thông tin</li>
                         <li>Đổi mật khẩu</li>
                         <li v-on:click="handleLogout">Đăng xuất</li>
+                        <li v-if="u?.role == 'admin'">
+                            <RouterLink to="/Admin" class="text-decoration-none text-black">Trang quản trị</RouterLink>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +57,7 @@ onMounted(async () => {
 
         <section class="col-md-7 px-2">
             <div id="profile_information" class="container-fluid my-2 px-4 d-flex flex-column justify-content-center align-items-center">
-                <ul class="py-3 px-md-3 m-0 w-100" style="list-style: none;">
+                <ul class="py-3 px-md-3 m-0 p-0 w-100" style="list-style: none;">
                     <li>
                         <h4>Họ và tên:</h4>
                         <p>{{ u?.name }}</p>
@@ -85,7 +88,7 @@ onMounted(async () => {
 
     #profile_menu {
         min-width: 290px;
-        height: 250px;
+        height: 280px;
         border-radius: 20px;
         background-color: white;
         font-family: 'Barlow', sans-serif;
@@ -117,7 +120,7 @@ onMounted(async () => {
 
     #profile_information {
         background-color: white;
-        height: 250px;
+        height: 280px;
         border-radius: 20px;
         font-family: 'Barlow', sans-serif;
 

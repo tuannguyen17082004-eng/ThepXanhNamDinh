@@ -50,7 +50,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <header class="container-fluid m-0 p-0 w-100">
+    <header class="container-fluid m-0 p-0 w-100 fixed-top">
 
         <!--Dòng trên-->
 
@@ -121,7 +121,6 @@ onUnmounted(() => {
 
 <style scoped>
 header {
-    position: fixed;
     z-index: 999;
 }
 

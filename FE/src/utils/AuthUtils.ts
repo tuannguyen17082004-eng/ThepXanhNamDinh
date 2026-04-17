@@ -1,6 +1,5 @@
 import api from "@/config/default";
 import router from "@/router";
-import { a } from "vue-router/dist/index-Cu9B0wDz.mjs";
 
 export const Login = async (email: any, password: any) => {
     try {

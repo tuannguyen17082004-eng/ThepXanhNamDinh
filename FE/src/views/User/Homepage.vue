@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted} from 'vue';
-import { type News } from '../models/news';
-import { type Video } from '../models/video';
-import { type Scoreboard } from '../models/scoreboard';
+import { type News } from '@/models/news';
+import { type Video } from '@/models/video';
+import { type Scoreboard } from '@/models/scoreboard';
 import { type Match } from '@/models/match';
 
 import { GetAllVideos } from '@/utils/VideoUtils';

@@ -18,13 +18,15 @@ module.exports.getAllUsers = async (req, res) => {
 module.exports.getUserById = async (req, res) => {
     try {
         const userFind = await UserModel.findById(req.params.id);
+
         res.status(200).json(user = {
             id: userFind._id,
             name: userFind.name,
             username: userFind.username,
             email: userFind.email,
             phone: userFind.phone,
-            avatar: userFind.avatar
+            avatar: userFind.avatar,
+            role: userFind.role
         });
     } 
     catch (err) 

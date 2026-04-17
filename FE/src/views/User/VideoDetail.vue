@@ -183,7 +183,7 @@ h1:not(#vid_title) {
     h4 {
         color: white;
         font-family: "Barlow", sans-serif;
-        font-size: clamp(18px, 1rem + 2vw, 30px);
+        font-size: clamp(18px, 1rem + 2vw, 40px);
         font-weight: 700;
     }
 
