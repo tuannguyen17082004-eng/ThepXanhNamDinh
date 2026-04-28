@@ -7,12 +7,8 @@ import router from '@/router';
 
 const u = ref<User>();
 
-const handleLogout = async () => {
-    const res = await Logout();
-}
-
 const GetUser = async () => {
-    const id = sessionStorage.getItem("bruh");
+    const id = localStorage.getItem("bruh");
     const res = await GetUserInformation(id);
 
     if (res)
@@ -45,8 +41,8 @@ onMounted(async () => {
                 <div class="container-fluid p-0 pb-1">
                     <ul class="p-0">
                         <li>Chỉnh sửa thông tin</li>
-                        <li>Đổi mật khẩu</li>
-                        <li v-on:click="handleLogout">Đăng xuất</li>
+                        <li v-on:click="() => router.push('/ChangePassword')">Đổi mật khẩu</li>
+                        <li v-on:click="async () => await Logout()">Đăng xuất</li>
                         <li v-if="u?.role == 'admin'">
                             <RouterLink to="/Admin" class="text-decoration-none text-black">Trang quản trị</RouterLink>
                         </li>

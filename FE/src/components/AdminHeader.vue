@@ -4,10 +4,30 @@
     import { type User } from '@/models/user';
 
     const a = ref<User>();
+    let status = true;
+
+    
+    const handleSidebar = () => {
+        const sidebar = document.getElementById("sidebar_container");
+        if (!sidebar) return;
+
+        if (status) {
+            sidebar.style.width = "0";
+            sidebar.style.minWidth = "0";
+            sidebar.style.transition = "1s ease-in-out";
+            status = false;
+        }
+        else {
+            sidebar.style.transition = "1s ease-in-out";
+            sidebar.style.width = "260px";
+            sidebar.style.minWidth = "260px";
+            status = true;
+        }
+    }
     
 
     const GetUser = async () => {
-        const id = sessionStorage.getItem('bruh');
+        const id = localStorage.getItem('bruh');
         const res = await GetUserInformation(id);
         a.value = res?.data;
     }
@@ -29,7 +49,7 @@
         <div class="container d-flex align-items-center justify-content-end m-0 p-0" style="width: max-content;">
             <i class="bi bi-search"></i>
             <i class="bi bi-bell"></i>
-            <i class="bi bi-list"></i>
+            <i class="bi bi-list" v-on:click="handleSidebar"></i>
             <div class="container p-0" style="height: 40px; overflow: hidden; aspect-ratio: 1 / 1;">
                 <img :src="a?.avatar" class="h-100 w-100 object-fit-cover" style="border-radius: 50%;">
             </div>
@@ -56,6 +76,7 @@ header {
         padding: 10px;
         color: black;
         font-size: 25px;
+        cursor: pointer;
     }
 }
 </style>

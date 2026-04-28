@@ -4,7 +4,7 @@ import router from "@/router";
 export const Login = async (email: any, password: any) => {
     try {
         const res = await api.post("/auth/login", { email, password }, { withCredentials: true });
-        sessionStorage.setItem("bruh", res.data.id);
+        localStorage.setItem("bruh", res.data.id);
         if (res.data.role == "admin")
             router.push('/Admin');
         else
@@ -20,7 +20,7 @@ export const Login = async (email: any, password: any) => {
 export const Logout = async () => {
     try {
         const res = await api.post("/auth/logout", { withCredentials: true });
-        sessionStorage.clear();
+        localStorage.clear();
         router.push('/');
         return res;
     } 
@@ -29,3 +29,16 @@ export const Logout = async () => {
         alert(err.response.data);
     }
 }
+
+export const ChangePassword = async (currentPassword: any, newPassword: any) => {
+    try {
+        const id = localStorage.getItem("bruh");
+        const res = await api.put(`/auth/change-password`, { id, currentPassword, newPassword }, { withCredentials: true });
+        router.push('/Profile');
+        return res;
+    }
+    catch (err : any) {
+        console.log("Something wrong at FE:" + err.response.data);
+        alert(err.response.data);
+    }
+} 

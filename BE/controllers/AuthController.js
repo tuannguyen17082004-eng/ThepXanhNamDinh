@@ -1,4 +1,4 @@
-const bcript = require('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user');
 
@@ -10,7 +10,7 @@ module.exports.Login = async (req, res) => {
         if (!checkUser)
             return res.status(400).send("Email hoặc mật khẩu không đúng");
 
-        bcript.compare(password, checkUser.password, (err, result) => {
+        bcrypt.compare(password, checkUser.password, (err, result) => {
             if (err) return res.status(400).send("Something wrong?" + err);
 
             if (!result) return res.status(400).send("Email hoặc mật khẩu không đúng");
@@ -48,6 +48,31 @@ module.exports.Logout = async (req, res) => {
     } 
     catch (err) 
     {
+        return res.status(400).send("Something wrong?" + err);
+    }
+}
+
+module.exports.ChangePassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword, id } = req.body;
+
+        const checkUser = await UserModel.findById(id);
+        if (!checkUser)
+            return res.status(400).send("Không tìm thấy người dùng");
+
+        bcrypt.compare(currentPassword, checkUser.password, async (err, result) => {
+            if (err) return res.status(400).send("Something wrong?" + err);
+
+            if (!result) return res.status(400).send("Mật khẩu hiện tại không đúng");
+
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            checkUser.password = hashedPassword;
+            await checkUser.save();
+
+            res.status(200).send("Đổi mật khẩu thành công!");
+        })
+    }
+    catch (err) {
         return res.status(400).send("Something wrong?" + err);
     }
 }

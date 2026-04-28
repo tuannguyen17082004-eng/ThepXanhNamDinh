@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-    <aside id="sidebar" class="sidebar py-3 fixed-top w-100">
-        <ul class="sidebar-nav">
+    <aside id="sidebar" class="sidebar m-0 w-100">
+        <ul class="sidebar-nav p-0">
             <li class="nav-item mb-2">
                 <i class="bi bi-house"><span class="px-2">Trang chủ</span></i>
             </li>
@@ -27,23 +27,24 @@
 
 <style scoped>
 #sidebar {
-    z-index: 0;
     font-family: 'Barlow', sans-serif;
     box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-    max-width: 300px;
-    min-width: none;
-    bottom: 0;
-    margin-top: 70px;
+    background-color: white;
+    height: 100dvh;
+    padding-top: 80px;
+    overflow: hidden;
 
     ul {
         list-style: none;
 
         li {
+            padding: 0 0 0 20px;
             height: 50px;
             cursor: pointer;
             transition: 0.3s ease-in-out;
             display: flex;
             align-items: center;
+            white-space: nowrap;
         }
     }
 
@@ -51,7 +52,7 @@
         font-size: 20px;
         font-style: normal;
         color: rgb(0, 133, 205);
-        font-weight: 500;
+        font-weight: 700;
     }
 
     li:hover {

@@ -2,7 +2,7 @@ import router from "@/router";
 import api from "@/config/default";
 
 export const isAdmin = async () => {
-    const id = sessionStorage.getItem("bruh");
+    const id = localStorage.getItem("bruh");
 
     if (!id) {
         router.push('/404');

@@ -38,10 +38,8 @@ module.exports.getUserById = async (req, res) => {
 module.exports.createUser = async (req, res) => {
     try {
         let { name, username, email, phone, password, avatar} = req.body;
-        console.log(name, username, email, phone, password, avatar);
-
         const checkUser = await UserModel.findOne({ email });
-        console.log(checkUser);
+
         if (checkUser)
             return res.status(400).send("Email đã được sử dụng");
 
@@ -71,8 +69,8 @@ module.exports.createUser = async (req, res) => {
 module.exports.createAdmin = async (req, res) => {
     try {
         let { name, username, email, phone, password, avatar} = req.body;
-
         const checkUser = await UserModel.findOne({ email });
+        
         if (checkUser)
             return res.status(400).send("Email đã được sử dụng");
 
@@ -105,7 +103,7 @@ module.exports.createAdmin = async (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
     try {
-        const { name, username, email, phone, password, avatar } = req.body;
+        const { name, username, email, phone, avatar } = req.body;
 
         const updatedUser = await UserModel.findByIdAndUpdate(
             req.params.id,
@@ -114,7 +112,6 @@ module.exports.updateUser = async (req, res) => {
                 username,
                 email,
                 phone,
-                password,
                 avatar
             }
         );

@@ -24,12 +24,11 @@ const handleScroll = () => {
 
 const LoginNav = async () => {
     const res = await isLogin();
-    const id = sessionStorage.getItem("bruh")
 
     if (res != true)
         router.push('/Login');
     else
-        router.push(`/Profile/${id}`);
+        router.push(`/Profile`);
 }
 
 MenuComponent.showMenu = () => {

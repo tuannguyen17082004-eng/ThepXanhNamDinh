@@ -15,14 +15,15 @@
     const handleRegister = async () => {
         if (!name.value || !username.value || !email.value || !phone.value || !password.value || !confirmPassword.value) {
             alert("Vui lòng nhập đầy đủ thông tin");
+            return;
         }
-        else if (password.value !== confirmPassword.value) {
+        if (password.value !== confirmPassword.value) {
             alert("Mật khẩu xác nhận không khớp");
+            return;
         }
-        else {
-            const res = await Register(name.value, username.value, email.value, phone.value, password.value, avatar.value);
-            alert(res);
-        }
+        
+        const res = await Register(name.value, username.value, email.value, phone.value, password.value, avatar.value);
+        alert(res.data);
     }
 
 </script>

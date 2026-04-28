@@ -82,7 +82,7 @@ watch(id, async (newId) => {
         </div>
         </section>
         <section class="container-fluid p-0" v-else>
-            <div id="no_video" class="container-fluid p-0 d-flex flex-column justify-content-center align-items-center" style="aspect-ratio: 18 / 9;">
+            <div id="no_video" class="container-fluid p-0 px-4 d-flex flex-column justify-content-center align-items-center w-100">
                 <h4>Bạn cần đăng nhập hoặc đăng ký tài khoản để xem video này</h4>
                 <div class="container p-0 d-flex justify-content-center align-items-center">
                     <RouterLink to="/Login" class="text-decoration-none">
@@ -179,6 +179,7 @@ h1:not(#vid_title) {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 100dvh;
 
     h4 {
         color: white;

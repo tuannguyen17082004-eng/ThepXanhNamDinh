@@ -15,6 +15,7 @@ import Login from '@/views/User/Login.vue'
 import Register from '@/views/User/Register.vue'
 import Profile from '@/views/User/Profile.vue'
 import Admin from '@/views/Admin/Admin.vue'
+import ChangePassword from '@/views/User/ChangePassword.vue'
 
 const routes = [{
   path: "/", 
@@ -33,8 +34,9 @@ const routes = [{
     {path: 'Honours', component: Honours},
     {path: 'Login', component: Login},
     {path: 'Register', component: Register},
+    {path: 'ChangePassword', component: ChangePassword},
     {path: ':pathMatch(.*)*', component: NotFound},
-    {path: 'Profile/:id', component: Profile},
+    {path: 'Profile', component: Profile},
   ]
 },
 {
