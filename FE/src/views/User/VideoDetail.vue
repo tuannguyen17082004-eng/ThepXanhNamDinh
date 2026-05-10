@@ -54,11 +54,11 @@ watch(id, async (newId) => {
                 <video class="p-0 m-0 w-100 h-100" :src="video?.link" controls></video>
             </div>
             <div id="video_detail_content" class="container-fluid m-0 px-md-5 px-4 pt-3 d-flex flex-column">
-                <p id="vid_time" class="d-flex align-items-center"><img src="/pictures/watch-bg-black.png"
+                <p id="vid_time" class="d-flex align-items-center p-0"><img src="/pictures/watch-bg-black.png"
                     style="background-color: transparent; width: 27px; height: 27px; margin-right: 3px;">
                     {{ video?.time }}</p>
-                <h1 id="vid_title" class="w-50">{{ video?.title }}</h1>
-                <div class="d-flex my-4 justify-content-center align-items-center">
+                <h1 id="vid_title" class="w-50 p-0">{{ video?.title }}</h1>
+                <div class="d-flex my-2 my-md-4 justify-content-center align-items-center">
                     <RouterLink to="/Video" class=" text-decoration-none" style="width: max-content;">
                         <button class="btn btn-primary" style="width: 120px;">Quay lại</button>
                     </RouterLink>
@@ -81,6 +81,8 @@ watch(id, async (newId) => {
                 </div>
         </div>
         </section>
+
+
         <section class="container-fluid p-0" v-else>
             <div id="no_video" class="container-fluid p-0 px-4 d-flex flex-column justify-content-center align-items-center w-100">
                 <h4>Bạn cần đăng nhập hoặc đăng ký tài khoản để xem video này</h4>

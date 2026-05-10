@@ -25,3 +25,51 @@ export const GetNewsById = async (id : any) => {
         console.error("Something's wrong in FE:" + err);
     }
 }
+
+export const AddNews = async (imgFile : any, img_url : any, title : any, type : any, author : any, content : any) => {
+    try {
+        const formData = new FormData();
+
+        formData.append("img", imgFile);
+        formData.append("img_url", img_url);
+        formData.append("title", title);
+        formData.append("type", type);
+        formData.append("author", author);
+        formData.append("content", content);
+
+        const res = await api.post("/news", formData, { withCredentials: true });
+        return res;
+    } 
+    catch (err : any) {
+        console.error("Something's wrong in FE:" + err.response.data);
+    }
+}
+
+export const UpdateNews = async (id : any, imgFile : any, img : any, title : any, type : any, author : any, content : any) => {
+    try {
+        const formData = new FormData();
+
+        formData.append("img", imgFile);
+        formData.append("img_url", img);
+        formData.append("title", title);
+        formData.append("type", type);
+        formData.append("author", author);
+        formData.append("content", content);
+
+        const res = await api.put(`/news/${id}`, formData, { withCredentials: true });
+        return res;
+    } 
+    catch (err : any) {
+        console.error("Something's wrong in FE:" + err.response.data);
+    }
+}
+
+export const DeleteNews = async (id : any) => {
+    try {
+        const res = await api.delete(`/news/${id}`, { withCredentials: true })
+        return res;
+    } 
+    catch (err : any) {
+        console.error("Something's wrong in FE:" + err.response.data);
+    }
+}

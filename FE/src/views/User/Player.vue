@@ -47,15 +47,15 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div id="player_background" class="container-fluid m-0 p-0 d-flex align-items-end">
-        <div class="container p-0 m-0 w-100 position-absolute">
-            <h2 class="m-0 pb-3 px-5">ĐỘI HÌNH CHÍNH</h2>
-            <p class="m-0 pb-3 px-5">Danh sách cầu thủ và ban huấn luyện mùa giải 2025/2026</p>
+    <main class="container-fluid p-0">
+        <div id="player_background" class="container-fluid m-0 p-0 d-flex align-items-end">
+            <div class="container p-0 m-0 w-100 position-absolute">
+                <h2 class="m-0 pb-3 px-5">ĐỘI HÌNH CHÍNH</h2>
+                <p class="m-0 pb-3 px-5">Danh sách cầu thủ và ban huấn luyện mùa giải 2025/2026</p>
+            </div>
         </div>
-
-    </div>
-    <div id="player_content"
-        class="container-fluid m-0 p-0 w-100 d-flex flex-column justify-content-center align-items-center">
+        <div id="player_content"
+            class="container-fluid m-0 p-0 w-100 d-flex flex-column justify-content-center align-items-center">
         <div id="position_list" class="container-fluid m-0 p-0"
             style="background-color: #f8f9fa; box-shadow: 5px 5px 5px rgb(224, 220, 220);">
             <ul class="m-0 p-0 d-flex flex-row justify-content-center align-items-center">
@@ -76,10 +76,10 @@ onMounted(async () => {
                 </a>
             </ul>
         </div>
-        <div id="title" class="container-fluid m-0 p-0 pt-5 px-5 w-100 d-flex justify-content-start align-items-start">
+        <div id="title" class="container-fluid m-0 px-3 pt-5">
             <h3 id="GK">Thủ môn</h3>
         </div>
-        <div id="player_menu" class="container-fluid m-0 mt-5 p-5">
+        <div id="player_menu" class="container-fluid m-0 mt-5 py-5">
             <div v-for="player in GKplayers" :key="player._id" id="player_card" ref="cards"
                 class="card w-100 border-0 d-flex flex-column">
                 <RouterLink :to="`/Squad/${ player._id }`" class="text-decoration-none">
@@ -95,10 +95,10 @@ onMounted(async () => {
                 </RouterLink>
             </div>
         </div>
-        <div id="title" class="container-fluid m-0 p-0 pt-5 px-5 w-100 d-flex justify-content-start align-items-start">
+        <div id="title" class="container-fluid m-0 p-0 pt-5 px-3">
             <h3 id="DF">Hậu vệ</h3>
         </div>
-        <div id="player_menu" class="container-fluid m-0 mt-5 p-5">
+        <div id="player_menu" class="container-fluid m-0 mt-5 py-5">
             <div v-for="player in DFplayers" :key="player._id" id="player_card" ref="cards"
                 class="card w-100 border-0 d-flex flex-column">
                 <RouterLink :to="`/Squad/${player._id}`" class="text-decoration-none">
@@ -114,10 +114,10 @@ onMounted(async () => {
                 </RouterLink>
             </div>
         </div>
-        <div id="title" class="container-fluid m-0 p-0 pt-5 px-5 w-100 d-flex justify-content-start align-items-start">
+        <div id="title" class="container-fluid m-0 p-0 pt-5 px-3">
             <h3 id="MF">Tiền vệ</h3>
         </div>
-        <div id="player_menu" class="container-fluid m-0 mt-5 p-5">
+        <div id="player_menu" class="container-fluid m-0 mt-5 py-5">
             <div v-for="player in MFplayers" :key="player._id" id="player_card" ref="cards"
                 class="card w-100 border-0 d-flex flex-column">
                 <RouterLink :to="`/Squad/${player._id}`" class="text-decoration-none">
@@ -133,10 +133,10 @@ onMounted(async () => {
                 </RouterLink>
             </div>
         </div>
-        <div id="title" class="container-fluid m-0 p-0 pt-5 px-5 w-100 d-flex justify-content-start align-items-start">
+        <div id="title" class="container-fluid m-0 p-0 pt-5 px-3">
             <h3 id="ST">Tiền đạo</h3>
         </div>
-        <div id="player_menu" class="container-fluid m-0 mt-5 p-5" style="max-width: 1600px;">
+        <div id="player_menu" class="container-fluid m-0 mt-5 py-5" style="max-width: 1600px;">
             <div v-for="player in STplayers" :key="player._id" id="player_card" ref="cards"
                 class="card w-100 border-0 d-flex flex-column">
                 <RouterLink :to="`/Squad/${ player._id }`" class="text-decoration-none">
@@ -169,6 +169,7 @@ onMounted(async () => {
             </div>
         </div>-->
     </div>
+    </main>
 </template>
 
 <style scoped></style>

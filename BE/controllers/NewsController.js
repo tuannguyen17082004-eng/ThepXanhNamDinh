@@ -32,10 +32,13 @@ module.exports.GetNewsById = async (req, res) => {
 
 module.exports.CreateNews = async (req, res) => {
     try {
-        let { img, title, type, author, content } = req.body;
+        const { img_url, title, type, author, content } = req.body;
+        let img;
 
-        if (!img || !title || !content || !type || !author) {
-            return res.status(400).send("Please provide all required fields.");
+        if (req.file) {
+            img = "/pictures/" + req.file;
+        } else {
+            img = img_url;
         }
 
         const newNewsItem = new NewModel({
@@ -56,8 +59,19 @@ module.exports.CreateNews = async (req, res) => {
 
 module.exports.UpdateNews = async (req, res) => {
     try {
-        let { img, title, type, author, content } = req.body;
+        const { img_url, title, type, author, content } = req.body;
+        let img;
 
+        const news = NewModel.findById(req.params.id);
+
+        if (!req.file && img_url == "null") {
+            img = news.img;
+        }
+        else if (req.file) {
+            img = "/pictures/" + req.file;
+        } else {
+            img = img_url;
+        }
 
         const updatedNewsItem = await NewModel.findByIdAndUpdate(
             req.params.id,

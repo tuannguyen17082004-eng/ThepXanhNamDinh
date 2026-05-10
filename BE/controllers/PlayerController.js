@@ -27,13 +27,28 @@ module.exports.GetPlayerById = async (req, res) => {
 
 module.exports.CreatePlayer = async (req, res) => {
     try {
-        let { fullname, firstname, lastname, number, nationality, birth, img, position, background, placeBirth, height, information } = req.body;
-
-        if (!fullname || !firstname || !lastname || !nationality || !img || !position) {
-            return res.status(400).send("Please provide all required fields.");
+        const { fullname, firstname, lastname, number, nationality_url, birth, img_url, position, background_url, placeBirth, height, information } = req.body;
+        let img, nationality, background;
+        
+        if (req.files["img"]) {
+            img = "/pictures/" + req.files["img"][0].filename;
+        } else {
+            img = img_url;
         }
 
-        const newPlayer = new playerModel.create({
+        if (req.files["nationality"]) {
+            nationality = "/pictures/" + req.files["nationality"][0].filename;
+        } else {
+            nationality = nationality_url;
+        }
+
+        if (req.files["background"]) {
+            background = "/pictures/" + req.files["background"][0].filename;
+        } else {
+            background = background_url;
+        }
+
+        const newPlayer = new playerModel({
             fullname,
             firstname,
             lastname,
@@ -50,6 +65,7 @@ module.exports.CreatePlayer = async (req, res) => {
             }
         });
 
+        await playerModel.create(newPlayer);
         res.status(201).json(newPlayer);
     }
     catch (err) {
@@ -59,7 +75,36 @@ module.exports.CreatePlayer = async (req, res) => {
 
 module.exports.UpdatePlayer = async (req, res) => {
     try {
-        let { fullname, firstname, lastname, number, nationality, birth, img, position, background, placeBirth, height, information } = req.body;
+        const user = await playerModel.findById(req.params.id);
+        const { fullname, firstname, lastname, number, nationality_url, birth, img_url, position, background_url, placeBirth, height, information } = req.body;
+        let img, nationality, background;
+        
+        if (!req.files["img"] && img_url == "null") {
+            img = user.img;
+        }
+        else if (req.files["img"]) {
+            img = "/pictures/" + req.files["img"][0].filename;
+        } else {
+            img = img_url;
+        }
+
+        if (!req.files["nationality"] && nationality_url == "null") {
+            nationality = user.nationality;
+        }
+        else if (req.files["nationality"]) {
+            nationality = "/pictures/" + req.files["nationality"][0].filename;
+        } else {
+            nationality = nationality_url;
+        }
+
+        if (!req.files["background"] && background_url == "null") {
+            background = user.bio.background;
+        }
+        else if (req.files["background"]) {
+            background = "/pictures/" + req.files["background"][0].filename;
+        } else {
+            background = background_url;
+        }
 
         const updatedPlayer = await playerModel.findByIdAndUpdate(
             req.params.id,
@@ -90,7 +135,7 @@ module.exports.UpdatePlayer = async (req, res) => {
 module.exports.DeletePlayer = async (req, res) => {
     try {
         await playerModel.findByIdAndDelete(req.params.id);
-        res.status(200).send("Player deleted successfully.");
+        res.status(200).send("Xóa thành công!");
     }
     catch (err) {
         return res.status(400).send("Something wrong?" + err);

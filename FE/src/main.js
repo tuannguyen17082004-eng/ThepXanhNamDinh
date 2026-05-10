@@ -1,4 +1,6 @@
 import { createApp } from 'vue'
+import Vue3Toastify from 'vue3-toastify';
+import "vue3-toastify/dist/index.css";
 import App from './views/App.vue'
 import router from './router'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -8,4 +10,6 @@ import '../public/styles/Homepage.css'
 import '../public/styles/Player.css'
 import '../public/styles/Root.css'
 
-const app = createApp(App).use(router).mount('#app')
+const app = createApp(App).use(router).use(Vue3Toastify, {
+    autoClose: 3000,
+}).mount('#app')

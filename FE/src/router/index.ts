@@ -15,7 +15,14 @@ import Login from '@/views/User/Login.vue'
 import Register from '@/views/User/Register.vue'
 import Profile from '@/views/User/Profile.vue'
 import Admin from '@/views/Admin/Admin.vue'
+import NewsManagement from '@/views/Admin/NewsManagement.vue'
+import PlayersManagement from '@/views/Admin/PlayersManagement.vue'
+import VideoManagement from '@/views/Admin/VideoManagement.vue'
 import ChangePassword from '@/views/User/ChangePassword.vue'
+import AddPlayer from '@/views/Admin/AddPlayer.vue'
+import UpdatePlayer from '@/views/Admin/UpdatePlayer.vue'
+import AddNews from '@/views/Admin/AddNews.vue'
+import UpdateNews from '@/views/Admin/UpdateNews.vue'
 
 const routes = [{
   path: "/", 
@@ -40,10 +47,17 @@ const routes = [{
   ]
 },
 {
-  path: '/Admin', 
+  path: '/Admin',
   component: () => import('@/views/Admin/AdminApp.vue'),
   children: [
-    {path: '', component: Admin}
+    {path: '', component: Admin},
+    {path: 'News', component: NewsManagement},
+    {path: 'Players', component: PlayersManagement},
+    {path: 'Players/Add', component: AddPlayer},
+    {path: 'Players/:id', component: UpdatePlayer},
+    {path: 'Video', component: VideoManagement},
+    {path: 'News/Add', component: AddNews},
+    {path: 'News/:id', component: UpdateNews}
   ]
 }]
 

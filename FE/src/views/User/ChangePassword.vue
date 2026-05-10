@@ -2,6 +2,7 @@
     import router from '@/router';
     import { ref } from 'vue';
     import { ChangePassword } from '@/utils/AuthUtils';
+    import { toast } from 'vue3-toastify';
 
     const currentPassword = ref<HTMLElement | null>(null);
     const newPassword = ref<HTMLElement | null>(null);
@@ -9,17 +10,26 @@
 
     const handleChangePassword = async () => {
         if (!currentPassword.value || !newPassword.value || !confirmPassword.value) {
-            alert('Vui lòng điền đầy đủ thông tin.');
+             toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
+                position: toast.POSITION.TOP_CENTER,    
+            })
             return;
         }
 
         if (newPassword.value !== confirmPassword.value) {
-            alert('Mật khẩu mới và xác nhận mật khẩu mới không khớp.');
+            toast.error("Mật khẩu mới không trùng khớp!", {
+                position: toast.POSITION.TOP_CENTER,
+            })
             return;
         }
 
         const res = await ChangePassword(currentPassword.value, newPassword.value);
-        alert(res?.data);
+
+        if (res) {
+            toast.error("Đổi mật khẩu thành công!", {
+                position: toast.POSITION.TOP_CENTER,
+            })
+        }
     }
 
 </script>

@@ -25,17 +25,17 @@ onMounted(async () => {
 </script>
 
 <template>
-    <section class="container-fluid m-0 p-0" style="z-index: 1; overflow: hidden;">
-        <div id="video_title_bg" class="container-fluid p-0 d-flex justify-content-start align-items-end">
+    <main class="container-fluid m-0 p-0" style="z-index: 1; overflow: hidden;">
+        <section id="video_title_bg" class="container-fluid p-0 d-flex justify-content-start align-items-end">
             <div class="container-fluid p-0">
                 <h1 class="m-0 p-0 px-5 pb-3">VIDEO MỚI NHẤT</h1>
                 <p class="m-0 p-0 px-5 pb-3">Chúng tôi đem đến những highlight mới nhất về những trận đấu của clb cũng như
                     những video thú vị bên lề,...</p>
             </div>
-        </div>
+        </section>
 
         <!--Phần video-->
-        <div class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center"
+        <section class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center"
             style="border-top: 10px solid rgb(0, 133, 205);">
             <div v-if="videolist.length != 0" class="container-fluid d-flex flex-column align-items-center">
             <div id="video_menu" class="container-fluid my-3 m-0 p-3">
@@ -59,8 +59,15 @@ onMounted(async () => {
             <div id="no_item" v-else class="container-fluid my-5 d-flex justify-content-center align-items-center">
                 <h1>Không có video:<<<</h1>
             </div>
-        </div>
-    </section>
+        </section>
+
+
+        <!--Quảng cáo-->
+        <section id="advertisement" class="container-fluid py-3 px-3 d-flex justify-content-center align-items-center" style="gap: 20px; flex-wrap: wrap;">
+                <img src="/pictures/Ocany advertisement.webp" alt="Quảng cáo Ocany" class="w-100" style="max-width: 250px;">
+                <img src="/pictures/Jogarbola advertisement.jpg" alt="Quảng cáo Jogarbola" class="w-100" style="max-width: 250px;">
+        </section>
+    </main>
 </template>
 
 <style scoped>

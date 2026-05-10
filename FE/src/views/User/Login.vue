@@ -2,16 +2,24 @@
     import router from '@/router';
     import { ref } from 'vue';
     import { Login } from '@/utils/AuthUtils';
+    import { toast } from 'vue3-toastify';
 
     const email = ref<HTMLElement | null>(null);
     const password = ref<HTMLElement | null>(null);
 
     const handleLogin = async () => {
         if (!email.value || !password.value) {
-            alert("Vui lòng nhập đầy đủ thông tin");
+            toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
+                position: toast.POSITION.TOP_CENTER,    
+            })
         }
         else {
             const res = await Login(email.value, password.value);
+            if (res) {
+                toast.success("Đăng nhập thành công!", {
+                    position: toast.POSITION.TOP_CENTER,
+                })
+            }
         }
     }
     

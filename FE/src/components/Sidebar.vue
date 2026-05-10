@@ -4,22 +4,34 @@
     <aside id="sidebar" class="sidebar m-0 w-100">
         <ul class="sidebar-nav p-0">
             <li class="nav-item mb-2">
-                <i class="bi bi-house"><span class="px-2">Trang chủ</span></i>
+                <RouterLink to="/Admin" class="text-decoration-none">
+                    <i class="bi bi-house"><span class="px-2">Trang chủ</span></i>
+                </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <i class="bi bi-newspaper"><span class="px-2">Tin tức</span></i>
+                <RouterLink to="/Admin/News" class="text-decoration-none">
+                    <i class="bi bi-newspaper"><span class="px-2">Tin tức</span></i>
+                </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <i class="bi bi-play-btn"><span class="px-2">Video</span></i>
+                <RouterLink to="/Admin/Video" class="text-decoration-none">
+                    <i class="bi bi-play-btn"><span class="px-2">Video</span></i>
+                </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <i class="bi bi-calendar3"><span class="px-2">Lịch trình</span></i>
+                <RouterLink to="/Admin/Schedule" class="text-decoration-none">
+                    <i class="bi bi-calendar3"><span class="px-2">Lịch trình</span></i>
+                </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <i class="bi bi-file-person"><span class="px-2">Cầu thủ</span></i>
+                <RouterLink to="/Admin/Players" class="text-decoration-none">
+                    <i class="bi bi-file-person"><span class="px-2">Cầu thủ</span></i>
+                </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <i class="bi bi-person"><span class="px-2">Người dùng</span></i>
+                <RouterLink to="/Admin/Users" class="text-decoration-none">
+                    <i class="bi bi-person"><span class="px-2">Người dùng</span></i>
+                </RouterLink>
             </li>
         </ul>
     </aside>
@@ -51,12 +63,17 @@
     i {
         font-size: 20px;
         font-style: normal;
-        color: rgb(0, 133, 205);
-        font-weight: 700;
+        transition: 0.3s ease-in-out;
+        color: #012970;
+        font-weight: 600;
     }
 
     li:hover {
         background-color: rgb(248, 249, 250);
+
+        i {
+            color: rgb(0, 133, 205);
+        }
     }
 }
 </style>

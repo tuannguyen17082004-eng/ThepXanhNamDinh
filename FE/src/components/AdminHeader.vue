@@ -9,18 +9,19 @@
     
     const handleSidebar = () => {
         const sidebar = document.getElementById("sidebar_container");
-        if (!sidebar) return;
+        const content = document.getElementById("content_container");
+        if (!sidebar || !content) return;
 
         if (status) {
             sidebar.style.width = "0";
             sidebar.style.minWidth = "0";
-            sidebar.style.transition = "1s ease-in-out";
+            content.style.marginLeft = "0";
             status = false;
         }
         else {
-            sidebar.style.transition = "1s ease-in-out";
             sidebar.style.width = "260px";
             sidebar.style.minWidth = "260px";
+            content.style.marginLeft = "260px";
             status = true;
         }
     }
@@ -47,7 +48,6 @@
         </div>
         
         <div class="container d-flex align-items-center justify-content-end m-0 p-0" style="width: max-content;">
-            <i class="bi bi-search"></i>
             <i class="bi bi-bell"></i>
             <i class="bi bi-list" v-on:click="handleSidebar"></i>
             <div class="container p-0" style="height: 40px; overflow: hidden; aspect-ratio: 1 / 1;">

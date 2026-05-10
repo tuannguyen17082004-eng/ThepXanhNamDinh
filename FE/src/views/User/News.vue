@@ -34,53 +34,60 @@ onMounted(async () => {
 </script>
 
 <template>
-    <section class="container-fluid m-0 p-0">
-        <div id="new_title_bg" class="container-fluid m-0 p-0 w-100 d-flex justify-content-start align-items-end">
+    <main class="container-fluid m-0 p-0">
+        <section id="new_title_bg" class="container-fluid m-0 p-0 w-100 d-flex justify-content-start align-items-end">
             <div class="container-fluid m-0 p-0 w-100">
                 <h1 class="m-0 p-0 px-5 pb-3">TIN TỨC CHÍNH</h1>
                 <p class="m-0 p-0 px-5 pb-3">Chúng tôi đem đến những thông tin mới nhất về clb cũng như những câu chuyện bên
                     lề,...</p>
             </div>
-        </div>
+        </section>
 
         <!--Phần tin tức-->
-        <div class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center">
+        <section class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center">
             <div id="newtype_list" class="container-fluid m-0 p-0"
             style="background-color: #f8f9fa; box-shadow: 5px 5px 5px rgb(224, 220, 220);">
-            <ul class="m-0 p-0 d-flex flex-row">
+                <ul class="m-0 p-0 d-flex flex-row">
                     <li v-on:click="getTypeNew(null)">Tất cả</li>
                     <li v-on:click="getTypeNew('Highlights')">Highlights</li>
                     <li v-on:click="getTypeNew('CLB')">CLB</li>
                     <li v-on:click="getTypeNew('Fanclub')">Fanclub</li>
                     <li v-on:click="getTypeNew('Đào tạo')">Đào tạo</li>
                     <li v-on:click="getTypeNew('Thông tin trận đấu')">Thông tin trận đấu</li>
-            </ul>
-        </div>
-        <div v-if="newsdata.length != 0" class="container-fluid d-flex flex-column align-items-center">
-            <div id="new_menu" class="container-fluid my-3 m-0 p-3 w-100"
-                style=" max-width: 1600px; grid-template-columns: repeat(auto-fill, 400px);">
-                <div id="new_card" v-for="news in newsdata" :key="news._id" class="card" style="max-width: 400px;">
-                    <RouterLink :to="`/News/${news._id}`" class="text-decoration-none text-body">
-                    <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
-                        <img class="w-100" :src="news.img">
-                    </div>
-                    <div class="card-body p-0" style="overflow: hidden; height: 130px;">
-                        <h4 class="m-0 px-2 pt-3 p-0">{{ news.title }}</h4>
-                        <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;"><img
-                                src="/pictures/watch-bg-black.png"
-                                style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
-                            {{ news.type }} | {{ news.time }}</p>
-                    </div>
-                    </RouterLink>
-                </div>
+                </ul>
             </div>
-            <button id="button" type="button" class="btn btn-lg m-3" v-on:click="moreNews(type)">Đọc thêm</button>
-        </div>
-        <div id="no_item" v-else class="container-fluid my-5 d-flex justify-content-center align-items-center">
-           <h1>Không có tin tức nào phù hợp với danh mục này!</h1>
-        </div>
-        </div>
-    </section>
+            <div v-if="newsdata.length != 0" class="container-fluid d-flex flex-column align-items-center">
+                <div id="new_menu" class="container-fluid my-3 m-0 p-3 w-100"
+                style=" max-width: 1600px; grid-template-columns: repeat(auto-fill, 400px);">
+                    <div id="new_card" v-for="news in newsdata" :key="news._id" class="card" style="max-width: 400px;">
+                        <RouterLink :to="`/News/${news._id}`" class="text-decoration-none text-body">
+                        <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
+                            <img class="w-100" :src="news.img">
+                        </div>
+                        <div class="card-body p-0" style="overflow: hidden; height: 130px;">
+                            <h4 class="m-0 px-2 pt-3 p-0">{{ news.title }}</h4>
+                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;"><img
+                                    src="/pictures/watch-bg-black.png"
+                                    style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                                {{ news.type }} | {{ news.time }}</p>
+                        </div>
+                        </RouterLink>
+                    </div>
+                </div>
+                <button id="button" type="button" class="btn btn-lg m-3" v-on:click="moreNews(type)">Đọc thêm</button>
+            </div>
+            <div id="no_item" v-else class="container-fluid my-5 d-flex justify-content-center align-items-center">
+                <h1>Không có tin tức nào phù hợp với danh mục này!</h1>
+            </div>
+        </section>
+
+
+        <!--Quảng cáo-->
+        <section id="advertisement" class="container-fluid py-3 px-3 d-flex justify-content-center align-items-center" style="gap: 20px; flex-wrap: wrap;">
+                <img src="/pictures/Ocany advertisement.webp" alt="Quảng cáo Ocany" class="w-100" style="max-width: 250px;">
+                <img src="/pictures/Jogarbola advertisement.jpg" alt="Quảng cáo Jogarbola" class="w-100" style="max-width: 250px;">
+        </section>
+    </main>
 </template>
 <style scoped>
 #new_title_bg {

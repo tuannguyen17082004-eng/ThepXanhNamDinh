@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import router from '@/router';
     import { ref } from 'vue';
-    import { Register } from '@/utils/UserUtils';
+    import { Register } from '@/utils/AuthUtils';
+    import { toast } from 'vue3-toastify';
 
 
     const name = ref<HTMLElement | null>(null);
@@ -14,16 +15,25 @@
 
     const handleRegister = async () => {
         if (!name.value || !username.value || !email.value || !phone.value || !password.value || !confirmPassword.value) {
-            alert("Vui lòng nhập đầy đủ thông tin");
+            toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
+                position: toast.POSITION.TOP_CENTER,
+        })
             return;
         }
         if (password.value !== confirmPassword.value) {
-            alert("Mật khẩu xác nhận không khớp");
+            toast.error("Mật khẩu không trùng khớp!", {
+                position: toast.POSITION.TOP_CENTER,
+            })
             return;
         }
         
         const res = await Register(name.value, username.value, email.value, phone.value, password.value, avatar.value);
-        alert(res.data);
+        
+        if (res) {
+            toast.success("Đăng ký thành công!", {
+                position: toast.POSITION.TOP_CENTER,
+            })
+        }
     }
 
 </script>

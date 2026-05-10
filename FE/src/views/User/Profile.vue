@@ -44,7 +44,7 @@ onMounted(async () => {
                         <li v-on:click="() => router.push('/ChangePassword')">Đổi mật khẩu</li>
                         <li v-on:click="async () => await Logout()">Đăng xuất</li>
                         <li v-if="u?.role == 'admin'">
-                            <RouterLink to="/Admin" class="text-decoration-none text-black">Trang quản trị</RouterLink>
+                            <RouterLink to="/Admin" class="text-decoration-none" style="color: #012970;">Trang quản trị</RouterLink>
                         </li>
                     </ul>
                 </div>
@@ -105,6 +105,7 @@ onMounted(async () => {
             align-items: center;
             font-weight: 500;
             font-size: clamp(15px, 2vw, 18px);
+            color: #012970;
         }
 
         ul li:hover {
@@ -132,6 +133,7 @@ onMounted(async () => {
                 font-weight: 600;
                 height: max-content;
                 margin: 0;
+                color: #012970;
             }
 
             p {
