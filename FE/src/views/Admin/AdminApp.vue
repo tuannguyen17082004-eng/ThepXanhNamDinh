@@ -32,5 +32,10 @@
     #content_container {
         margin: 0 !important;
     }
+
+    #sidebar_container {
+        min-width: 0;
+        width: 0;
+    }
 }
 </style>

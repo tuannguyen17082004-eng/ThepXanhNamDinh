@@ -9,19 +9,19 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const id = route.params.id;
 
-const firstname = ref(null);
-const lastname = ref(null);
-const number = ref(null);
-const position = ref(null);
-const height = ref(null);
-const dateofbirth = ref(null);
-const placeofbirth = ref(null);
-const bio = ref(null);
-const selfie_url = ref(null);
+const firstname = ref();
+const lastname = ref();
+const number = ref();
+const position = ref();
+const height = ref();
+const dateofbirth = ref();
+const placeofbirth = ref();
+const bio = ref();
+const selfie_url = ref();
 const selfie_file = ref();
-const nationality_url = ref(null);
+const nationality_url = ref();
 const nationality_file = ref();
-const background_url = ref(null);
+const background_url = ref();
 const background_file = ref();
 let selfie_png = ref();
 let nationality_png = ref();
@@ -31,6 +31,7 @@ const handleSelfie = (e : any) => {
     const file = e.target.files[0];
     if (!file) {
         selfie_png.value = null;
+        selfie_file.value = null;
         return;
     }
 
@@ -42,6 +43,7 @@ const handleNationality = (e : any) => {
     const file = e.target.files[0];
     if (!file) {
         nationality_png.value = null;
+        nationality_file.value = null;
         return;
     }
 
@@ -53,6 +55,7 @@ const handleBackground = (e : any) => {
     const file = e.target.files[0];
     if (!file) {
         background_png.value = null;
+        background_file.value = null;
         return;
     }
 
@@ -63,39 +66,22 @@ const handleBackground = (e : any) => {
 const FetchPlayerByID = async (id: any) => {
     const res = await GetPlayerByID(id);
 
-    if (!res) {
-        toast.error("Lấy dữ liệu thất bại!", {
-            position: toast.POSITION.TOP_CENTER,
-        })
-        return;
+    if (res) {
+        const [day, month, year] = res.data.birth.split('/');
+        res.data.birth = `${year}-${month}-${day}`;
+
+        firstname.value = res.data.firstname;
+        lastname.value = res.data.lastname;
+        number.value = res.data.number;
+        position.value = res.data.position;
+        height.value = res.data.bio.height;
+        dateofbirth.value = res.data.birth;
+        placeofbirth.value = res.data.bio.placeBirth;
+        bio.value = res.data.bio.information;
+        selfie_png.value = res.data.img;
+        nationality_png.value = res.data.nationality;
+        background_png.value = res.data.bio.background;
     }
-    const [day, month, year] = res.data.birth.split('/');
-    res.data.birth = `${year}-${month}-${day}`;
-
-    firstname.value = res.data.firstname;
-    lastname.value = res.data.lastname;
-    number.value = res.data.number;
-    position.value = res.data.position;
-    height.value = res.data.bio.height;
-    dateofbirth.value = res.data.birth;
-    placeofbirth.value = res.data.bio.placeBirth;
-    bio.value = res.data.bio.information;
-
-    if (res.data.img.startsWith('https')) {
-        selfie_url.value = res.data.img;
-    }
-    selfie_png.value = res.data.img;
-
-    if (res.data.nationality.startsWith('https')) {
-        nationality_url.value = res.data.nationality;
-    }
-    nationality_png.value = res.data.nationality;
-
-    if (res.data.bio.background.startsWith('https')) {
-        background_url.value = res.data.bio.background;
-    } 
-    background_png.value = res.data.bio.background;
-    
 }
 
 const handleUpdate = async () => {
@@ -116,15 +102,10 @@ const handleUpdate = async () => {
     const res = await UpdatePlayer(id, selfie_file.value, nationality_file.value, background_file.value, firstname.value + " " + lastname.value, firstname.value, lastname.value, number.value, nationality_url.value, dateofbirth.value, selfie_url.value, position.value, background_url.value, placeofbirth.value, height.value, bio.value);
     
     if (res) {
-        toast.success("Chỉnh sửa thành công!", {
+        toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         })
         router.push("/Admin/Players")
-    }
-    else {
-        toast.error("Có lỗi xảy ra!", {
-            position: toast.POSITION.TOP_CENTER,
-        })
     }
 }
 
@@ -142,15 +123,10 @@ const handleDelete = () => {
             const res = await DeletePlayer(id);
 
             if (res) {
-                toast.success("Xóa thành công!", {
+                toast.success(res.data, {
                     position: toast.POSITION.TOP_CENTER,
                 });
                 router.push("/Admin/Players");
-            }
-            else {
-                toast.error("Có lỗi xảy ra!", {
-                    position: toast.POSITION.TOP_CENTER,
-                });
             }
         }
     });
@@ -163,11 +139,18 @@ onMounted(async() => {
 
 <template>
     <main class="container-fluid p-3" style="margin-top: 70px;">
-        <div id="title" class="container-fluid p-3">
-            <h5>Thông tin chi tiết cầu thủ</h5>
+        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+            <div id="title_player" class="container-fluid p-0 pe-5 m-0">
+                <h5 class="m-0">Cập nhật thông tin cầu thủ</h5>
+                <p class="m-0 pt-1">Nhập đầy đủ thông tin cần thiết</p>
+            </div>
+
+            <RouterLink to="/Admin/Video" class="container-fluid p-0" style="width: max-content;">
+              <button id="back_btn" class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay lại</button>
+            </RouterLink>
         </div>
 
-        <form ref="addPlayer" id="add_form" class="container-fluid p-3" @submit.prevent="handleUpdate">
+        <form ref="addPlayer" id="add_form" class="container-fluid p-3 mt-4" @submit.prevent="handleUpdate">
             <div class="row w-100 m-0 p-0 d-flex">
                 <div class="col-sm-6 p-3">
                     <h3>Họ:</h3>
@@ -224,14 +207,14 @@ onMounted(async() => {
                     <h3 class="w-100">Ảnh (chọn trên máy hoặc nhập link ảnh):</h3>
                     <img :src="selfie_png" id="selfie_png" width="200" class="my-2"> 
                     <input type="file" class="form-control mb-3" @change="handleSelfie">
-                    <input v-model="selfie_url" type="text" class="form-control" placeholder="Nhập URL...">
+                    <input v-model="selfie_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
 
                 <div class="col-md-6 p-3">
                     <h3 class="w-100">Quốc tịch (chọn trên máy hoặc nhập link ảnh):</h3>
                     <img :src="nationality_png" id="nationality_png" width="200" class="my-2"> 
                     <input type="file" class="form-control mb-3" @change="handleNationality">
-                    <input v-model="nationality_url" type="text" class="form-control" placeholder="Nhập URL...">
+                    <input v-model="nationality_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
             </div>
 
@@ -240,7 +223,7 @@ onMounted(async() => {
                     <h3 class="w-100">Ảnh bìa (chọn trên máy hoặc nhập link ảnh):</h3>
                     <img :src="background_png" id="background_png" width="200" class="my-2"> 
                     <input type="file" class="form-control mb-3" @change="handleBackground">
-                    <input v-model="background_url" type="text" class="form-control" placeholder="Nhập URL...">
+                    <input v-model="background_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
             </div>
 
@@ -248,20 +231,37 @@ onMounted(async() => {
                 <button id="add_btn" type="submit" class="btn btn-lg">Sửa</button>
                 <button id="reset_btn" type="reset" class="btn btn-lg">Reset</button>
                 <button id="del_btn" type="button" class="btn btn-lg" v-on:click="handleDelete">Xóa</button>
-                <button id="back_btn" type="button" class="btn btn-lg" v-on:click="() => router.push('/Admin/Players')">Quay lại</button>
             </div>
         </form>
     </main>
 </template>
 
 <style scoped>
-#title {
+#title_player {
+    font-family: 'Barlow', sans-serif;
+
     h5 {
-        font-family: 'Barlow', sans-serif;
-        font-weight: 600;
+        font-weight: 700;
         font-size: clamp(20px, 2vw, 25px);
         color: #012970;
     }
+
+    p {
+        font-weight: 500;
+        color: #899bbd;
+    }
+}
+
+#back_btn {
+    width: 100px;
+    color: #012970;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+}
+
+#back_btn:hover {
+    background-color: rgb(0, 133, 205);
+    color: white;
 }
 
 #add_form {
@@ -274,8 +274,8 @@ onMounted(async() => {
         margin-right: 10px;
         display: flex;
         align-items: center;
-        font-size: clamp(15px, 3vw, 20px);
-        font-weight: 500;
+        font-size: clamp(15px, 3vw, 18px);
+        font-weight: 600;
     }
 
     #add_btn {
@@ -290,15 +290,6 @@ onMounted(async() => {
     #reset_btn {
         width: 100px;
         background-color: grey;
-        color: white;
-        font-family: 'Barlow', sans-serif;
-        font-size: large;
-        font-weight: 500;
-    }
-
-    #back_btn {
-        width: 100px;
-        background-color: goldenrod;
         color: white;
         font-family: 'Barlow', sans-serif;
         font-size: large;

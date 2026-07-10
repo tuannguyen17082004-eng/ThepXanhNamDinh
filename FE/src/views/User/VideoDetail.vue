@@ -26,16 +26,22 @@ const hozirontalScroll = () => {
 
 const fetchVideoById = async (id : any) => {
     const res = await GetVideoById(id);
-    video.value = res?.data;
+
+    if (res) {
+        video.value = res.data;
+    }
 }
 
-const fetchVideo = async (page : any, limit : any, time : any, title : any) => {
+const fetchVideo = async () => {
     const res = await GetAllVideos(page, limit, time, title);
-    videodata.value = res?.data;
+
+    if (res) {
+        videodata.value = res.data;
+    }
 }
 
 onMounted(async () => {
-    await fetchVideo(page, limit, time, title);
+    await fetchVideo();
     await fetchVideoById(id.value);
     hozirontalScroll();
 });
@@ -51,7 +57,7 @@ watch(id, async (newId) => {
         <section class="container-fluid p-0" v-if="video">
             <div class="container-fluid m-0 p-0 d-flex justify-content-center align-items-center"
                 style="aspect-ratio: 16 / 9;">
-                <video class="p-0 m-0 w-100 h-100" :src="video?.link" controls></video>
+                <video class="p-0 m-0 w-100 h-100" :src="video?.video.link" controls></video>
             </div>
             <div id="video_detail_content" class="container-fluid m-0 px-md-5 px-4 pt-3 d-flex flex-column">
                 <p id="vid_time" class="d-flex align-items-center p-0"><img src="/pictures/watch-bg-black.png"
@@ -69,12 +75,12 @@ watch(id, async (newId) => {
                 <div id="video_extend_card" class="card" v-for="video in videodata" :key="video._id">
                     <RouterLink :to="`/Video/${video._id}`" class="text-decoration-none">
                         <div class="card-img-top p-0" style="aspect-ratio: 16 / 9; overflow: hidden;">
-                            <img class="w-100" :src="video.poster"></img>
+                            <img class="w-100" :src="video.poster.link"></img>
                         </div>
                         <div class="card-body m-0" style="height: 120px;">
                             <h4 class="pt-1">{{ video.title }}</h4>
-                            <p class="position-absolute d-flex align-items-center"><img src="/pictures/watch-bg-black.png"
-                                    style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                            <p class="position-absolute d-flex align-items-center">
+                                <span class="bi bi-clock pe-1"></span>
                                 {{ video.time }}</p>
                         </div>
                     </RouterLink>
@@ -85,7 +91,7 @@ watch(id, async (newId) => {
 
         <section class="container-fluid p-0" v-else>
             <div id="no_video" class="container-fluid p-0 px-4 d-flex flex-column justify-content-center align-items-center w-100">
-                <h4>Bạn cần đăng nhập hoặc đăng ký tài khoản để xem video này</h4>
+                <h4>Đăng nhập hoặc đăng ký tài khoản để khám phá thêm!</h4>
                 <div class="container p-0 d-flex justify-content-center align-items-center">
                     <RouterLink to="/Login" class="text-decoration-none">
                         <button class="btn btn-primary m-3">Đăng nhập</button>

@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const newSchema = new mongoose.Schema({
-    img: {type: String, require: true},
+    img: {
+        link: {type: String, require: true},
+        id: {type: String, require: true}
+    },
     title: {type: String, require: true},
     type: {type: String, require: true},
     content: {type: String, require: true},

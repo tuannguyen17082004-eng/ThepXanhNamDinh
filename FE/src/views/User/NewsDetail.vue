@@ -24,19 +24,25 @@ const hozirontalScroll = () => {
   })
 }
 
-const fetchAllNews = async (page : any, limit : any, title : any, time : any, type : any, author : any) => {
+const fetchAllNews = async () => {
     const res = await GetAllNews(page, limit, type, title, author, time);
-    newsdata.value.push(...res?.data);
+
+    if (res) {
+        newsdata.value.push(...res.data);
+    }
 }
 
 const fetchNewsById = async (id : any) => {
     const res = await GetNewsById(id);
-    news.value = res?.data;
+    
+    if (res) {
+        news.value = res.data;
+    }
 }
 
 onMounted(async () => {
     await fetchNewsById(id.value);
-    await fetchAllNews(page, limit, type, title, author, time);
+    await fetchAllNews();
     hozirontalScroll();
 });
 
@@ -47,48 +53,57 @@ watch(id, async (newId) => {
 </script>
 
 <template>
-    <section class="container-fluid m-0 p-0" style="z-index: 1; overflow: hidden;">
-        <div id="news_bg" class="p-0 container-fluid d-flex justify-content-start">
-            <img class="w-100" :src="news?.img">
-            <div id="news_title" class="container-fluid position-absolute d-flex flex-column">
-                <h1>{{ news?.title }}</h1>
-                <p>{{ news?.time }}</p>
+    <main class="container-fluid m-0 p-0" style="z-index: 1; overflow: hidden;">
+        <section v-if="news" class="container-fluid p-0">
+            <div id="news_bg" class="p-0 container-fluid d-flex justify-content-start">
+                <img class="w-100" :src="news.img.link">
+                <div id="news_title" class="container-fluid position-absolute d-flex flex-column">
+                    <h1>{{ news.title }}</h1>
+                    <p>{{ news.time }}</p>
+                </div>
             </div>
-        </div>
-        <div id="news-content" class="container-fluid">
-            <p>Nguồn: {{ news?.author }}</p>
-            <p id="content">{{ news?.content }}</p>
+            <div id="news-content" class="container-fluid">
+                <p style="color: #012970; font-weight: 700;">Nguồn: {{ news.author }}</p>
+                <p id="content">{{ news.content }}</p>
 
-        <RouterLink to="/News" class="text-decoration-none w-100">
-            <h3 class="p-3">Quay lại</h3>
-        </RouterLink>
-        </div>
+                <RouterLink to="/News" class="text-decoration-none w-100">
+                    <h3 class="p-3"><span class="bi bi-arrow-left p-0 px-2"></span>Quay lại</h3>
+                </RouterLink>
+            </div>
+        </section>
+
+        <section v-else id="no_content" class="container-fluid p-md-5 p-3 d-flex flex-column justify-content-center align-items-center" style="min-height: 100dvh;">
+            <h4>Không có dữ liệu</h4>
+
+            <RouterLink to="/News" class="text-decoration-none w-100 mt-5">
+                <h3 class="p-3"><span class="bi bi-arrow-left p-0 px-2"></span>Quay lại</h3>
+            </RouterLink>
+        </section>
         
         <h1 id="title" class="ps-4">TIN TỨC LIÊN QUAN</h1>
         <div ref="newList" id="news_list" class="container-fluid d-flex my-3 ps-4">
                 <div id="new_card" class="card" v-for="news in newsdata" :key="news._id">
                     <RouterLink :to="`/News/${news._id}`" class="text-decoration-none text-body">
                         <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
-                            <img class="w-100" :src="news.img">
+                            <img class="w-100" :src="news.img.link">
                         </div>
                         <div class="card-body p-0" style="overflow: hidden; height: 130px;">
                             <h4 class="m-0 px-2 pt-3 p-0">{{ news.title }}</h4>
-                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;"><img
-                                src="/pictures/watch-bg-black.png"
-                                style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;">
+                                <span class="bi bi-clock pe-1"></span>
                                 {{ news.type }} | {{ news.time }}</p>
                         </div>
                     </RouterLink>
                 </div>
         </div>
-    </section>
+    </main>
 </template>
 
 <style scoped>
 #news_bg {
     height: 80vh;
     position: relative;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
     border-bottom: 10px solid rgb(0, 133, 205);
 
     img {
@@ -118,11 +133,12 @@ watch(id, async (newId) => {
     max-width: 2000px;
     font-family: 'Barlow', sans-serif;
     font-size: clamp(15px, 3vw, 20px);
-    font-weight: 500;
+    font-weight: 400;
     padding: 30px 10vw;
     
     #content {
         white-space: pre-line;
+        font-weight: 500;
     }
 
     h3 {
@@ -131,6 +147,28 @@ watch(id, async (newId) => {
         font-family: 'Barlow', sans-serif;
         font-weight: 500;
         font-size: 20px;
+    }
+
+    span {
+        color: #012970;
+        font-size: 20px;
+        -webkit-text-stroke: 1px;
+    }
+}
+
+#no_content {
+    font-family: 'Barlow', sans-serif;
+
+    h3 {
+        color: white;
+        background-color: rgb(0, 133, 205);
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    h4 {
+        font-size: 35px;
+        font-weight: 600;
     }
 }
 
@@ -168,7 +206,7 @@ watch(id, async (newId) => {
             font-size: 20px;
         }
         
-        p{
+        span, p{
             color: black;
             font-size: 15px;
             font-weight: 500;
@@ -185,7 +223,7 @@ watch(id, async (newId) => {
             transition: ease 0.3s;
         }
 
-        p {
+        span, p {
             color: white;
             transition: ease 0.3s;
         }

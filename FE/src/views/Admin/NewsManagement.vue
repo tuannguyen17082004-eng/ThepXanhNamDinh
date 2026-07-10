@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, render } from 'vue';
+import { ref, onMounted } from 'vue';
 import DataTable from 'datatables.net-vue3';
 import DataTableCore from 'datatables.net-bs5';
-import router from '@/router';
 import { GetAllNews } from '@/utils/NewUtils';
 import { type News } from '@/models/news';
 
@@ -47,7 +46,10 @@ const columns = [
 
 const GetNews = async () => {
     const res = await GetAllNews(null, null, null, null, null, null);
-    news.value = res?.data;
+
+    if (res) {
+        news.value = res.data;
+    }
 }
 
 
@@ -58,15 +60,18 @@ onMounted(async () => {
 
 <template>
     <main class="container-fluid p-3" style="margin-top: 70px;">
-        <div id="title" class="container-fluid p-0 mb-3">
-            <h5>Quản lý tin tức</h5>
+        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+            <div id="title_news" class="container-fluid p-0 pe-5 m-0">
+                <h5 class="m-0">Quản lý tin tức</h5>
+                <p class="m-0 pt-1">Quản lý thông tin tin tức trên hệ thống</p>
+            </div>
+
+            <RouterLink to="News/Add" class="container-fluid p-0" style="width: max-content;">
+              <button class="btn btn-md m-0"><span class="bi bi-plus-lg pe-1"></span>Thêm</button>
+            </RouterLink>
         </div>
 
-        <RouterLink to="News/Add" class="container-fluid p-0">
-          <button class="btn btn-md m-0">Thêm</button>
-        </RouterLink>
-
-        <div id="data_table" class="container-fluid p-3 mt-3">
+        <div id="data_table" class="container-fluid p-3 mt-4">
             <DataTable class="table" :data="news" :columns="columns">
             </DataTable>
         </div>
@@ -74,12 +79,18 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-#title {
+#title_news {
+    font-family: 'Barlow', sans-serif;
+
     h5 {
-        font-family: 'Barlow', sans-serif;
-        font-weight: 600;
+        font-weight: 700;
         font-size: clamp(20px, 2vw, 25px);
         color: #012970;
+    }
+
+    p {
+        font-weight: 500;
+        color: #899bbd;
     }
 }
 
@@ -88,7 +99,7 @@ button {
   background-color: rgb(0, 133, 205);
   color: white;
   font-family: 'Barlow', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 button:hover {
@@ -105,6 +116,10 @@ button:hover {
             display: flex;
             gap: 10px;
             font-weight: 600;
+    }
+
+    :deep(td) {
+        align-content: center;
     }
 
     :deep(td p) {

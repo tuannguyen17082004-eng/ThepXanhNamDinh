@@ -46,7 +46,9 @@ app.listen(3000, '0.0.0.0', () => {
     console.log('Server is running');
 });
 
-cron.schedule('* 1 * * *', () => {
+crawlScoreboardData();
+
+cron.schedule('* 6 * * *', () => {
     crawlScoreboardData();
 })
 

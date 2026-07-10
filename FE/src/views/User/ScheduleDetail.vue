@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { toast } from 'vue3-toastify';
 import { GetMatchDetail } from '@/utils/MatchUtils';
 import { useRoute } from 'vue-router';
 import { type Match } from '@/models/match';
@@ -11,8 +12,15 @@ let check = null;
 
 const getMatch = async (id : any) => {
     const res = await GetMatchDetail(id);
-    match.value = res?.data;
-    check = match.value?.highlight;
+
+    if (!res) {
+        toast.error("Có lỗi xảy ra khi tải dữ liệu!", {
+            position: toast.POSITION.TOP_CENTER,
+        });
+        return;
+    }
+    match.value = res.data;
+    check = res.data.highlight;
 }
 
 

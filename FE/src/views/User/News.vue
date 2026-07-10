@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GetAllNews } from "@/utils/NewUtils";
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import type { News } from '@/models/news';
 
 let newsdata = ref<News[]>([]);
@@ -11,25 +11,28 @@ let title: string | null = null;
 let author: string | null = null;
 let time: string | null = null;
 
-const fetchNews = async (page : number, limit : number, type : string | null, title : string | null, author : string | null, time : string | null) => {
+const fetchNews = async () => {
     const res = await GetAllNews(page, limit, type, title, author, time);
-    newsdata.value.push(...res?.data);
+
+    if (res) {
+        newsdata.value.push(...res.data);
+    }
 }
 
-const getTypeNew = async (typef : string | null) => {
+const getTypeNew = async (typef : any) => {
     type = typef;
     page = 1;
-    newsdata.value = [] ;
-    await fetchNews(page, limit, type, title, author, time);
+    newsdata.value = [];
+    await fetchNews();
 }
 
-const moreNews = async (type : string | null) => {
+const moreNews = async () => {
     page++;
-    await fetchNews(page, limit, type, title, author, time);
+    await fetchNews();
 }
 
 onMounted(async () => {
-    await fetchNews(page, limit, type, title, author, time);
+    await fetchNews();
 });
 </script>
 
@@ -62,19 +65,18 @@ onMounted(async () => {
                     <div id="new_card" v-for="news in newsdata" :key="news._id" class="card" style="max-width: 400px;">
                         <RouterLink :to="`/News/${news._id}`" class="text-decoration-none text-body">
                         <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
-                            <img class="w-100" :src="news.img">
+                            <img class="w-100" :src="news.img.link">
                         </div>
                         <div class="card-body p-0" style="overflow: hidden; height: 130px;">
                             <h4 class="m-0 px-2 pt-3 p-0">{{ news.title }}</h4>
-                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;"><img
-                                    src="/pictures/watch-bg-black.png"
-                                    style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;">
+                                <span class="bi bi-clock pe-1"></span>
                                 {{ news.type }} | {{ news.time }}</p>
                         </div>
                         </RouterLink>
                     </div>
                 </div>
-                <button id="button" type="button" class="btn btn-lg m-3" v-on:click="moreNews(type)">Đọc thêm</button>
+                <button id="button" type="button" class="btn btn-lg m-3" v-on:click="moreNews()">Đọc thêm</button>
             </div>
             <div id="no_item" v-else class="container-fluid my-5 d-flex justify-content-center align-items-center">
                 <h1>Không có tin tức nào phù hợp với danh mục này!</h1>
@@ -93,7 +95,7 @@ onMounted(async () => {
 #new_title_bg {
     position: relative;
     height: 400px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(../pictures/Hình\ nền\ tin\ tức.jpg);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(/pictures/Hình\ nền\ tin\ tức.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

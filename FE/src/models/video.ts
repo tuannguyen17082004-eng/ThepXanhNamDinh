@@ -1,7 +1,13 @@
 export interface Video {
-    _id : string;
-    link : string;
-    poster : string;
-    title : string;
-    time : string;
+    _id: string;
+    video: {
+        link: string,
+        id: string
+    };
+    poster: {
+        link: string,
+        id: string
+    };
+    title: string;
+    time: string;
 }

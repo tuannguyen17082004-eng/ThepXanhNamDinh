@@ -6,6 +6,7 @@ module.exports.GetScoreboardData = async (req, res) => {
         res.status(200).json(scoreboard);
     }
     catch (err) {
-        return res.status(400).send("Something wrong?" + err);
+        console.log(err)
+        return res.status(500).send("Internal server error");
     }
 }

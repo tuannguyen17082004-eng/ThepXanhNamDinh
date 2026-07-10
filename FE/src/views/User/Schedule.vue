@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { GetScoreboard } from '@/utils/ScoreboardUtils';
 import { GetAllMatch } from '@/utils/MatchUtils';
 import type { Scoreboard } from '@/models/scoreboard';
@@ -17,28 +17,35 @@ const matches = ref([]);
 
 const fetchScoreboard = async () => {
     const res = await GetScoreboard();
-    sbdata.value = res?.data;
+
+    if (res) {
+        sbdata.value = res.data;
+    }
 }
 
 const fetchMatch = async () => {
     const res = await GetAllMatch();
-    
-    res?.data.forEach((match : any) => {
+
+    if (res) {
+        res.data.forEach((match : any) => {
         if (!match.result)
             matchdata.value.push(match);
         else
             scoredata.value.push(match);
-    });
+        });
+    }
 }
 
 const getNextMatch = () => {
     match.value = matchdata.value.shift();
-    if (match.value?.awayteam == "Thép Xanh Nam Định") {
-        match.value.awayteam = match.value.hometeam;
-        match.value.awayteamlg = match.value.hometeamlg;
-    } else {
-        match.value.hometeam = match.value.awayteam;
-        match.value.hometeamlg = match.value.awayteamlg;
+    if (match.value) {
+        if (match.value.awayteam == "Thép Xanh Nam Định") {
+            match.value.awayteam = match.value.hometeam;
+            match.value.awayteamlg = match.value.hometeamlg;
+        } else {
+            match.value.hometeam = match.value.awayteam;
+            match.value.hometeamlg = match.value.awayteamlg;
+        }
     }
 }
 
@@ -90,35 +97,36 @@ onMounted(async () => {
 </script>
 
 <template>
-    <section class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center" style="background-color: #f8f9fa;">
-        <div id="schedule_bg" class="container-fluid justify-content-start align-items-end p-0">
+    <main class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center" style="background-color: #f8f9fa;">
+        <section id="schedule_bg" class="container-fluid justify-content-start align-items-end p-0">
             <div class="container-fluid m-0 px-md-5 px-3 position-absolute" style="bottom: 20px;">
                 <div id="schedule_title" class="container pb-3 p-0">
                     <h1>TRẬN ĐẤU TIẾP THEO</h1>
                 </div>
 
-                <div id="next_match" v-if="match" class="container-fluid px-md-5 pb-3 p-0">
+                <div id="next_match" v-if="match" class="container-fluid px-3 px-md-0 pb-3 p-0">
                     <div class="row m-0">
-                        <div class="col-6 p-0 py-4 px-5 d-flex flex-column justify-content-center align-items-start">
+                        <div class="col-6 p-0 py-4 d-flex flex-column justify-content-center align-items-start">
                             <p class="m-0 text-truncate">{{ match.time }}</p>
                             <p class="m-0 text-truncate">{{ match.stadium }}</p>
                         </div>
 
-                        <div class="col-6 p-0 px-5 d-flex justify-content-end align-items-center">
+                        <div class="col-6 p-0 d-flex justify-content-end align-items-center">
                             <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                            <img id="league_logo" :src="match.leaguelg">
+                            <img id="league_logo" :src="match.leaguelg.link">
                         </div>
                     </div>
 
                     <div class="row m-0">
-                        <div id="schedule_col1" class="container-fluid p-0 pb-3 d-flex flex-column justify-content-center align-items-center">
-                            <img id="team_logo" :src="match.awayteamlg">
-                            <h1 class="py-3 m-0 text-truncate">{{ match.awayteam }}</h1>
+                        <div id="schedule_col1" class="container-fluid p-0 pb-3 d-flex flex-column flex-md-row justify-content-center align-items-center">
+                            <img id="team_logo" :src="match.awayteamlg.link">
+                            <h1 class="py-3 px-md-3 m-0 text-truncate">{{ match.awayteam }}</h1>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
         <div id="schedule_menu" class="container-fluid mb-3 p-0 d-flex align-items-center">
             <ul class="p-0 m-0 d-flex">
                     <li v-on:click="showContent('a')">Lịch thi đấu</li>
@@ -127,8 +135,8 @@ onMounted(async () => {
             </ul>
         </div>
 
-        <div ref="schedule" id="schedule_content" class="container-fluid pt-3 justify-content-center align-items-center">
-            <div class="container-fluid p-0" v-for="month in months">
+        <section ref="schedule" id="schedule_content" class="container-fluid pt-3 justify-content-center align-items-center">
+            <div class="container-fluid p-0" v-if="scoredata.length != 0" v-for="month in months">
                 <div class="container-fluid p-0" v-if="matchdata.filter(x=> x.time.slice(9, 11) == month).length != 0">
                     <div class="container-fluid my-4 mx-2 p-0">
                         <h1 id="month" class="text-center text-md-start">Tháng {{ month }}</h1>
@@ -142,14 +150,14 @@ onMounted(async () => {
 
                             <div class="col-6 p-0  px-3 px-md-0 d-flex justify-content-end align-items-center">
                                 <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                                <img id="league_logo" :src="match.leaguelg">
+                                <img id="league_logo" :src="match.leaguelg.link">
                             </div>
                         </div>
 
                         <div class="row m-0">
                             <div id="schedule_col1" class="col-md-5 p-0 pb-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
                                 <h1 class="px-md-3 m-0 text-truncate w-100 text-md-end">{{ match.hometeam }}</h1>
-                                <img id="team_logo" :src="match.hometeamlg">
+                                <img id="team_logo" :src="match.hometeamlg.link">
                             </div>
 
                             <div class="col-md-2 p-0 d-none d-md-flex justify-content-center align-items-center">
@@ -157,23 +165,26 @@ onMounted(async () => {
                             </div>
 
                             <div id="schedule_col2" class="col-md-5 p-0 pb-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
-                                <img id="team_logo" :src="match.awayteamlg">
+                                <img id="team_logo" :src="match.awayteamlg.link">
                                 <h1 class="px-md-3 m-0 text-truncate w-100">{{ match.awayteam }}</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div ref="result" id="result_content" class="container-fluid pt-3 justify-content-center align-items-center">
-            <div class="container-fluid p-0" v-for="month in months">
+            <div v-else class="container-fluid p-0 d-flex justify-content-center align-items-center" style="font-family: 'Barlow', sans-serif; height: 400px;">
+                <h2>Không có dữ liệu!</h2>
+            </div>
+        </section>
+
+        <section ref="result" id="result_content" class="container-fluid pt-3 justify-content-center align-items-center">
+            <div class="container-fluid p-0" v-if="scoredata.length != 0" v-for="month in months">
                 <div class="container-fluid p-0" v-if="scoredata.filter(x=> x.time.slice(9, 11) == month).length != 0">
                     <div class="container-fluid my-4 mx-2 p-0">
                         <h1 id="month" class="text-center text-md-start">Tháng {{ month }}</h1>
                     </div>
                     <div id="result_card" ref="matches" v-for="match in scoredata.filter(x => x.time.slice(9,11) == month)" :key="match._id" class="container-fluid px-md-5 m-0 mb-4 p-0">
-                        <RouterLink :to="`/Schedule/${ match._id }`" class="text-decoration-none">
                             <div class="row m-0 py-3">
                                 <div class="col-6 p-0 px-3 px-md-0 d-flex flex-column justify-content-center align-items-start">
                                     <p class="m-0 text-truncate">{{ match.time }}</p>
@@ -182,33 +193,43 @@ onMounted(async () => {
 
                                 <div class="col-6 p-0  px-3 px-md-0 d-flex justify-content-end align-items-center">
                                     <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                                    <img id="league_logo" :src="match.leaguelg">
+                                    <img id="league_logo" :src="match.leaguelg.link">
                                 </div>
                             </div>
 
                             <div class="row m-0">
-                                <div id="schedule_col1" class="col-4 p-0 pb-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
+                                <div id="schedule_col1" class="col-4 p-0 pb-md-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
                                     <h1 class="px-md-3 my-3 m-0 w-100 text-md-end text-center text-truncate">{{ match.hometeam }}</h1>
-                                    <img id="team_logo" :src="match.hometeamlg">
+                                    <img id="team_logo" :src="match.hometeamlg.link">
                                 </div>
 
                                 <div class="col-4 p-0 d-flex justify-content-center align-items-center">
                                     <h2 class="px-md-4 py-md-2 px-3 py-1">{{ match.result }}</h2>
                                 </div>
 
-                                <div id="schedule_col2" class="col-4 p-0 pb-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
-                                    <img id="team_logo" :src="match.awayteamlg">
+                                <div id="schedule_col2" class="col-4 p-0 pb-md-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
+                                    <img id="team_logo" :src="match.awayteamlg.link">
                                     <h1 class="px-md-3 my-3 m-0 w-100 text-md-start text-center text-truncate">{{ match.awayteam }}</h1>
                                 </div>
                             </div>
-                        </RouterLink>
+
+                            <div id="schedule_option" class="row pb-3 d-flex justify-content-center align-items-center">
+                                <RouterLink :to="`/Schedule/${ match._id }`" class="text-decoration-none d-flex justify-content-center align-items-center" style="width: max-content;">
+                                    <i class="bi bi-play-btn p-0 px-2"></i>
+                                    <h5 class="m-0">Highlight</h5>
+                                </RouterLink>
+                            </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div ref="scoreboard" id="scoreboard" class="container-fluid m-0 mt-3">
-            <table class="table">
+            <div v-else class="container-fluid p-0 d-flex justify-content-center align-items-center" style="font-family: 'Barlow', sans-serif; height: 400px;">
+                <h2>Không có dữ liệu!</h2>
+            </div>
+        </section>
+
+        <section ref="scoreboard" id="scoreboard" class="container-fluid m-0 mt-3">
+            <table v-if="sbdata" class="table">
                 <tbody>
                     <tr>
                         <th><img src="/pictures/Logo V.League 1.png" class="w-100" style="max-width: 80px; min-width: 40px;"/></th>
@@ -232,15 +253,19 @@ onMounted(async () => {
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </section>
+
+            <div v-else class="container-fluid p-0 d-flex justify-content-center align-items-center" style="font-family: 'Barlow', sans-serif; height: 400px;">
+                <h2>Không có dữ liệu!</h2>
+            </div>
+        </section>
+    </main>
 </template>
 
 <style scoped>
     #schedule_bg {
         height: 600px;
         position: relative;
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('../pictures/SVĐ\ Thiên\ Trường.jpg');
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('/pictures/SVĐ\ Thiên\ Trường.jpg');
         background-size: cover;
         background-position: center;
 
@@ -293,9 +318,9 @@ onMounted(async () => {
 
     #schedule_content, #result_content {
         max-width: 2000px;
+        font-family: 'Barlow', sans-serif;
 
-        #month {
-            font-family: 'Barlow', sans-serif;
+        #month {           
             font-weight: 700;
             color: rgb(0, 133, 205);
         }
@@ -304,7 +329,6 @@ onMounted(async () => {
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.6s ease;
-            font-family: 'Barlow', sans-serif;
             background-color: white;
             border-radius: 20px;
 
@@ -336,6 +360,20 @@ onMounted(async () => {
             #team_logo {
                 max-height: 80px;
                 width: auto;
+            }
+
+            #schedule_option {
+                i {
+                    color: #012970;
+                    width: max-content;
+                }
+
+                h5 {
+                    color: #012970;
+                    font-weight: 600;
+                    font-size: 18px;
+                    width: max-content;
+                }
             }
         }
 
@@ -373,6 +411,7 @@ onMounted(async () => {
 
     #scoreboard {
         max-width: 1500px;
+        overflow-x: scroll;
 
         th {
             font-family: 'Barlow', sans-serif;
@@ -425,8 +464,5 @@ onMounted(async () => {
             justify-content: start !important;
         }
 
-        #scoreboard td:nth-child(n+4):nth-child(-n+7), th:nth-child(n+4):nth-child(-n+7){
-            display: none !important;
-        }
     }
 </style>

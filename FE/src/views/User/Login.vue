@@ -4,21 +4,28 @@
     import { Login } from '@/utils/AuthUtils';
     import { toast } from 'vue3-toastify';
 
-    const email = ref<HTMLElement | null>(null);
-    const password = ref<HTMLElement | null>(null);
+    const email = ref();
+    const password = ref();
 
     const handleLogin = async () => {
         if (!email.value || !password.value) {
             toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
                 position: toast.POSITION.TOP_CENTER,    
             })
+            return;
         }
-        else {
-            const res = await Login(email.value, password.value);
-            if (res) {
-                toast.success("Đăng nhập thành công!", {
-                    position: toast.POSITION.TOP_CENTER,
-                })
+        
+        const res = await Login(email.value, password.value);
+
+        if (res) {
+            toast.success("Đăng nhập thành công!", {
+                position: toast.POSITION.TOP_CENTER,
+            })
+
+            if (res.data.role === "admin") {
+                router.push('/Admin')
+            } else {
+                router.push('/')
             }
         }
     }
@@ -32,7 +39,7 @@
 
         <!--Đăng nhập-->
         <div class="col-md-6 col-12 h-100 m-0 p-0 d-flex justify-content-center align-items-center">
-            <form ref="login" id="login_form" class="container w-75 py-md-5 py-4" @submit.prevent="handleLogin">
+            <form id="login_form" class="container w-75 py-md-5 py-4" @submit.prevent="handleLogin">
                 <div class="container-fluid py-3 d-flex justify-content-center align-items-center">
                     <img src="/pictures/logo.png">
                     <h2 class="px-3">Đăng nhập</h2>
@@ -46,7 +53,7 @@
                     <input v-model="password" class="form-control" type="password" placeholder="Password...">
                 </div>
                 <div class="container-fluid p-0 d-flex justify-content-center">
-                    <RouterLink to="/ForgetPassword" style="width: max-content;">
+                    <RouterLink to="/ForgetPasswordEmail" style="width: max-content;">
                         <p class="text-center">Quên mật khẩu?</p>
                     </RouterLink>
                 </div>
@@ -63,7 +70,7 @@
 
 <style scoped>
 #auth_background {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(../pictures/SVĐ\ Thiên\ Trường.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(/pictures/SVĐ\ Thiên\ Trường.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

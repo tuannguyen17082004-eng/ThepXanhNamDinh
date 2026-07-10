@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema({
-    link: {type: String, require: true},
-    poster: {type: String, require: true},
+    video: {
+        link: { type: String, require: true},
+        id: { type: String, require: true }
+    },
+    poster: {
+        link: { type: String, require: true},
+        id: { type: String, require: true }
+    },
     title: {type: String, require: true},
     time: {type: Date, default: Date.now}
 });

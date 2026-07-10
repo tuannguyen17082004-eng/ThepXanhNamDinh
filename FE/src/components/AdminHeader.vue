@@ -2,6 +2,7 @@
     import { ref, onMounted } from 'vue';
     import { GetUserInformation } from '@/utils/UserUtils';
     import { type User } from '@/models/user';
+    import router from '@/router';
 
     const a = ref<User>();
     let status = true;
@@ -16,14 +17,14 @@
             sidebar.style.width = "0";
             sidebar.style.minWidth = "0";
             content.style.marginLeft = "0";
-            status = false;
         }
         else {
             sidebar.style.width = "260px";
             sidebar.style.minWidth = "260px";
             content.style.marginLeft = "260px";
-            status = true;
         }
+
+        status = !status;
     }
     
 
@@ -47,11 +48,11 @@
             <h3 class="m-0 ms-2 d-none d-sm-block">THÉP XANH NAM ĐỊNH</h3>
         </div>
         
-        <div class="container d-flex align-items-center justify-content-end m-0 p-0" style="width: max-content;">
+        <div class="container d-flex align-items-center justify-content-end m-0 me-3 p-0" style="width: max-content;">
             <i class="bi bi-bell"></i>
             <i class="bi bi-list" v-on:click="handleSidebar"></i>
-            <div class="container p-0" style="height: 40px; overflow: hidden; aspect-ratio: 1 / 1;">
-                <img :src="a?.avatar" class="h-100 w-100 object-fit-cover" style="border-radius: 50%;">
+            <div class="container p-0" style="height: 40px; overflow: hidden; aspect-ratio: 1 / 1; cursor: pointer;" v-on:click="() => router.push('/Profile')">
+                <img :src="a?.avatar.link" class="h-100 w-100 object-fit-cover" style="border-radius: 50%;">
             </div>
         </div>
     </header>

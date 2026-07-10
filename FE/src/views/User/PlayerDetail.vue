@@ -10,7 +10,10 @@ const id = route.params.id;
 
 const getPlayerByID = async (id : any) => {
     const res = await GetPlayerByID(id);
-    player.value = res?.data;
+
+    if (res) {
+        player.value = res.data;
+    }   
 }
 
 onMounted(async () => {
@@ -31,30 +34,48 @@ onMounted(async () => {
             </div>
         </section>
 
-        <section id="pd_content" v-if="player" class="container-fluid p-0 d-flex flex-column">
-            <div class="container-fluid py-3 d-flex flex-wrap justify-content-center">
-                <h2 class="mx-3">Ngày sinh: <span>{{ player.birth }}</span></h2>
-                <h2 class="mx-3">Nơi sinh: <span>{{ player.bio.placeBirth }}</span> <img :src="player.nationality" class="mx-1" style="height: 35px;"></h2>
-                <h2 class="mx-3">Chiều cao: <span>{{ player.bio.height }}m</span></h2>
+        <section class="container-fluid p-0" style="background-color: rgb(0, 133, 205);">
+            <div id="pd-btn" class="container-fluid py-3 px-4 d-flex justify-content-start align-items-center">
+                <RouterLink to="/Squad" class="text-decoration-none d-flex align-items-center">
+                    <i class="bi bi-arrow-left p-0 px-2"></i>
+                    <button class="btn btn-lg p-0 text-white">Quay lại</button>
+                </RouterLink>
             </div>
 
-            <div class="container-fluid p-5 d-flex flex-column justify-content-center align-items-center" style="max-width: 2000px;">
-                <div class="container-fluid d-flex flex-md-row flex-column-reverse p-0">
-                    <div class="container-fluid p-0 d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="w-100">Thông tin cầu thủ:</h3>
-                        <p>{{ player.bio.information }}</p>
-                            <RouterLink to="/Squad" class="text-decoration-none" style="width: max-content;">
-                                <button class="btn btn-lg px-4">Quay lại</button>
-                            </RouterLink>
+            <div id="pd_content" v-if="player" class="container-fluid p-0 pt-3 d-flex flex-column">
+                <div class="container-fluid py-3 d-flex flex-wrap justify-content-center" style="max-width: max-content; column-gap: 40px; row-gap: 10px;">
+                    <div id="info" class="container-fluid p-0">
+                        <h2 class="m-0 p-0">Ngày sinh:</h2>
+                        <p class="m-0 mb-2">{{ player.birth }}</p>
                     </div>
-                    <div class="container-fluid p-0 d-flex justify-content-center align-items-center">
-                        <img :src="player.img" class="w-50" style="mask-image: linear-gradient(to top, transparent, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)); min-width: 250px;">
+                    <div id="info" class="container-fluid p-0">
+                        <h2 class="m-0 p-0">Nơi sinh:</h2>
+                        <p class="m-0 mb-2">{{ player.bio.placeBirth }}<img class="ms-2" :src="player.nationality" style="height: 25px;" alt="Nationality"></p>
+                    </div>
+                    <div id="info" class="container-fluid p-0">
+                        <h2 class="m-0 p-0">Chiều cao:</h2>
+                        <p class="m-0 mb-2">{{ player.bio.height }}m</p>
                     </div>
                 </div>
 
+                <div class="container-fluid p-5 pt-3 d-flex flex-column justify-content-center align-items-center" style="max-width: 2000px;">
+                    <div class="container-fluid d-flex flex-md-row flex-column-reverse p-0">
+                        <div class="container-fluid p-0 d-flex flex-column justify-content-center align-items-center">
+                            <h3 class="w-100">Thông tin cầu thủ:</h3>
+                            <p>{{ player.bio.information }}</p>
+                        </div>
+                        <div class="container-fluid p-0 d-flex justify-content-center align-items-center">
+                            <img :src="player.img" class="w-50" style="mask-image: linear-gradient(to top, transparent, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)); min-width: 250px;">
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
+        <section id="advertisement" class="container-fluid py-3 px-3 d-flex justify-content-center align-items-center" style="gap: 20px; flex-wrap: wrap;">
+                <img src="/pictures/Ocany advertisement.webp" alt="Quảng cáo Ocany" class="w-100" style="max-width: 250px;">
+                <img src="/pictures/Jogarbola advertisement.jpg" alt="Quảng cáo Jogarbola" class="w-100" style="max-width: 250px;">
+        </section>
     </main>
 </template>
 
@@ -64,7 +85,6 @@ onMounted(async () => {
     overflow: hidden;
     font-family: 'Barlow', sans-serif;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
-    border-bottom: 10px solid rgb(0, 133, 205);
 
     img {
         z-index: -1;
@@ -74,7 +94,7 @@ onMounted(async () => {
     h1 {
         font-family: 'Be Vietnam Pro';
         color: white;
-        font-size: clamp(50px, 20vw, 100px);
+        font-size: clamp(50px, 20vw, 80px);
         font-weight: 700;
     }
 
@@ -91,35 +111,48 @@ onMounted(async () => {
     }
 }
 
+#pd-btn {
+    button {
+        font-family: 'Barlow', sans-serif;
+        font-weight: 600;
+    }
+
+    i {
+        color: #012970;
+        font-size: 20px;
+        -webkit-text-stroke: 1px;
+    }
+}
+
 #pd_content {
     font-family: 'Barlow', sans-serif;
     color: white;
+    background-color: white;
+    border-radius: 40px 40px 0 0;
 
-    h2 {
-        color: rgb(0, 133, 205);
+    #info {
+        width: 250px;
         border-bottom: 1px solid rgb(0, 133, 205);
-        width: 100%;
-        padding: 10px;
-        min-width: 200px;
-        max-width: 450px;
-        font-size: clamp(20px, 3vw, 25px);
-        font-weight: 700;
-    }
 
-    span {
-        font-weight: 500;
+        h2 {
+            color: #012970;
+            width: 100%;
+            padding: 10px;
+            font-size: clamp(15px, 3vw, 20px);
+            font-weight: 700;
+        }
     }
 
     h3 {
-        color: black;
-        font-weight: 600;
+        color: #012970;
+        font-weight: 700;
     }
 
     p {
         color: black;
         white-space: pre-line;
         font-weight: 500;
-        font-size: clamp(15px, 3vw, 20px);
+        font-size: clamp(18px, 3vw, 20px);
     }
 
     button {

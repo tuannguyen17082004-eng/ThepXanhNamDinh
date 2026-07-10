@@ -4,14 +4,21 @@
     import { ChangePassword } from '@/utils/AuthUtils';
     import { toast } from 'vue3-toastify';
 
-    const currentPassword = ref<HTMLElement | null>(null);
-    const newPassword = ref<HTMLElement | null>(null);
-    const confirmPassword = ref<HTMLElement | null>(null);
+    const currentPassword = ref();
+    const newPassword = ref();
+    const confirmPassword = ref();
 
     const handleChangePassword = async () => {
         if (!currentPassword.value || !newPassword.value || !confirmPassword.value) {
              toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
-                position: toast.POSITION.TOP_CENTER,    
+                position: toast.POSITION.TOP_CENTER,
+            })
+            return;
+        }
+
+        if (currentPassword.value === newPassword.value) {
+            toast.error("Mật khẩu mới không được trùng với mật khẩu hiện tại!", {
+                position: toast.POSITION.TOP_CENTER,
             })
             return;
         }
@@ -26,16 +33,17 @@
         const res = await ChangePassword(currentPassword.value, newPassword.value);
 
         if (res) {
-            toast.error("Đổi mật khẩu thành công!", {
+            toast.success(res.data, {
                 position: toast.POSITION.TOP_CENTER,
             })
+            router.push("/Profile");
         }
     }
 
 </script>
 
 <template>
-    <main id="main_background" class="container-fluid p-0 d-flex justify-content-center align-items-center">
+    <main id="main_background" class="container-fluid p-0 px-4 d-flex justify-content-center align-items-center">
         <form ref="changePassword" id="change_password_form" class="container-fluid py-md-5 py-4" @submit.prevent="handleChangePassword">
             <div class="container-fluid p-0 py-2 d-flex flex-column justify-content-center align-items-center">
                 <h3>Thay đổi mật khẩu</h3>
@@ -68,7 +76,7 @@
 <style scoped>
 #main_background {
     height: 100dvh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../pictures/SVĐ\ Thiên\ Trường.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/pictures/SVĐ\ Thiên\ Trường.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 

@@ -10,16 +10,19 @@ const time = null, title = null;
 
 const moreVideos = async () => {
     page++;
-    await fetchVideo(page, limit, time, title);
+    await fetchVideo();
 }
 
-const fetchVideo = async (page : any, limit : any, time : any, title : any) => {
+const fetchVideo = async () => {
     const res = await GetAllVideos(page, limit, time, title);
-    videolist.value.push(...res?.data);
-}
+
+    if (res) {
+        videolist.value.push(...res.data);
+    }
+}   
 
 onMounted(async () => {
-    await fetchVideo(page, limit, time, title);
+    await fetchVideo();
 });
 
 </script>
@@ -42,13 +45,12 @@ onMounted(async () => {
                 <div id="video_card" v-for="video in videolist" :key="video._id" class="card" style="max-width: 400px;">
                     <RouterLink :to="`/Video/${video._id}`" class="text-decoration-none text-white">
                         <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
-                            <img class="w-100" :src="video.poster">
+                            <img class="w-100" :src="video.poster.link">
                         </div>
                         <div class="card-body p-0" style="overflow: hidden; height: 130px;">
                             <h4 class="m-0 px-2 pt-3 p-0">{{ video.title }}</h4>
-                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center"><img
-                                    src="/pictures/watch-bg-black.png"
-                                    style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center">
+                                <span class="bi bi-clock pe-1"></span>
                                 {{ video.time }}</p>
                         </div>
                     </RouterLink>

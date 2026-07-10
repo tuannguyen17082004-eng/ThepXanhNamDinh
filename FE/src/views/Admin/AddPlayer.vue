@@ -4,19 +4,19 @@ import { toast } from 'vue3-toastify';
 import { AddPlayer } from '@/utils/PlayerUtils';
 import router from '@/router';
 
-const firstname = ref(null);
-const lastname = ref(null);
-const number = ref(null);
-const position = ref(null);
-const height = ref(null);
-const dateofbirth = ref(null);
-const placeofbirth = ref(null);
-const bio = ref(null);
-const selfie_url = ref(null);
+const firstname = ref();
+const lastname = ref();
+const number = ref();
+const position = ref();
+const height = ref();
+const dateofbirth = ref();
+const placeofbirth = ref();
+const bio = ref();
+const selfie_url = ref();
 const selfie_file = ref();
-const nationality_url = ref(null);
+const nationality_url = ref();
 const nationality_file = ref();
-const background_url = ref(null);
+const background_url = ref();
 const background_file = ref();
 let selfie_png = ref();
 let nationality_png = ref();
@@ -26,6 +26,7 @@ const handleSelfie = (e : any) => {
     const file = e.target.files[0];
     if (!file) {
         selfie_png.value = null;
+        selfie_file.value = null;
         return;
     }
 
@@ -37,6 +38,7 @@ const handleNationality = (e : any) => {
     const file = e.target.files[0];
     if (!file) {
         nationality_png.value = null;
+        nationality_file.value = null;
         return;
     }
 
@@ -48,6 +50,7 @@ const handleBackground = (e : any) => {
     const file = e.target.files[0];
     if (!file) {
         background_png.value = null;
+        background_file.value = null;
         return;
     }
 
@@ -73,28 +76,29 @@ const handleAdd = async() => {
     const res = await AddPlayer(selfie_file.value, nationality_file.value, background_file.value, firstname.value + " " + lastname.value, firstname.value, lastname.value, number.value, nationality_url.value, dateofbirth.value, selfie_url.value, position.value, background_url.value, placeofbirth.value, height.value, bio.value);
 
     if (res) {
-        toast.success("Thêm thành công!", {
+        toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         })
         router.push("/Admin/Players")
     }
-    else {
-        toast.error("Có lỗi xảy ra!", {
-            position: toast.POSITION.TOP_CENTER,
-        })
-    }
-
 }
 
 </script>
 
 <template>
     <main class="container-fluid p-3" style="margin-top: 70px;">
-        <div id="title" class="container-fluid p-3">
-            <h5>Thêm cầu thủ</h5>
+        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+            <div id="title_player" class="container-fluid p-0 pe-5 m-0">
+                <h5 class="m-0">Thêm cầu thủ</h5>
+                <p class="m-0 pt-1">Nhập đầy đủ thông tin cần thiết</p>
+            </div>
+
+            <RouterLink to="/Admin/Players" class="container-fluid p-0" style="width: max-content;">
+              <button class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay lại</button>
+            </RouterLink>
         </div>
 
-        <form id="add_form" class="container-fluid p-3" @submit.prevent="handleAdd">
+        <form id="add_form" class="container-fluid p-3 mt-4" @submit.prevent="handleAdd">
             <div class="row w-100 m-0 p-0 d-flex">
                 <div class="col-sm-6 p-3">
                     <h3>Họ:</h3>
@@ -142,32 +146,32 @@ const handleAdd = async() => {
             </div>
 
             <div class="row w-100 m-0 p-3 d-flex">
-                <h3>Thông tin:</h3>
+                <h3 class="p-0">Thông tin:</h3>
                 <textarea v-model="bio" class="form-control" placeholder="bio..."></textarea>
             </div>
 
             <div class="row w-100 m-0 p-3 d-flex">
                 <div class="col-md-6 p-3">
                     <h3 class="w-100">Ảnh (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img :src="selfie_png" id="selfie_png" width="200" class="my-2"> 
+                    <img v-if="selfie_png" :src="selfie_png" id="selfie_png" width="200" class="my-2"> 
                     <input type="file" class="form-control mb-3" @change="handleSelfie">
-                    <input v-model="selfie_url" type="text" class="form-control" placeholder="Nhập URL...">
+                    <input v-model="selfie_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
 
                 <div class="col-md-6 p-3">
                     <h3 class="w-100">Quốc tịch (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img :src="nationality_png" id="nationality_png" width="200" class="my-2"> 
+                    <img v-if="nationality_png" :src="nationality_png" id="nationality_png" width="200" class="my-2"> 
                     <input type="file" class="form-control mb-3" @change="handleNationality">
-                    <input v-model="nationality_url" type="text" class="form-control" placeholder="Nhập URL...">
+                    <input v-model="nationality_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
             </div>
 
             <div class="row w-100 m-0 p-3 d-flex justify-content-center">
                 <div class="col-md-6 p-3">
                     <h3 class="w-100">Ảnh bìa (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img :src="background_png" id="background_png" width="200" class="my-2"> 
+                    <img v-if="background_png" :src="background_png" id="background_png" width="200" class="my-2"> 
                     <input type="file" class="form-control mb-3" @change="handleBackground">
-                    <input v-model="background_url" type="text" class="form-control" placeholder="Nhập URL...">
+                    <input v-model="background_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
             </div>
 
@@ -180,13 +184,31 @@ const handleAdd = async() => {
 </template>
 
 <style scoped>
-#title {
+#title_player {
+    font-family: 'Barlow', sans-serif;
+
     h5 {
-        font-family: 'Barlow', sans-serif;
-        font-weight: 600;
+        font-weight: 700;
         font-size: clamp(20px, 2vw, 25px);
         color: #012970;
     }
+
+    p {
+        font-weight: 500;
+        color: #899bbd;
+    }
+}
+
+button {
+  width: 100px;
+  color: #012970;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: rgb(0, 133, 205);
+  color: white;
 }
 
 #add_form {
@@ -199,8 +221,8 @@ const handleAdd = async() => {
         margin-right: 10px;
         display: flex;
         align-items: center;
-        font-size: clamp(15px, 3vw, 20px);
-        font-weight: 500;
+        font-size: clamp(15px, 3vw, 18px);
+        font-weight: 600;
     }
 
     #add_btn {

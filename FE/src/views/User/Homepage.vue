@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted} from 'vue';
+import { toast } from 'vue3-toastify';
+
 import { type News } from '@/models/news';
 import { type Video } from '@/models/video';
 import { type Scoreboard } from '@/models/scoreboard';
@@ -9,6 +11,7 @@ import { GetAllVideos } from '@/utils/VideoUtils';
 import { GetAllNews } from '@/utils/NewUtils';
 import { GetScoreboard } from '@/utils/ScoreboardUtils';
 import { GetAllMatch } from '@/utils/MatchUtils';
+import { isLogin } from '@/middlewares/isLogined';
 
 const matchdata = ref<Match[]>([]);
 const scoreboard = ref<Scoreboard[]>([]);
@@ -18,48 +21,66 @@ const newslist = ref<News[]>([]);
 let firstnew = ref<News>();
 let nextmatch = ref<Match>();
 let lastmatch = ref<Match>();
+let Login = ref(false);
 const page = 1;
 const limit = 5;
 const limitvid = 4;
 const title = null, type = null, author = null, time = null;
 
-const fetchVideo = async (page : number, limit : number, time : string | null, title : string | null) => {
-    const res = await GetAllVideos(page, limit, time, title);
-    videolist.value = res?.data;
+const checkLogin = async() => {
+    Login.value = await isLogin();
 }
 
-const fetchNews = async (page : number, limit : number, type : string | null, title : string | null, author : string | null, time : string | null) => {
+const fetchVideo = async () => {
+    const res = await GetAllVideos(page, limitvid, time, title);
+
+    if (res) {
+        videolist.value = res.data;
+    }
+}
+
+const fetchNews = async () => {
     const res = await GetAllNews(page, limit, type, title, author, time);
-    newslist.value = res?.data;
-    firstnew.value = newslist.value.shift();
-    phonelist.value = newslist.value.slice(0, 4);
+
+    if (res) {
+        newslist.value = res.data;
+        firstnew.value = newslist.value.shift();
+        phonelist.value = newslist.value.slice(0, 4);
+    }
 }
 
 const fetchScoreboard = async () => {
     const res = await GetScoreboard();
-    scoreboard.value = res?.data;
-    const root = scoreboard.value.findIndex(team => team.team == "Thép Xanh Nam Định");
-    scoreboard.value = scoreboard.value.slice(root - 1, root + 2);
+
+    if (res) {
+        scoreboard.value = res.data;
+        const root = scoreboard.value.findIndex(team => team.img == "https://vpf.vn/wp-content/uploads/2018/10/Logo-TXND-3-sao-150x150.png");
+        scoreboard.value = scoreboard.value.slice(root - 1, root + 2);
+    }
+
 }
 
 const fetchMatch = async () => {
     const res = await GetAllMatch();
-    
-    res?.data.forEach((match: Match) => {
-        if (match.result == "")
-        matchdata.value.push(match);
+    if (res) {
+        res.data.forEach((match: Match) => {
+            if (match.result == "")
+                matchdata.value.push(match);
         
-        else lastmatch.value = match;
-    });
-    matchdata.value = matchdata.value.slice(0, 3);
-    nextmatch.value = matchdata.value[0];
+            else lastmatch.value = match;
+        });
+        matchdata.value = matchdata.value.slice(0, 3);
+        nextmatch.value = matchdata.value[0];
+    }
+    
 }
 
 onMounted(async () => {
-    await fetchVideo(page, limitvid, time, title);
-    await fetchNews(page, limit, type, title, author, time);
+    await fetchVideo();
+    await fetchNews();
     await fetchScoreboard();
     await fetchMatch();
+    await checkLogin();
 });
 
 </script>
@@ -69,7 +90,7 @@ onMounted(async () => {
 
         <!--Tin tức-->
         <section id="background" class="container-fluid m-0 p-0 d-flex flex-column align-items-center justify-content-end">
-            <img class="position-absolute" :src="firstnew?.img ? firstnew?.img : ''"
+            <img class="position-absolute" :src="firstnew?.img.link ? firstnew?.img.link : ''"
                 style="width: 100vw; height: 107vh; top: 0; left: 0; object-fit: cover; object-position: center; z-index: -1;">
             <div id="filter" class="container-fluid m-0 p-0 position-absolute w-100">
                 <div class="container-fluid m-0 p-0 position-absolute" style="bottom: 0;">
@@ -97,35 +118,43 @@ onMounted(async () => {
                 class="container m-0 p-2 d-flex flex-row justify-content-center align-items-center">
                 <div id="previous_match" v-if="lastmatch"
                     class="container h-100 p-0 pt-2 m-0 d-flex flex-column justify-content-center align-items-center">
-                    <img :src="lastmatch.leaguelg" style="width: auto; height: 30px;">
+                    <img :src="lastmatch.leaguelg.link" style="width: auto; height: 30px;">
                     <p class="m-0 p-0 pt-2">{{ lastmatch.time }}</p>
                     <p>{{ lastmatch.stadium }}</p>
                     <div class="container m-0 p-2">
                         <div class="row m-0 p-0 w-100">
-                            <div class="col-sm-3 p-0 m-0"> <img :src="lastmatch.hometeamlg"></div>
+                            <div class="col-sm-3 p-0 m-0"> <img :src="lastmatch.hometeamlg.link"></div>
                             <div class="col-sm-6 p-0 m-0 d-flex flex-row justify-content-center align-items-center">
                                 <h1 class="text-center p-0 m-0">{{ lastmatch.result }}</h1>
                             </div>
-                            <div class="col-sm-3 p-0 m-0"><img :src="lastmatch.awayteamlg"></div>
+                            <div class="col-sm-3 p-0 m-0"><img :src="lastmatch.awayteamlg.link"></div>
                         </div>
                     </div>
+                </div>
+
+                <div v-else id="previous_match" class="container m-0 p-2 d-flex justify-content-center align-items-center h-100">
+                    <h5>Không có dữ liệu!</h5>
                 </div>
 
                 <!--Trận tiếp theo-->
                 <div id="next_match" v-if="nextmatch"
                     class="container h-100 p-0 pt-2 m-0 ms-2 d-flex flex-column justify-content-center align-items-center">
-                    <img :src="nextmatch.leaguelg" style="width: auto; height: 30px;">
+                    <img :src="nextmatch.leaguelg.link" style="width: auto; height: 30px;">
                     <p class="m-0 p-0 pt-2">{{ nextmatch.time }}</p>
                     <p>{{ nextmatch.stadium }}</p>
                     <div class="container m-0 p-2 d-flex flex-row justify-content-between align-items-center">
                         <div class="row m-0 p-0 w-100">
-                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.awayteamlg"></div>
+                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.awayteamlg.link"></div>
                             <div class="col-sm-6 m-0 p-0 d-flex flex-row justify-content-center align-items-center">
                                 <h2 class="text-center p-0 m-0">19:00</h2>
                             </div>
-                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.hometeamlg"></div>
+                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.hometeamlg.link"></div>
                         </div>
                     </div>
+                </div>
+
+                <div id="next_match" class="container m-0 ms-2 p-2 d-flex justify-content-center align-items-center h-100">
+                    <h5>Không có dữ liệu!</h5>
                 </div>
 
                 <!--Bảng xếp hạng-->
@@ -173,7 +202,7 @@ onMounted(async () => {
                                 <RouterLink v-if="newslist[0]" :to="`/News/${newslist[0]._id}`" class="text-decoration-none p-0">
                                 <div id="top_right" class="container-fluid p-0 w-100 h-100 d-flex justify-content-center"
                                     style="aspect-ratio: 1 / 1;">
-                                    <img class="p-0 object-fit-cover w-100 h-100" :src="newslist[0].img">
+                                    <img class="p-0 object-fit-cover w-100 h-100" :src="newslist[0].img.link">
                                     <div id="filter_new" class="container-fluid p-0 w-100 h-100 position-absolute">
                                         <div class="container-fluid m-0 py-2 position-absolute" style="bottom: 0;">
                                             <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
@@ -190,7 +219,7 @@ onMounted(async () => {
                             <RouterLink v-if="newslist[1]" :to="`/News/${newslist[1]._id}`" class="text-decoration-none p-0">
                             <div id="bottom_left" class="container-fluid p-0 w-100 h-100 d-flex justify-content-center"
                                 style="aspect-ratio: 1 / 1;">
-                                <img id="pic_2" class="p-0 object-fit-cover w-100 h-100" :src="newslist[1].img">
+                                <img id="pic_2" class="p-0 object-fit-cover w-100 h-100" :src="newslist[1].img.link">
                                 <div id="filter_new" class="container-fluid p-0 w-100 h-100">
                                     <div class="container-fluid m-0 py-2 position-absolute" style="bottom: 0;">
                                         <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
@@ -207,7 +236,7 @@ onMounted(async () => {
                     <div class="row m-0 p-0 ps-3 pt-3 w-100">
                         <RouterLink v-if="newslist[2]" :to="`/News/${newslist[2]._id}`" class="text-decoration-none p-0">
                         <div id="top_1" class="container-fluid p-0 w-100 d-flex justify-content-center" style="aspect-ratio: 1 / 1;">
-                            <img id="pic_1" class="p-0 object-fit-cover w-100 h-100" :src="newslist[2].img">
+                            <img id="pic_1" class="p-0 object-fit-cover w-100 h-100" :src="newslist[2].img.link">
                             <div id="filter_new" class="container-fluid m-0 p-0 w-100 h-100">
                                 <div class="container-fluid py-2 position-absolute" style="bottom: 0;">
                                     <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
@@ -221,7 +250,7 @@ onMounted(async () => {
                     <div class="row m-0 p-0 ps-3 pt-3 w-100">
                         <RouterLink v-if="newslist[3]" :to="`/News/${newslist[3]._id}`" class="text-decoration-none p-0">
                         <div id="bottom_right" class="container-fluid p-0 w-100 d-flex justify-content-center">
-                            <img class="p-0 object-fit-cover w-100 h-100" :src="newslist[3].img">
+                            <img class="p-0 object-fit-cover w-100 h-100" :src="newslist[3].img.link">
                             <div id="filter_new" class="container-fluid m-0 p-0 w-100 h-100">
                                 <div class="container-fluid py-2 position-absolute" style="bottom: 0;">
                                     <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
@@ -249,7 +278,7 @@ onMounted(async () => {
                 <div id="new_card" v-for="news in phonelist" :key="news._id" class="card">
                     <RouterLink :to="`/News/${news._id}`" class="text-decoration-none">
                         <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
-                            <img class="w-100" :src="news.img">
+                            <img class="w-100" :src="news.img.link">
                         </div>
                         <div id="new_card_body" class="card-body m-1 p-1 d-flex flex-column"
                             style="justify-content: space-between; height: 110px;">
@@ -271,7 +300,7 @@ onMounted(async () => {
 
 
         <!--Banner-->
-        <section id="banner" class="container-fluid m-0 p-0 w-100 d-none d-md-flex justify-content-center align-items-center">
+        <section id="banner" v-if="!Login" class="container-fluid m-0 p-0 w-100 d-none d-md-flex justify-content-center align-items-center">
             <div class="container" style="width: 70%; aspect-ratio: 16 / 9;">
                 <div class="container-fluid">
                     <img class="w-100" src="/pictures/Đăng ký thành viên.png" alt="Đăng ký thành viên">
@@ -302,7 +331,7 @@ onMounted(async () => {
                                     <p class="m-0 p-0 text-truncate">{{ match.stadium }}</p>
                                 </div>
                                 <div class="col-2 p-0 ps-3 d-flex align-items-center justify-content-center">
-                                    <img id="league" :src="match.leaguelg">
+                                    <img id="league" :src="match.leaguelg.link">
                                 </div>
                             </div>
                             <div class="row m-0 p-0 px-1 pb-3 w-100">
@@ -310,7 +339,7 @@ onMounted(async () => {
                                     <h1 class="m-0 p-0 text-truncate">{{ match.awayteam }}</h1>
                                 </div>
                                 <div class="col-2 p-0 pe-3 d-flex justify-content-center">
-                                    <img id="team" :src="match.awayteamlg">
+                                    <img id="team" :src="match.awayteamlg.link">
                                 </div>
                             </div>
                             <div class="row m-0 p-0 px-1 pb-4 w-100">
@@ -318,7 +347,7 @@ onMounted(async () => {
                                     <h1 class="m-0 p-0 text-truncate">{{ match.hometeam }}</h1>
                                 </div>
                                 <div class="col-2 p-0 pe-3 d-flex justify-content-center">
-                                    <img id="team" :src="match.hometeamlg">
+                                    <img id="team" :src="match.hometeamlg.link">
                                 </div>
                             </div>
                         </div>
@@ -358,14 +387,13 @@ onMounted(async () => {
                         <div id="video_card" v-for="video in videolist" :key="video._id" class="card">
                             <RouterLink :to="`/Video/${video._id}`" class="text-decoration-none text-white">
                                 <div class="card-img-top p-0" style=" aspect-ratio: 16 / 9; overflow: hidden;">
-                                    <img class="w-100" :src=video.poster></img>
+                                    <img class="w-100" :src=video.poster.link></img>
                                 </div>
                                 <div class="card-body m-1 p-1 d-flex flex-column"
                                     style="height: 120px; justify-content: space-between;">
                                     <h4 class="pt-2">{{ video.title }}</h4>
                                     <p class="p-0 m-0 d-flex align-items-center">
-                                        <img src="/pictures/watch-bg-black.png"
-                                            style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                                        <span class="bi bi-clock pe-1"></span>
                                         {{ video.time }}
                                     </p>
                                 </div>
@@ -397,7 +425,7 @@ onMounted(async () => {
                         </div>
                 </RouterLink>
 
-                <RouterLink to="/Introduction" id="history" class="w-100 text-decoration-none text-white d-flex justify-content-end align-items-end">
+                <RouterLink to="/History" id="history" class="w-100 text-decoration-none text-white d-flex justify-content-end align-items-end">
                         <div class="container-fluid px-4">
                             <h1 class="w-100">Lịch sử</h1>
                             <p class="w-100">Khám phá hành trình và thành tựu của đội bóng</p>

@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import Vue3Toastify from 'vue3-toastify';
 import "vue3-toastify/dist/index.css";
 import App from './views/App.vue'
@@ -10,6 +11,11 @@ import '../public/styles/Homepage.css'
 import '../public/styles/Player.css'
 import '../public/styles/Root.css'
 
-const app = createApp(App).use(router).use(Vue3Toastify, {
+const app = createApp(App)
+
+app.use(router)
+app.use(Vue3Toastify, {
     autoClose: 3000,
-}).mount('#app')
+})
+app.use(createPinia())
+app.mount('#app')

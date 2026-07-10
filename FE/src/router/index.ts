@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { isAdmin } from '@/middlewares/isAdmin'
+
 import Homepage from '@/views/User/Homepage.vue'
 import Player from '@/views/User/Player.vue'
 import News from '@/views/User/News.vue'
@@ -9,20 +11,33 @@ import VideoDetail from '@/views/User/VideoDetail.vue'
 import Stadium from '@/views/User/Stadium.vue'
 import Honours from '@/views/User/Honours.vue'
 import NewsDetail from '@/views/User/NewsDetail.vue'
+import History from '@/views/User/History.vue'
+import Introduction from '@/views/User/Introduction.vue'
+import UpdateProfile from '@/views/User/UpdateProfile.vue'
 import NotFound from '@/views/User/NotFound.vue'
 import PlayerDetail from '@/views/User/PlayerDetail.vue'
 import Login from '@/views/User/Login.vue'
 import Register from '@/views/User/Register.vue'
+import ForgetPasswordEmail from '@/views/User/ForgetPasswordEmail.vue'
+import ResetPassword from '@/views/User/ResetPassword.vue'
 import Profile from '@/views/User/Profile.vue'
 import Admin from '@/views/Admin/Admin.vue'
+import MatchManagement from '@/views/Admin/MatchManagement.vue'
 import NewsManagement from '@/views/Admin/NewsManagement.vue'
 import PlayersManagement from '@/views/Admin/PlayersManagement.vue'
 import VideoManagement from '@/views/Admin/VideoManagement.vue'
+import UserManagement from '@/views/Admin/UserManagement.vue'
 import ChangePassword from '@/views/User/ChangePassword.vue'
 import AddPlayer from '@/views/Admin/AddPlayer.vue'
 import UpdatePlayer from '@/views/Admin/UpdatePlayer.vue'
 import AddNews from '@/views/Admin/AddNews.vue'
 import UpdateNews from '@/views/Admin/UpdateNews.vue'
+import AddVideo from '@/views/Admin/AddVideo.vue'
+import UpdateVideo from '@/views/Admin/UpdateVideo.vue'
+import UserDetail from '@/views/Admin/UserDetail.vue'
+import AddAdmin from '@/views/Admin/AddAdmin.vue'
+import AddMatch from '@/views/Admin/AddMatch.vue'
+import UpdateMatch from '@/views/Admin/UpdateMatch.vue'
 
 const routes = [{
   path: "/", 
@@ -41,14 +56,20 @@ const routes = [{
     {path: 'Honours', component: Honours},
     {path: 'Login', component: Login},
     {path: 'Register', component: Register},
+    {path: 'ForgetPasswordEmail', component: ForgetPasswordEmail},
+    {path: 'ResetPassword', component: ResetPassword},
     {path: 'ChangePassword', component: ChangePassword},
     {path: ':pathMatch(.*)*', component: NotFound},
     {path: 'Profile', component: Profile},
+    {path: 'Introduction', component: Introduction},
+    {path: 'History', component: History},
+    {path: 'UpdateProfile', component: UpdateProfile}
   ]
 },
 {
   path: '/Admin',
   component: () => import('@/views/Admin/AdminApp.vue'),
+  beforeEnter: isAdmin,
   children: [
     {path: '', component: Admin},
     {path: 'News', component: NewsManagement},
@@ -57,7 +78,15 @@ const routes = [{
     {path: 'Players/:id', component: UpdatePlayer},
     {path: 'Video', component: VideoManagement},
     {path: 'News/Add', component: AddNews},
-    {path: 'News/:id', component: UpdateNews}
+    {path: 'News/:id', component: UpdateNews},
+    {path: 'Video/Add', component: AddVideo},
+    {path: 'Video/:id', component: UpdateVideo},
+    {path: 'Users', component: UserManagement},
+    {path: 'Users/Add', component: AddAdmin},
+    {path: 'Users/:id', component: UserDetail},
+    {path: 'Match', component: MatchManagement},
+    {path: 'Match/Add', component: AddMatch},
+    {path: 'Match/:id', component: UpdateMatch}
   ]
 }]
 

@@ -1,6 +1,9 @@
 export interface News{
     _id: string;
-    img: string;
+    img: {
+        link: string;
+        id: string;
+    };
     title: string;
     type: string;
     time: string;

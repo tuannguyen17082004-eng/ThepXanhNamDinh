@@ -15,7 +15,7 @@
 section {
     min-height: 100vh;
     max-height: max-content;
-    background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9)), url('/pictures/SVĐ\ Thiên\ Trường\ 4.jpg');
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9)), url('/pictures/SVĐ\ Thiên\ Trường\ 2.jpg');
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: cover;

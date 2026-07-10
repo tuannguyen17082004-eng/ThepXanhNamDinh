@@ -14,7 +14,7 @@ const closeMenu = () => {
     <div ref="hamburger_menu" id="hamburger_menu" class="container-fluid m-0 p-0 w-100 h-100">
         <div id="ham_menu_row" class="row w-100 border-bottom p-0 m-0">
             <div class="col-5 d-flex justify-content-start align-items-center ps-3">
-                <img id="close_icon" src="/pictures/close.png" v-on:click="closeMenu()">
+                <i class="bi bi-x-lg text-white" v-on:click="closeMenu()"></i>
             </div>
             <div class="col-2 d-flex justify-content-center align-items-center">
                 <RouterLink to="/" v-on:click="closeMenu()">
@@ -59,10 +59,13 @@ const closeMenu = () => {
 
                     <div class="col-md-6 d-flex flex-column justify-content-start align-items-start mt-2">
                         <h3 class="w-100 border-bottom py-1 px-2">VỀ ĐỘI BÓNG</h3>
-                        <RouterLink to="/" class="text-decoration-none" v-on:click="closeMenu()">
-                            <h5 class="text-white py-3 px-2">Giới thiệu</h5>
+                        <RouterLink to="/Academy" class="text-decoration-none" v-on:click="closeMenu()">
+                            <h5 class="text-white py-3 px-2">Học viện</h5>
                         </RouterLink>
-                        <RouterLink to="/" class="text-decoration-none" v-on:click="closeMenu()">
+                        <RouterLink to="/Charter" class="text-decoration-none" v-on:click="closeMenu()">
+                            <h5 class="text-white py-3 px-2">Tôn chỉ CLB</h5>
+                        </RouterLink>
+                        <RouterLink to="/History" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Lịch sử</h5>
                         </RouterLink>
                         <RouterLink to="/Honours" class="text-decoration-none" v-on:click="closeMenu()">
@@ -129,9 +132,9 @@ const closeMenu = () => {
         height: 60px;
     }
 
-    #close_icon {
-        height: 20px;
-        width: 20px;
+    i {
+        font-size: 25px;
+        -webkit-text-stroke: 1px;
         cursor: pointer;
     }
 

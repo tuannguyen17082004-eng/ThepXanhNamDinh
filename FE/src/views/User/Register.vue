@@ -5,21 +5,21 @@
     import { toast } from 'vue3-toastify';
 
 
-    const name = ref<HTMLElement | null>(null);
-    const username = ref<HTMLElement | null>(null);
-    const email = ref<HTMLElement | null>(null);
-    const phone = ref<HTMLElement | null>(null);
-    const password = ref<HTMLElement | null>(null);
-    const confirmPassword = ref<HTMLElement | null>(null);
-    const avatar = ref<HTMLElement | null>(null);
+    const name = ref();
+    const gender = ref();
+    const email = ref();
+    const phone = ref();
+    const password = ref();
+    const confirmPassword = ref();
 
     const handleRegister = async () => {
-        if (!name.value || !username.value || !email.value || !phone.value || !password.value || !confirmPassword.value) {
+        if (!name.value || !gender.value || !email.value || !phone.value || !password.value || !confirmPassword.value) {
             toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
                 position: toast.POSITION.TOP_CENTER,
-        })
+            })
             return;
         }
+
         if (password.value !== confirmPassword.value) {
             toast.error("Mật khẩu không trùng khớp!", {
                 position: toast.POSITION.TOP_CENTER,
@@ -27,12 +27,12 @@
             return;
         }
         
-        const res = await Register(name.value, username.value, email.value, phone.value, password.value, avatar.value);
-        
+        const res = await Register(name.value, gender.value, email.value, phone.value, password.value);
         if (res) {
-            toast.success("Đăng ký thành công!", {
+            toast.success(res.data, {
                 position: toast.POSITION.TOP_CENTER,
             })
+            router.push('/Login');
         }
     }
 
@@ -59,8 +59,12 @@
                         <input v-model="name" class="form-control" type="text" placeholder="Họ tên...">
                     </div>
                     <div class="container-fluid py-3">
-                        <h5 class="pb-2">Tên đăng nhập*</h5>
-                        <input v-model="username" class="form-control" type="text" placeholder="Tên đăng nhập...">
+                        <h5 class="pb-2">Giới tính*</h5>
+                        <select v-model="gender" class="form-select">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                    </select>
                     </div>
                     <div class="container-fluid py-3">
                         <h5 class="pb-2">SĐT*</h5>
@@ -87,7 +91,7 @@
 
 <style scoped>
 #auth_background {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(../pictures/SVĐ\ Thiên\ Trường.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(/pictures/SVĐ\ Thiên\ Trường.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

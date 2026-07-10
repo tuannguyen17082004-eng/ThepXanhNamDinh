@@ -10,9 +10,9 @@ const bottom = ref<HTMLElement | null>()
 const handleScroll = () => {
     if (top.value && bottom.value) {
         if (window.scrollY > 200) {
-           top.value.style.display = ''
+            top.value.style.display = ''
             bottom.value.style.backgroundColor = "rgb(0, 133, 205)"
-           bottom.value.style.backgroundImage = "none"
+            bottom.value.style.backgroundImage = "none"
         }
         else {
             top.value.style.display = "none"
@@ -54,18 +54,18 @@ onUnmounted(() => {
         <!--Dòng trên-->
 
         <div ref="top" id="top" class="row m-0 p-0 justify-content-between align-items-center bg-white w-100">
-            <div class="col-8 d-flex flex-row m-0 p-0 justify-content-start ps-3 position-absolute top-left">
+            <div class="col-8 d-flex flex-row h-100 p-0 justify-content-start align-items-center ps-3">
                 <strong>THÉP XANH NAM ĐỊNH</strong>
             </div>
-            <div class="col-4 d-flex flex-row m-0 p-0 justify-content-end pe-3 position-absolute top-right">
+            <div class="col-4 d-flex flex-row h-100 m-0 p-0 justify-content-end align-items-center pe-3">
                 <ul class="nav">
                     <li class="nav-item pe-3">
                         <RouterLink to="/Search">
-                            <img class="icon" src="/pictures/Search icon.png" alt="Tìm kiếm"></img>
+                            <i class="bi bi-search"></i>
                         </RouterLink>
                     </li>
                     <li class="nav-item">
-                            <img class="icon" src="/pictures/Login icon.png" alt="Đăng nhập" v-on:click="LoginNav"></img>
+                            <i class="bi bi-person-circle" v-on:click="LoginNav"></i>
                     </li>
                 </ul>
             </div>
@@ -78,8 +78,7 @@ onUnmounted(() => {
             <div class="col-5 d-flex m-0 p-0 justify-content-start">
                 <ul class="nav d-flex flex-row m-0 p-0 justify-content-center align-items-center ps-3">
                     <li class="nav-item">
-                        <img class="icon" src="/pictures/Menu icon.png" alt="Menu"
-                            v-on:click="MenuComponent.showMenu()"></img>
+                        <i class="bi bi-list text-white" v-on:click="MenuComponent.showMenu()"></i>
 
                     </li>
                     <li id="hiddenchoice" class="nav-item ps-1">
@@ -124,23 +123,13 @@ header {
 }
 
 #top {
-    height: 40px;
+    height: 45px;
     overflow: hidden;
 }
 
 #bottom {
     height: 60px;
     transition: ease 0.3s;
-}
-
-.top-left {
-    top: 5px;
-    left: 0;
-}
-
-.top-right {
-    top: 5px;
-    right: 0;
 }
 
 strong {
@@ -151,13 +140,11 @@ strong {
     transition: ease 0.3s;
 }
 
-.icon {
-    width: 25px;
-    height: 25px;
-}
-
-.icon:hover {
+i {
+    color: #012970;
+    font-size: 25px;
     cursor: pointer;
+    -webkit-text-stroke: 1px;
 }
 
 #logo {

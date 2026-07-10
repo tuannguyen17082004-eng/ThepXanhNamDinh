@@ -1,19 +1,28 @@
 const mongoose = require('mongoose');
 
 const playerSchema = new mongoose.Schema({
-    fullname: {type: String, require: true},
-    firstname: {type: String, require: true},
-    lastname: {type: String, require: true},
-    number: {type: String},
-    nationality: {type: String, require: true},
-    birth: {type: Date},
-    img: {type: String, require: true},
+    fullname: { type: String, require: true },
+    firstname: { type: String, require: true },
+    lastname: { type: String, require: true },
+    number: { type: String },
+    nationality: {
+        link: { type: String, require: true },
+        id: { type: String, require: true }
+    },
+    birth: { type: Date },
+    img: {
+        link: { type: String, require: true },
+        id: {type: String, require: true }
+    },
     position: {type: String, require: true},
     bio: {
-        background: {type: String, require: true},
-        placeBirth: {type: String},
-        height: {type: Number},
-        information: {type: String}
+        background: {
+            link: { type: String, require: true },
+            id: { type: String, require: true }
+        },
+        placeBirth: { type: String },
+        height: { type: Number },
+        information: { type: String }
     }
 });
 

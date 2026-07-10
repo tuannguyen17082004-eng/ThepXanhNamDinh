@@ -12,13 +12,25 @@ const STplayers = ref<Player[]>([]);
 
 const fetchPlayers = async () => {
     let res = await GetAllPlayers('GK');
-    GKplayers.value = res?.data;
+
+    if (res) {
+        GKplayers.value = res.data;
+    }
+    
     res = await GetAllPlayers('DF');
-    DFplayers.value = res?.data;
+    if (res) {
+        DFplayers.value = res.data;
+    }
+    
     res = await GetAllPlayers('MF');
-    MFplayers.value = res?.data;
+    if (res) {
+        MFplayers.value = res.data;
+    }
+    
     res = await GetAllPlayers('ST');
-    STplayers.value = res?.data;
+    if (res) {
+        STplayers.value = res.data;
+    }
 }
 
 const showCard = () => {

@@ -19,7 +19,7 @@
                 </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <RouterLink to="/Admin/Schedule" class="text-decoration-none">
+                <RouterLink to="/Admin/Match" class="text-decoration-none">
                     <i class="bi bi-calendar3"><span class="px-2">Lịch trình</span></i>
                 </RouterLink>
             </li>
