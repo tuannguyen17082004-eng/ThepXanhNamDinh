@@ -41,7 +41,7 @@
 </script>
 
 <template>
-    <main class="container-fluid m-0" style="padding-top: 70px;">
+    <main class="container-fluid m-0" style="padding-top: 70px; height: 100dvh;">
         <section id="number_section" class="row w-100 p-0 m-0">
             <div class="row col-xl-6 p-0 m-0">
                 <div id="number_card" class="col-sm-6 pt-3">

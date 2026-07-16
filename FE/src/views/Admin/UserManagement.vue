@@ -74,8 +74,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh;">
-        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+    <main class="container-fluid m-0" style="padding-top: 70px; min-height: 100dvh;">
+        <div class="container-fluid px-3 py-4 mt-3 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_user" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Quản lý người dùng</h5>
                 <p class="m-0 pt-1">Quản lý thông tin người dùng trên hệ thống</p>

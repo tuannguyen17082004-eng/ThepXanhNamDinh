@@ -16,7 +16,6 @@
         <div id="honours_list" class="container-fluid m-0 p-0 py-5 d-flex justify-content-center">
             <div class="row w-100" style="max-width: 1200px;">
                 <div class="col-sm-6 ps-3">
-                    <h2>DANH HIỆU TẬP THỂ</h2>
                     <h4>V.League 1</h4>
                     <p>1985, 2023–24, 2024–25</p>
                     <h4>V.League 2</h4>
@@ -85,19 +84,18 @@
     font-family: "Barlow", sans-serif;
 
     h4 {
+        margin: 0;
+        margin-bottom: 5px;
         padding-left: 10px;
         color: rgb(0, 133, 205);
         font-weight: 700;
     }
 
-    h2 {
-        padding: 20px 0;
-        color: rgb(0, 133, 205);
-        font-weight: 700;
-    }
-
     p {
-        padding-left: 15px;
+        margin: 0;
+        margin-bottom: 25px;
+        padding-left: 10px;
+        font-weight: 600;
     }
 }
 

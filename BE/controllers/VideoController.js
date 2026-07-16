@@ -30,6 +30,31 @@ module.exports.GetVideoById = async (req, res) => {
     }
 }
 
+module.exports.SearchVideo = async (req, res) => {
+    try {
+        let { keyword, page, limit } = req.query;
+
+        keyword = keyword.trim();
+
+        if (!keyword) {
+            const video = await VideoModel.find().sort({ time: -1 }).skip((page - 1) * limit).limit(limit);
+            res.status(200).json(video);
+            return;
+        }
+
+        const video = await VideoModel.find({
+            $text: {
+                $search: keyword
+            }
+        }).sort({ time: -1 }).skip((page - 1) * limit).limit(limit);
+        res.status(200).json(video);
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Internal server error");
+    }
+}
+
 module.exports.CreateVideo = async (req, res) => {
     try {
         let { video_url, poster_url, title } = req.body;

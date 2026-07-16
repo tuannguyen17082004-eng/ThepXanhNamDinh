@@ -4,32 +4,32 @@
     <aside id="sidebar" class="sidebar m-0 w-100">
         <ul class="sidebar-nav p-0">
             <li class="nav-item mb-2">
-                <RouterLink to="/Admin" class="text-decoration-none">
+                <RouterLink to="/Admin" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                     <i class="bi bi-house"><span class="px-2">Trang chủ</span></i>
                 </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <RouterLink to="/Admin/News" class="text-decoration-none">
+                <RouterLink to="/Admin/News" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                     <i class="bi bi-newspaper"><span class="px-2">Tin tức</span></i>
                 </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <RouterLink to="/Admin/Video" class="text-decoration-none">
+                <RouterLink to="/Admin/Video" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                     <i class="bi bi-play-btn"><span class="px-2">Video</span></i>
                 </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <RouterLink to="/Admin/Match" class="text-decoration-none">
+                <RouterLink to="/Admin/Match" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                     <i class="bi bi-calendar3"><span class="px-2">Lịch trình</span></i>
                 </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <RouterLink to="/Admin/Players" class="text-decoration-none">
+                <RouterLink to="/Admin/Players" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                     <i class="bi bi-file-person"><span class="px-2">Cầu thủ</span></i>
                 </RouterLink>
             </li>
             <li class="nav-item my-2">
-                <RouterLink to="/Admin/Users" class="text-decoration-none">
+                <RouterLink to="/Admin/Users" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                     <i class="bi bi-person"><span class="px-2">Người dùng</span></i>
                 </RouterLink>
             </li>

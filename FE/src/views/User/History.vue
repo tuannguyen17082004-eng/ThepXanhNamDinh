@@ -9,7 +9,7 @@
             </div>
         </section>
 
-        <section id="history_content" class="container p-0 m-0 mt-4 px-4 d-flex flex-column align-items-center">
+        <section id="history_content" class="container-fluid p-0 m-0 mt-4 px-4 d-flex flex-column align-items-center">
             <p>Tiền thân của Câu lạc bộ bóng đá Nam Định là đội Cotonkin (đã 2 lần vô địch Đông Dương các năm 1943 và 1945). Năm 1943 là lần đầu có giải bóng đá Đông Dương.</p>
             
             <p>Năm 1965, câu lạc bộ chính thức được thành lập với tên gọi Thanh niên Nam Hà (thời gian này Nam Hà gồm tỉnh Hà Nam và Nam Định nhập lại), đến năm 1978 đổi tên thành Công nghiệp Hà Nam Ninh. Đây là tiền thân của đội Nam Định ngày nay. Năm 1981, đội lên hạng A1 (tiền thân của V.League hiện nay), hạng đấu cao nhất trong hệ thống thi đấu bóng đá Việt Nam thời gian này. Chỉ sau 4 năm, đội có lần đầu vô địch hang đấu A1 với lứa cầu thủ chất lượng như Nguyễn Văn Dũng, Đặng Gia Mẫn... cùng sự dẫn dắt của huấn luyện viên Lâm Ngọc Lập. Đây cũng là chức vô địch quốc gia đầu tiên của Câu lạc bộ.</p>
@@ -72,7 +72,6 @@
 }
 
 #history_content {
-    width: 100%;
     max-width: 800px;
     font-family: "Barlow", sans-serif;
 

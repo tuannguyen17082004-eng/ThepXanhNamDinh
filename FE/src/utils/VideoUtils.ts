@@ -33,6 +33,23 @@ export const GetVideoById = async(id : any) => {
     }
 }
 
+export const SearchVideo = async(keyword : any, page : any, limit : any) => {
+    try {
+        const res = await api.get('/videos/search-video', { params : { keyword, page, limit }});
+
+        res.data.forEach((video : any) => {
+            video.time = new Date(video.time).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })
+        });
+        return res;
+
+    } catch (err : any) {
+        console.error("Something's wrong:" + err.response.data);
+        toast.error(err.response.data, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+
 export const CreateVideo = async(linkFile : any, posterFile : any, video_url : any, poster_url : any, title : any) => {
     try {
         const formData = new FormData();

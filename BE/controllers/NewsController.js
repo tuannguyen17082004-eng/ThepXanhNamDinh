@@ -14,7 +14,7 @@ module.exports.GetAllNews = async (req, res) => {
         res.status(200).json(news);
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
         return res.status(500).send("Internal server error");
     }
 }
@@ -25,7 +25,32 @@ module.exports.GetNewsById = async (req, res) => {
         res.status(200).json(newsItem);
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
+        return res.status(500).send("Internal server error");
+    }
+}
+
+module.exports.SearchNews = async (req, res) => {
+    try {
+        let { keyword, page, limit } = req.query;
+
+        keyword = keyword.trim();
+
+        if (!keyword) {
+            const news = await NewModel.find().sort({time: -1}).skip((page - 1) * limit).limit(limit);
+            res.status(200).json(news);
+            return;
+        }
+
+        const news = await NewModel.find({
+            $text: {
+                $search: keyword
+            }
+        }).sort({time: -1}).skip((page - 1) * limit).limit(limit);
+        res.status(200).json(news);
+
+    } catch (err) {
+        console.log(err);
         return res.status(500).send("Internal server error");
     }
 }

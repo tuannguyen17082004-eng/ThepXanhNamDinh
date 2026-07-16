@@ -60,8 +60,7 @@ watch(id, async (newId) => {
                 <video class="p-0 m-0 w-100 h-100" :src="video?.video.link" controls></video>
             </div>
             <div id="video_detail_content" class="container-fluid m-0 px-md-5 px-4 pt-3 d-flex flex-column">
-                <p id="vid_time" class="d-flex align-items-center p-0"><img src="/pictures/watch-bg-black.png"
-                    style="background-color: transparent; width: 27px; height: 27px; margin-right: 3px;">
+                <p id="vid_time" class="d-flex align-items-center p-0"><span class="bi bi-clock pe-1"></span>
                     {{ video?.time }}</p>
                 <h1 id="vid_title" class="w-50 p-0">{{ video?.title }}</h1>
                 <div class="d-flex my-2 my-md-4 justify-content-center align-items-center">

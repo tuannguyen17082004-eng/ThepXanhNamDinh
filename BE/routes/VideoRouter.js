@@ -4,9 +4,10 @@ const VideoController = require('../controllers/VideoController');
 const isLogined = require('../middleware/isLogin');
 const isAdmined = require('../middleware/isAdmin');
 const upload = require('../config/multer_config');
-const { GetAllVideos, GetVideoById, CreateVideo, UpdateVideo, DeleteVideo } = VideoController;
+const { GetAllVideos, GetVideoById, SearchVideo, CreateVideo, UpdateVideo, DeleteVideo } = VideoController;
 
 router.get('/', GetAllVideos);
+router.get('/search-video', SearchVideo);
 router.get('/:id', isLogined, GetVideoById);
 router.post('/', isLogined, isAdmined, upload.fields([
     { name: "link", maxCount: 1 },

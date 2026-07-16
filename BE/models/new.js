@@ -12,6 +12,13 @@ const newSchema = new mongoose.Schema({
     author: {type: String, require: true},
 });
 
+newSchema.index({
+    type: 'text',
+    title: 'text',
+    author: 'text',
+    content: 'text'
+})
+
 const New = mongoose.model('New', newSchema);
 
 module.exports = New;

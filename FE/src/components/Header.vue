@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import router from '@/router';
-import MenuComponent from '../components/Menu.vue';
+import MenuComponent from '@/components/Menu.vue';
+import SearchComponent from '@/components/Search.vue';
 import { isLogin } from '@/middlewares/isLogined';
 
 const top = ref<HTMLElement | null>()
@@ -32,10 +33,19 @@ const LoginNav = async () => {
 }
 
 MenuComponent.showMenu = () => {
-    const hamburger_menu = document.getElementById("hamburger_menu")
+    const hamburger_menu = document.getElementById("hamburger_menu");
+
     if (!hamburger_menu) return
     hamburger_menu.style.opacity = "1";
     hamburger_menu.style.pointerEvents = "auto";
+}
+
+SearchComponent.showSearch = () => {
+    const search = document.getElementById("search_bg");
+    
+    if (!search) return;
+    search.style.opacity = '1';
+    search.style.pointerEvents = 'auto';
 }
 
 onMounted(() => {
@@ -60,9 +70,7 @@ onUnmounted(() => {
             <div class="col-4 d-flex flex-row h-100 m-0 p-0 justify-content-end align-items-center pe-3">
                 <ul class="nav">
                     <li class="nav-item pe-3">
-                        <RouterLink to="/Search">
-                            <i class="bi bi-search"></i>
-                        </RouterLink>
+                            <i class="bi bi-search" v-on:click="SearchComponent.showSearch()"></i>
                     </li>
                     <li class="nav-item">
                             <i class="bi bi-person-circle" v-on:click="LoginNav"></i>
@@ -115,6 +123,7 @@ onUnmounted(() => {
     </header>
 
     <MenuComponent />
+    <SearchComponent />
 </template>
 
 <style scoped>

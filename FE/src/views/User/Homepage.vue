@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted} from 'vue';
-import { toast } from 'vue3-toastify';
+import { ref, onMounted } from 'vue';
 
 import { type News } from '@/models/news';
 import { type Video } from '@/models/video';
@@ -64,7 +63,7 @@ const fetchMatch = async () => {
     const res = await GetAllMatch();
     if (res) {
         res.data.forEach((match: Match) => {
-            if (match.result == "")
+            if (!match.result)
                 matchdata.value.push(match);
         
             else lastmatch.value = match;
@@ -146,14 +145,14 @@ onMounted(async () => {
                         <div class="row m-0 p-0 w-100">
                             <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.awayteamlg.link"></div>
                             <div class="col-sm-6 m-0 p-0 d-flex flex-row justify-content-center align-items-center">
-                                <h2 class="text-center p-0 m-0">19:00</h2>
+                                <h2 class="text-center p-0 m-0">{{ nextmatch.time.split(" ")[0] }}</h2>
                             </div>
                             <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.hometeamlg.link"></div>
                         </div>
                     </div>
                 </div>
 
-                <div id="next_match" class="container m-0 ms-2 p-2 d-flex justify-content-center align-items-center h-100">
+                <div v-else id="next_match" class="container m-0 ms-2 p-2 d-flex justify-content-center align-items-center h-100">
                     <h5>Không có dữ liệu!</h5>
                 </div>
 
@@ -205,8 +204,7 @@ onMounted(async () => {
                                     <img class="p-0 object-fit-cover w-100 h-100" :src="newslist[0].img.link">
                                     <div id="filter_new" class="container-fluid p-0 w-100 h-100 position-absolute">
                                         <div class="container-fluid m-0 py-2 position-absolute" style="bottom: 0;">
-                                            <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
-                                                    style="background-color: transparent; width: 22px; height: 22px;">
+                                            <p class="mx-3 m-0 p-0 d-flex align-items-center"><span class="bi bi-clock pe-1"></span>
                                                 {{ newslist[0].time }}</p>
                                             <h1 class="mx-3 p-0 py-1 text-truncate">{{ newslist[0].title }}</h1>
                                         </div>
@@ -222,8 +220,7 @@ onMounted(async () => {
                                 <img id="pic_2" class="p-0 object-fit-cover w-100 h-100" :src="newslist[1].img.link">
                                 <div id="filter_new" class="container-fluid p-0 w-100 h-100">
                                     <div class="container-fluid m-0 py-2 position-absolute" style="bottom: 0;">
-                                        <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
-                                                style="background-color: transparent; width: 22px; height: 22px;"> {{ newslist[1].time }} </p>
+                                        <p class="mx-3 m-0 p-0 d-flex align-items-center"><span class="bi bi-clock pe-1"></span> {{ newslist[1].time }} </p>
                                         <h1 class="mx-3 p-0 py-2 text-truncate">{{ newslist[1].title }} </h1>
                                     </div>
                                 </div>
@@ -239,8 +236,7 @@ onMounted(async () => {
                             <img id="pic_1" class="p-0 object-fit-cover w-100 h-100" :src="newslist[2].img.link">
                             <div id="filter_new" class="container-fluid m-0 p-0 w-100 h-100">
                                 <div class="container-fluid py-2 position-absolute" style="bottom: 0;">
-                                    <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
-                                            style="background-color: transparent; width: 22px; height: 22px;"> {{ newslist[2].time }} </p>
+                                    <p class="mx-3 m-0 p-0 d-flex align-items-center"><span class="bi bi-clock pe-1"></span> {{ newslist[2].time }} </p>
                                     <h1 class="mx-3 p-0 py-2 text-truncate">{{ newslist[2].title }} </h1>
                                 </div>
                             </div>
@@ -253,8 +249,7 @@ onMounted(async () => {
                             <img class="p-0 object-fit-cover w-100 h-100" :src="newslist[3].img.link">
                             <div id="filter_new" class="container-fluid m-0 p-0 w-100 h-100">
                                 <div class="container-fluid py-2 position-absolute" style="bottom: 0;">
-                                    <p class="mx-3 m-0 p-0 d-flex align-items-center"><img src="/pictures/watch.png"
-                                        style="background-color: transparent; width: 22px; height: 22px;"> {{ newslist[3].time }}</p>
+                                    <p class="mx-3 m-0 p-0 d-flex align-items-center"><span class="bi bi-clock pe-1"></span> {{ newslist[3].time }}</p>
                                     <h1 class="mx-3 p-0 py-2 text-truncate">{{ newslist[3].title }} </h1>
                                 </div>
                             </div>
@@ -283,8 +278,7 @@ onMounted(async () => {
                         <div id="new_card_body" class="card-body m-1 p-1 d-flex flex-column"
                             style="justify-content: space-between; height: 110px;">
                             <h4 class="pt-2">{{ news.title }}</h4>
-                            <p class="m-0 p-0 d-flex align-items-center"><img src="/pictures/watch-bg-black.png"
-                                style="background-color: transparent; width: 22px; height: 22px; margin-right: 3px;">
+                            <p class="m-0 p-0 d-flex align-items-center"><span class="bi bi-clock pe-1"></span>
                                 {{ news.time }}</p>
                         </div>
                     </RouterLink>
@@ -317,13 +311,13 @@ onMounted(async () => {
 
         <!--Lịch trình-->
         <section id="schedule_background" class="container-fluid mb-3 p-0 d-md-none d-flex flex-column">
-            <div class="row my-2 px-5 pt-3 pb-0 w-100">
+            <div class="row m-0 my-2 px-5 pt-3 pb-0 w-100">
                 <div class="col-md-12 p-0 d-flex justify-content-center align-items-center">
                     <h1 class="w-100 text-center">LỊCH TRÌNH</h1>
                 </div>
             </div>
             <div class="container-fluid p-0 d-flex">
-                <div id="schedule_list" class="container-fluid mx-2 d-flex flex-column">
+                <div id="schedule_list" v-if="matchdata.length > 0" class="container-fluid mx-2 d-flex flex-column">
                         <div id="schedule_card" v-for="match in matchdata" :key="match._id" class="container-fluid p-0 my-2 d-flex flex-column">
                             <div class="row m-0 p-4 w-100">
                                 <div class="col-10 p-0 text-start">

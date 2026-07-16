@@ -38,6 +38,7 @@ import UserDetail from '@/views/Admin/UserDetail.vue'
 import AddAdmin from '@/views/Admin/AddAdmin.vue'
 import AddMatch from '@/views/Admin/AddMatch.vue'
 import UpdateMatch from '@/views/Admin/UpdateMatch.vue'
+import TicketPrice from '@/views/User/TicketPrice.vue'
 
 const routes = [{
   path: "/", 
@@ -63,7 +64,8 @@ const routes = [{
     {path: 'Profile', component: Profile},
     {path: 'Introduction', component: Introduction},
     {path: 'History', component: History},
-    {path: 'UpdateProfile', component: UpdateProfile}
+    {path: 'UpdateProfile', component: UpdateProfile},
+    {path: 'TicketDetail', component: TicketPrice}
   ]
 },
 {

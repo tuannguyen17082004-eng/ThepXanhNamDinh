@@ -11,20 +11,23 @@ const closeMenu = () => {
 </script>
 
 <template>
-    <div ref="hamburger_menu" id="hamburger_menu" class="container-fluid m-0 p-0 w-100 h-100">
+    <div ref="hamburger_menu" id="hamburger_menu" class="container-fluid p-0 h-100">
         <div id="ham_menu_row" class="row w-100 border-bottom p-0 m-0">
             <div class="col-5 d-flex justify-content-start align-items-center ps-3">
                 <i class="bi bi-x-lg text-white" v-on:click="closeMenu()"></i>
             </div>
+
             <div class="col-2 d-flex justify-content-center align-items-center">
                 <RouterLink to="/" v-on:click="closeMenu()">
                     <img id="logo" src="/pictures/logo.png" alt="Logo Thép Xanh Nam Định FC"></img>
                 </RouterLink>
             </div>
+
             <div class="col-5 d-flex flex-row justify-content-end align-items-center">
                 <img id="sponsor" src="/pictures/Tập đoàn Xuân Thiện.png" alt="Tập đoàn Xuân Thiện"></img>
             </div>
         </div>
+
         <div id="ham_bottom_row" class="row w-100 px-5 m-0 mt-5">
             <div class="col-lg-4 d-flex flex-column justify-content-start align-items-start mb-5" style="z-index: 999;">
                 <RouterLink id="ham_menu_mainmenu" class="text-decoration-none" to="/News" v-on:click="closeMenu()">
@@ -52,7 +55,7 @@ const closeMenu = () => {
                         <a href="https://datve.clbnamdinh.vn/?fbclid=IwY2xjawQk8vBleHRuA2FlbQIxMABicmlkETFJSnY5TW9hY3lFNGJDVlR3c3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHiAciJVZaJJguu_9R9z9VL17unfyVnlUyIcd-jIhk7hKBH_Wv05b8ZVuPQkX_aem_hP1uyhrXHCtxxh3f8dzEjg" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Mua vé</h5>
                         </a>
-                        <RouterLink to="/TicketPrice" class="text-decoration-none" v-on:click="closeMenu()">
+                        <RouterLink to="/TicketDetail" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Thông tin giá vé</h5>
                         </RouterLink>
                     </div>
@@ -115,7 +118,6 @@ const closeMenu = () => {
 
 <style scoped>
 #hamburger_menu {
-    inset: 0;
     background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 133, 205, 0.7), rgba(0, 133, 205, 0.7)), url("../pictures/Trước\ trận\ đấu.jpg");
     background-position: center;
     background-size: cover;
@@ -134,7 +136,7 @@ const closeMenu = () => {
 
     i {
         font-size: 25px;
-        -webkit-text-stroke: 1px;
+        -webkit-text-stroke: 2px;
         cursor: pointer;
     }
 

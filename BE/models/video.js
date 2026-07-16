@@ -13,6 +13,10 @@ const videoSchema = new mongoose.Schema({
     time: {type: Date, default: Date.now}
 });
 
+videoSchema.index({
+    title: 'text'
+});
+
 const Video = mongoose.model('Video', videoSchema);
 
 module.exports = Video;
