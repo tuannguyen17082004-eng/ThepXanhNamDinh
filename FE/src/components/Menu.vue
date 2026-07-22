@@ -62,11 +62,14 @@ const closeMenu = () => {
 
                     <div class="col-md-6 d-flex flex-column justify-content-start align-items-start mt-2">
                         <h3 class="w-100 border-bottom py-1 px-2">VỀ ĐỘI BÓNG</h3>
-                        <RouterLink to="/Academy" class="text-decoration-none" v-on:click="closeMenu()">
-                            <h5 class="text-white py-3 px-2">Học viện</h5>
+                        <RouterLink to="/Introduction" class="text-decoration-none" v-on:click="closeMenu()">
+                            <h5 class="text-white py-3 px-2">Giới thiệu</h5>
                         </RouterLink>
                         <RouterLink to="/Charter" class="text-decoration-none" v-on:click="closeMenu()">
-                            <h5 class="text-white py-3 px-2">Tôn chỉ CLB</h5>
+                            <h5 class="text-white py-3 px-2">Bình đẳng, Đa dạng và Hòa nhập</h5>
+                        </RouterLink>
+                        <RouterLink to="/Careers" class="text-decoration-none" v-on:click="closeMenu()">
+                            <h5 class="text-white py-3 px-2">Nghề nghiệp</h5>
                         </RouterLink>
                         <RouterLink to="/History" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Lịch sử</h5>
@@ -106,7 +109,7 @@ const closeMenu = () => {
                         <RouterLink to="/" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Chính sách bảo mật</h5>
                         </RouterLink>
-                        <RouterLink to="/" class="text-decoration-none" v-on:click="closeMenu()">
+                        <RouterLink to="/ContactUs" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Liên hệ với chúng tôi</h5>
                         </RouterLink>
                     </div>

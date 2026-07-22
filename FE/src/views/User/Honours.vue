@@ -60,10 +60,11 @@
 #honours_background {
     height: 600px;
     overflow: hidden;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(../pictures/vô\ địch.jpg);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(/pictures/vô\ địch.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border-bottom: 10px rgb(0, 133, 205) solid;
 
     h1 {
         font-family: "Barlow", sans-serif;

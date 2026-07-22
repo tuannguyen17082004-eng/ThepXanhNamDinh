@@ -10,7 +10,7 @@ let news = ref<News[]>([]);
 let video = ref<Video[]>([]);
 let page1 = 1;
 let page2 = 1;
-let keyword = '';
+let keyword = ref("");
 const limit = 3;
 const search = ref<HTMLElement>();
 const i1 = ref<HTMLElement>();
@@ -19,14 +19,14 @@ const i3 = ref<HTMLElement>();
 const i4 = ref<HTMLElement>();
 
 const searchForNews = async(page : any) => {
-    const res = await SearchNews(page, limit, keyword);
+    const res = await SearchNews(page, limit, keyword.value);
 
     if (res)
         news.value = res.data;
 }
 
 const searchForVideo = async(page : any) => {
-    const res = await SearchVideo(keyword, page, limit);
+    const res = await SearchVideo(keyword.value, page, limit);
 
     if (res)
         video.value = res.data;
@@ -39,13 +39,18 @@ const handleSearchButton = async() => {
     await searchForVideo(page2);
 }
 
-const closeSearch = () => {
+const closeSearch = async() => {
     if (!search.value) return;
+    
     search.value.style.opacity = '0';
     search.value.style.pointerEvents = 'none';
+
+    keyword.value = "";
+    await searchForNews(page1 = 1);
+    await searchForVideo(page2 = 1);
 }
 
-onMounted( async() => {
+onMounted(async() => {
     await searchForNews(page1);
     await searchForVideo(page2);
 })

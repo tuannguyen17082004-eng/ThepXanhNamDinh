@@ -18,7 +18,7 @@ const columns = [
     render: (data : any) => `<p class="m-2">${data}</p>`
   },
   { 
-    data: 'nationality', 
+    data: 'nationality.link', 
     title: 'Quốc tịch', 
     className: 'text-center col-2 h-100 d-none d-sm-table-cell',
     render: (data : any) => `<img src="${data}" class="m-1" style="height: 35px; width: 55px;"/>`

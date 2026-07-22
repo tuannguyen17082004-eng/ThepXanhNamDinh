@@ -78,9 +78,9 @@ const FetchPlayerByID = async (id: any) => {
         dateofbirth.value = res.data.birth;
         placeofbirth.value = res.data.bio.placeBirth;
         bio.value = res.data.bio.information;
-        selfie_png.value = res.data.img;
-        nationality_png.value = res.data.nationality;
-        background_png.value = res.data.bio.background;
+        selfie_png.value = res.data.img.link;
+        nationality_png.value = res.data.nationality.link;
+        background_png.value = res.data.bio.background.link;
     }
 }
 
@@ -145,7 +145,7 @@ onMounted(async() => {
                 <p class="m-0 pt-1">Nhập đầy đủ thông tin cần thiết</p>
             </div>
 
-            <RouterLink to="/Admin/Video" class="container-fluid p-0" style="width: max-content;">
+            <RouterLink to="/Admin/Players" class="container-fluid p-0" style="width: max-content;">
               <button id="back_btn" class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay lại</button>
             </RouterLink>
         </div>

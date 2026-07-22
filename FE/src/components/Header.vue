@@ -42,6 +42,7 @@ MenuComponent.showMenu = () => {
 
 SearchComponent.showSearch = () => {
     const search = document.getElementById("search_bg");
+    search
     
     if (!search) return;
     search.style.opacity = '1';

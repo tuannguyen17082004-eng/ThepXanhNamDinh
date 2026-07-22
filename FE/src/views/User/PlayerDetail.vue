@@ -25,7 +25,7 @@ onMounted(async () => {
 <template>
     <main class="container-fluid p-0">
         <section id="pd_background" v-if="player" class="container-fluid p-0 d-flex justify-content-center">
-            <img :src="player.bio.background" class="w-100 object-fit-cover position-absolute">
+            <img :src="player.bio.background.link" class="w-100 object-fit-cover position-absolute">
 
             <div class="container px-5 py-3 d-flex flex-column justify-content-end" style="height: 90vh;">
                 <h2>{{ player.number }}</h2>
@@ -50,7 +50,7 @@ onMounted(async () => {
                     </div>
                     <div id="info" class="container-fluid p-0">
                         <h2 class="m-0 p-0">Nơi sinh:</h2>
-                        <p class="m-0 mb-2">{{ player.bio.placeBirth }}<img class="ms-2" :src="player.nationality" style="height: 25px;" alt="Nationality"></p>
+                        <p class="m-0 mb-2">{{ player.bio.placeBirth }}<img class="ms-2" :src="player.nationality.link" style="height: 25px;" alt="Nationality"></p>
                     </div>
                     <div id="info" class="container-fluid p-0">
                         <h2 class="m-0 p-0">Chiều cao:</h2>
@@ -65,7 +65,7 @@ onMounted(async () => {
                             <p>{{ player.bio.information }}</p>
                         </div>
                         <div class="container-fluid p-0 d-flex justify-content-center align-items-center">
-                            <img :src="player.img" class="w-50" style="mask-image: linear-gradient(to top, transparent, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)); min-width: 250px;">
+                            <img :src="player.img.link" class="w-50" style="mask-image: linear-gradient(to top, transparent, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)); min-width: 250px;">
                         </div>
                     </div>
                 </div>

@@ -50,7 +50,7 @@
 #history_title_bg {
     position: relative;
     height: 600px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(../pictures/Hình\ nền\ lịch\ sử.jpg);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(/pictures/Hình\ nền\ lịch\ sử.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

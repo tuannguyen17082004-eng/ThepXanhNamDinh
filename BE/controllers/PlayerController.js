@@ -48,34 +48,34 @@ module.exports.CreatePlayer = async (req, res) => {
 
         
         if (req.files["img"]) {
-            const result = await uploadImageFile(req.files.img[0].buffer, 'image');
+            const result = await uploadImageFile(req.files.img[0].buffer, 'player');
             imgLink = result.secure_url;
             imgId = result.public_id;
 
         } else if (img_url) {
-            const result = await cloudinary.uploader.upload(img_url, { folder: 'image' });
+            const result = await cloudinary.uploader.upload(img_url, { folder: 'player' });
             imgLink = result.secure_url;
             imgId = result.public_id;
         }
         
         if (req.files["nationality"]) {
-            const result = await uploadImageFile(req.files.nationality[0].buffer, 'image');
+            const result = await uploadImageFile(req.files.nationality[0].buffer, 'player');
             nationalityLink = result.secure_url;
             nationalityId = result.public_id;
 
         } else if (nationality_url) {
-            const result = await cloudinary.uploader.upload(nationality_url, { folder: 'image' });
+            const result = await cloudinary.uploader.upload(nationality_url, { folder: 'player' });
             nationalityLink = result.secure_url;
             nationalityId = result.public_id;
         }
         
         if (req.files["background"]) {
-            const result = await uploadImageFile(req.files.background[0].buffer, 'image');
+            const result = await uploadImageFile(req.files.background[0].buffer, 'player');
             backgroundLink = result.secure_url;
             backgroundId = result.public_id;
 
         } else if (background_url) {
-            const result = await cloudinary.uploader.upload(background_url, { folder: 'image'});
+            const result = await cloudinary.uploader.upload(background_url, { folder: 'player'});
             backgroundLink = result.secure_url;
             backgroundId = result.public_id;
         }
@@ -130,40 +130,52 @@ module.exports.UpdatePlayer = async (req, res) => {
         }
         
         if (req.files["img"]) {
-            await cloudinary.uploader.destroy(user.img.id);
-            const result = await uploadImageFile(req.files.img[0].buffer, 'image');
+            if (user.img.id)
+                await cloudinary.uploader.destroy(user.img.id);
+
+            const result = await uploadImageFile(req.files.img[0].buffer, 'player');
             imgLink = result.secure_url;
             imgId = result.public_id;
 
         } else if (img_url) {
-            await cloudinary.uploader.destroy(user.img.id);
-            const result = await cloudinary.uploader.upload(img_url, { folder: 'image'});
+            if (user.img.id)
+                await cloudinary.uploader.destroy(user.img.id);
+
+            const result = await cloudinary.uploader.upload(img_url, { folder: 'player'});
             imgLink = result.secure_url;
             imgId = result.public_id;
         }
         
         if (req.files["nationality"]) {
-            await cloudinary.uploader.destroy(user.nationality.id);
-            const result = await uploadImageFile(req.files.nationality[0].buffer, 'image');
+            if (user.nationality.id)
+                await cloudinary.uploader.destroy(user.nationality.id);
+
+            const result = await uploadImageFile(req.files.nationality[0].buffer, 'player');
             nationalityLink = result.secure_url;
             nationalityId = result.public_id;
 
         } else if (nationality_url) {
-            await cloudinary.uploader.destroy(user.nationality.id);
-            const result = await cloudinary.uploader.upload(nationality_url, { folder: 'image'});
+            if (user.nationality.id)
+                await cloudinary.uploader.destroy(user.nationality.id);
+
+            const result = await cloudinary.uploader.upload(nationality_url, { folder: 'player'});
             nationalityLink = result.secure_url;
             nationalityId = result.public_id;
         }
         
         if (req.files["background"]) {
-            await cloudinary.uploader.destroy(user.bio.background.id);
-            const result = await uploadImageFile(req.files.background[0].buffer, 'image');
+            if (user.bio.background.id)
+                await cloudinary.uploader.destroy(user.bio.background.id);
+
+            const result = await uploadImageFile(req.files.background[0].buffer, 'player');
             backgroundLink = result.secure_url;
             backgroundId = result.public_id;
 
         } else if (background_url) {
-            await cloudinary.uploader.destroy(user.bio.background.id);
-            const result = await cloudinary.uploader.upload(background_url, { folder: 'image'});
+            if (user.bio.background.id)
+                await cloudinary.uploader.destroy(user.bio.background.id);
+
+            const result = await cloudinary.uploader.upload(background_url, { folder: 'player'});
             backgroundLink = result.secure_url;
             backgroundId = result.public_id;
         }

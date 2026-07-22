@@ -10,8 +10,8 @@
             </div>
         </div>
 
-        <section id="stadium_content" class="container-fluid p-0 mt-3">
-            <div class="container-fluid p-0 px-md-5 px-4">
+        <section id="stadium_content" class="container-fluid p-0 mt-3 d-flex flex-column justify-content-center align-items-center">
+            <div class="container-fluid p-0 px-md-5 px-4" style="max-width: 800px;">
                 <p>Sân vận động Thiên Trường được khánh thành vào năm 2003, là niềm tự hào của người dân thành Nam và là sân nhà của Thép Xanh Nam Định. Nằm tại trung tâm thành phố Nam Định, sân được xây dựng nhằm phục vụ SEA Games 22, đồng thời tạo nên một công trình thể thao hiện đại, mang đậm bản sắc văn hóa Việt Nam. 
                     Từ một khu vực từng là sân Chùa Cuối cũ, Thiên Trường đã vươn mình trở thành một trong những sân vận động đẹp và giàu cảm xúc nhất Việt Nam, thường xuyên tổ chức các trận đấu quốc nội, quốc tế cũng như nhiều sự kiện thể thao lớn.</p>
                 <p>Với sức chứa khoảng 30.000 chỗ ngồi, sân Thiên Trường là một trong những sân vận động lớn và sôi động nhất Việt Nam.
@@ -19,7 +19,7 @@
                 Thiên Trường từng đăng cai các trận đấu tại SEA Games 2003, các trận của đội tuyển quốc gia và nhiều giải đấu quan trọng, khẳng định vị thế là một trong những sân đấu hàng đầu khu vực phía Bắc.</p>
             </div>
 
-            <div class="container-fluid p-0 mt-4 px-md-5 px-4 d-flex flex-column justify-content-center align-items-center">
+            <div class="container-fluid p-0 mt-4 px-md-5 px-4 d-flex flex-column justify-content-center align-items-center" style="max-width: 800px;">
                 <h3 class="w-100">MẶT SÂN VÀ CƠ SỞ HẠ TẦNG</h3>
                 <ul class="w-100">
                     <li>Kích thước: 115m x 72m (đạt tiêu chuẩn quốc tế)</li>
@@ -33,10 +33,10 @@
                     <li>Hệ thống chiếu sáng đạt chuẩn thi đấu ban đêm</li>
                 </ul>
 
-                <img class="container w-50 my-md-3" style="min-width: 250px;" src="/pictures/Sơ đồ svd.jpg">
+                <img class="container w-100 my-md-3" style="min-width: 250px;" src="/pictures/Sơ đồ svd.jpg">
             </div>
 
-            <div class="container-fluid p-0 px-md-5 px-4 mt-4 d-flex flex-column justify-content-center align-items-center">
+            <div class="container-fluid p-0 px-md-5 px-4 mt-4 d-flex flex-column justify-content-center align-items-center" style="max-width: 800px;">
                 <h3 class="w-100">KIẾN TRÚC VÀ THIẾT KẾ</h3>
                 <p class="w-100">Sân Thiên Trường được thiết kế với hình dáng cân đối, mang nét đặc trưng của kiến trúc Việt Nam:</p>
                 <ul class="w-100">
@@ -53,7 +53,7 @@
                     <img class="col-sm-4 p-0" src="/pictures/SVĐ Thiên Trường 6.jpg">
             </div>
 
-            <div class="container-fluid p-0 px-md-5 px-4 mt-4">
+            <div class="container-fluid p-0 px-md-5 px-4 mt-4" style="max-width: 800px;">
                 <h3>DI CHUYỂN TỚI SVĐ</h3>
                 <ul>
                     <li>Địa chỉ: Đường Đặng Xuân Thiều, phường Vị Hoàng, thành phố Nam Định, tỉnh Nam Định</li>
@@ -75,7 +75,7 @@
 #stadium_image_background {
     height: 100dvh;
     overflow: hidden;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url(../pictures/SVĐ\ Thiên\ Trường\ 5.jpg);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url(/pictures/SVĐ\ Thiên\ Trường\ 5.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

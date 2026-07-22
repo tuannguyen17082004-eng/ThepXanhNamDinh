@@ -4,12 +4,21 @@ export interface Player {
   firstname: string;
   lastname: string;
   number: string;
-  nationality: string;
+  nationality: {
+    id: string;
+    link: string;
+  };
   birth: string;
-  img: string;
+  img: {
+    id: string;
+    link: string;
+  };
   position: string;
   bio: {
-    background: string,
+    background: {
+      id: string;
+      link: string;
+    },
     placeBirth: string,
     height: number,
     information: string

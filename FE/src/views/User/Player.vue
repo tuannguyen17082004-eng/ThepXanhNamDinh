@@ -97,12 +97,12 @@ onMounted(async () => {
                 <RouterLink :to="`/Squad/${ player._id }`" class="text-decoration-none">
                 <h1 class="position-absolute w-100 text-center">{{ player.number }}</h1>
                 <div id="card_img" class="container w-100 px-5">
-                    <img class="card-img-top px-5 position-absolute" :src="player.img">
+                    <img class="card-img-top px-5 position-absolute" :src="player.img.link">
                 </div>
                 <div id="card_inf" class="card-body m-0 w-100">
                     <h3 class="card-title m-0 p-0">{{ player.firstname }}</h3>
                     <p class="card-text m-0 p-0 mt-1">{{ player.lastname }}</p>
-                    <img id="national" class="position-absolute" :src="player.nationality">
+                    <img id="national" class="position-absolute" :src="player.nationality.link">
                 </div>
                 </RouterLink>
             </div>
@@ -116,12 +116,12 @@ onMounted(async () => {
                 <RouterLink :to="`/Squad/${player._id}`" class="text-decoration-none">
                     <h1 class="position-absolute w-100 text-center">{{ player.number }}</h1>
                     <div id="card_img" class="container w-100 px-5">
-                        <img class="card-img-top px-5 position-absolute" :src="player.img">
+                        <img class="card-img-top px-5 position-absolute" :src="player.img.link">
                     </div>
                     <div id="card_inf" class="card-body m-0 w-100">
                         <h3 class="card-title m-0 p-0">{{ player.firstname }}</h3>
                         <p class="card-text m-0 p-0 mt-1">{{ player.lastname }}</p>
-                        <img id="national" class="position-absolute" :src="player.nationality">
+                        <img id="national" class="position-absolute" :src="player.nationality.link">
                     </div>
                 </RouterLink>
             </div>
@@ -135,12 +135,12 @@ onMounted(async () => {
                 <RouterLink :to="`/Squad/${player._id}`" class="text-decoration-none">
                     <h1 class="position-absolute w-100 text-center">{{ player.number }}</h1>
                     <div id="card_img" class="container w-100 px-5">
-                        <img class="card-img-top px-5 position-absolute" :src="player.img">
+                        <img class="card-img-top px-5 position-absolute" :src="player.img.link">
                     </div>
                     <div id="card_inf" class="card-body m-0 w-100">
                         <h3 class="card-title m-0 p-0">{{ player.firstname }}</h3>
                         <p class="card-text m-0 p-0 mt-1">{{ player.lastname }}</p>
-                        <img id="national" class="position-absolute" :src="player.nationality">
+                        <img id="national" class="position-absolute" :src="player.nationality.link">
                     </div>
                 </RouterLink>
             </div>
@@ -154,12 +154,12 @@ onMounted(async () => {
                 <RouterLink :to="`/Squad/${ player._id }`" class="text-decoration-none">
                     <h1 class="position-absolute w-100 text-center">{{ player.number }}</h1>
                     <div id="card_img" class="container w-100 px-5">
-                        <img class="card-img-top px-5 position-absolute" :src="player.img">
+                        <img class="card-img-top px-5 position-absolute" :src="player.img.link">
                     </div>
                     <div id="card_inf" class="card-body m-0 w-100">
                         <h3 class="card-title m-0 p-0">{{ player.firstname }}</h3>
                         <p class="card-text m-0 p-0 mt-1">{{ player.lastname }}</p>
-                        <img id="national" class="position-absolute" :src="player.nationality">
+                        <img id="national" class="position-absolute" :src="player.nationality.link">
                     </div>
                 </RouterLink>
             </div>
