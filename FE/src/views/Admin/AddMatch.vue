@@ -60,7 +60,7 @@ const handleAwayteamImg = (e : any) => {
 }
 
 const handleAdd = async() => {
-    if (!league.value || !date.value || !hour.value || !stadium.value || !hometeam.value || !awayteam.value || (!league_file.value && !league_url.value) || (!hometeam_file.value && !hometeam_url.value) || (!awayteam_file.value && !awayteam_url.value)) {
+    if (!league.value || !date.value || !hour.value || !stadium.value || !hometeam.value || !awayteam.value || (!hometeam_file.value && !hometeam_url.value) || (!awayteam_file.value && !awayteam_url.value)) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })

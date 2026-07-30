@@ -32,7 +32,9 @@ const FetchData = async() => {
     const res = await GetMatchDetail(id);
 
     if (res) {
-        league_png.value = res.data.leaguelg.link;
+        if (res.data.leaguelg)
+            league_png.value = res.data.leaguelg.link;
+        
         league.value = res.data.league;
         stadium.value = res.data.stadium;
         hometeam_png.value = res.data.hometeamlg.link;

@@ -34,13 +34,13 @@ onMounted( async () => {
         <section id="schedule_detail_bg" v-if="match" class="container-fluid p-0 d-flex align-items-end">
             <div class="container-fluid p-0 d-flex flex-column">
                 <div class="container-fluid p-0 d-flex flex-column justify-content-center align-items-center">
-                    <img class="mb-3" id="league_logo" :src="match.leaguelg" alt="league logo">
+                    <img v-if="match.leaguelg.link" class="mb-3" id="league_logo" :src="match.leaguelg.link" alt="league logo">
                     <h3 class="mb-1">{{ match.time }}</h3>
                     <h3 class="mb-3">{{ match.stadium }}</h3>
                 </div>
                 <div class="row w-100 py-4 m-0">
                     <div class="col-4 d-flex flex-column justify-content-end align-items-center">
-                        <img id="team_logo" :src="match.hometeamlg">
+                        <img id="team_logo" :src="match.hometeamlg.link">
                         <h2 class="d-none d-md-block">{{ match.hometeam }}</h2>
                     </div>
                     <div class="col-4 d-flex flex-column justify-content-center align-items-center">
@@ -48,7 +48,7 @@ onMounted( async () => {
                         <h1 class="px-md-4 py-md-2 px-3 py-1">{{ match.result }}</h1>
                     </div>
                     <div class="col-4 d-flex flex-column justify-content-end align-items-center">
-                        <img id="team_logo" :src="match.awayteamlg">
+                        <img id="team_logo" :src="match.awayteamlg.link">
                         <h2 class="d-none d-md-block">{{ match.awayteam }}</h2>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ onMounted( async () => {
 <style scoped>
 #schedule_detail_bg {
     border-bottom: 10px rgb(0, 133, 205) solid;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url("../pictures/Chi tiết trận đấu.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url("/pictures/Chi tiết trận đấu.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;

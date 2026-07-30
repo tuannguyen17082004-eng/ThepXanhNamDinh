@@ -136,7 +136,7 @@ onMounted(async () => {
         </div>
 
         <section ref="schedule" id="schedule_content" class="container-fluid pt-3 justify-content-center align-items-center">
-            <div class="container-fluid p-0" v-if="scoredata.length != 0" v-for="month in months">
+            <div class="container-fluid p-0" v-if="matchdata.length != 0" v-for="month in months">
                 <div class="container-fluid p-0" v-if="matchdata.filter(x=> x.time.slice(9, 11) == month).length != 0">
                     <div class="container-fluid my-4 mx-2 p-0">
                         <h1 id="month" class="text-center text-md-start">Tháng {{ month }}</h1>
@@ -150,7 +150,7 @@ onMounted(async () => {
 
                             <div class="col-6 p-0  px-3 px-md-0 d-flex justify-content-end align-items-center">
                                 <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                                <img id="league_logo" :src="match.leaguelg.link">
+                                <img v-if="match.leaguelg" id="league_logo" :src="match.leaguelg.link">
                             </div>
                         </div>
 
@@ -193,7 +193,7 @@ onMounted(async () => {
 
                                 <div class="col-6 p-0  px-3 px-md-0 d-flex justify-content-end align-items-center">
                                     <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                                    <img id="league_logo" :src="match.leaguelg.link">
+                                    <img v-if="match.leaguelg" id="league_logo" :src="match.leaguelg.link">
                                 </div>
                             </div>
 

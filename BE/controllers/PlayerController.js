@@ -118,12 +118,13 @@ module.exports.CreatePlayer = async (req, res) => {
 module.exports.UpdatePlayer = async (req, res) => {
     try {
         const user = await playerModel.findById(req.params.id);
+
         if (!user) {
             return res.status(400).send("Không tìm thấy thông tin cầu thủ!");
         }
 
         const { fullname, firstname, lastname, number, nationality_url, birth, img_url, position, background_url, placeBirth, height, information } = req.body;
-        let img = user.img.link, imgId = user.img.id, nationality = user.nationality.link, nationalityId = user.nationality.id, background = user.bio.background.link, backgroundId = user.bio.background.id;
+        let imgLink = user.img.link, imgId = user.img.id, nationalityLink = user.nationality.link, nationalityId = user.nationality.id, backgroundLink = user.bio.background.link, backgroundId = user.bio.background.id;
 
         if (!fullname || !firstname || !lastname || !number || !birth || !position || !placeBirth || !height || !information) {
             return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");

@@ -29,7 +29,7 @@ module.exports.createMatch = async (req, res) => {
         const { stadium, league, leaguelg_url, hometeam, hometeamlg_url, awayteam, awayteamlg_url, result, highlight, time } = req.body;
         let leaguelink, leagueId, hometeamlink, hometeamId, awayteamlink, awayteamId;
 
-        if (!stadium || !league || !hometeam || !awayteam || !time || (!req.files["leagueLogo"] && !leaguelg_url) || (!req.files["hometeamLogo"] && !hometeamlg_url) || (!req.files["awayteamLogo"] && !awayteamlg_url))
+        if (!stadium || !league || !hometeam || !awayteam || !time || (!req.files["hometeamLogo"] && !hometeamlg_url) || (!req.files["awayteamLogo"] && !awayteamlg_url))
             return res.status(400).send("Vui lòng điền đầy đủ thông tin!");
 
         if ((req.files["leagueLogo"] && leaguelg_url) || (req.files["hometeamLogo"] && hometeamlg_url) || (req.files["awayteamLogo"] && awayteamlg_url))
@@ -40,7 +40,7 @@ module.exports.createMatch = async (req, res) => {
             leaguelink = respond.secure_url;
             leagueId = respond.public_id;
 
-        } else {
+        } else if (leaguelg_url) {
             const respond = await cloudinary.uploader.upload(leaguelg_url, 'match');
             leaguelink = respond.secure_url;
             leagueId = respond.public_id;
