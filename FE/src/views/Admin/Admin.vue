@@ -105,7 +105,7 @@
         </section>
 
         <section id="match_section" class="container-fluid p-0 px-3 my-3 m-0">
-            <div class="container-fluid p-0 d-flex justify-content-center align-items-center">
+            <div class="container-fluid p-0 pt-3 d-flex justify-content-center align-items-center">
                 <h3 class="pt-3">TRẬN ĐẤU TIẾP THEO</h3>
             </div>
 
@@ -148,11 +148,11 @@
                     <div id="new_section" class="container-fluid p-3 d-flex flex-column">
                         <h3 class="p-0">Tin tức mới nhất</h3>
 
-                        <table class="table table-hover">
+                        <table class="table table-hover mt-3">
                             <thead>
                                 <tr>
                                     <th class="text-center">Tiêu đề</th>
-                                    <th class="text-center">Thời gian</th>
+                                    <th class="text-center">Ngày đăng</th>
                                 </tr>
                             </thead>
 
@@ -170,11 +170,11 @@
                     <div id="video_section" class="container-fluid p-3 d-flex flex-column">
                         <h3 class="p-0">Video mới nhất</h3>
 
-                        <table class="table table-hover">
+                        <table class="table table-hover mt-3">
                             <thead>
                                 <tr>
                                     <th class="text-center">Tiêu đề</th>
-                                    <th class="text-center">Thời gian</th>
+                                    <th class="text-center">Ngày đăng</th>
                                 </tr>
                             </thead>
 
@@ -201,6 +201,7 @@
             height: 120px;
             background-color: white;
             font-family: 'Barlow', sans-serif;
+            box-shadow: 5px 5px 10px rgb(224, 220, 220);
 
             h4 {
                 margin: 0 10px 0 0;
@@ -236,12 +237,14 @@
 }
 
 #match_section {
+    box-shadow: 5px 5px 10px rgb(224, 220, 220);
     background-color: white;
     font-family: 'Barlow', sans-serif;
 
     h3 {
         color: #012970;
         font-weight: 700;
+        font-size: clamp(25px, 3vw, 30px);
     }
 
     p {
@@ -259,6 +262,7 @@
     h2 {
         color: #012970;
         font-weight: 700;
+        font-size: clamp(25px, 3vw, 45px);
     }
 
     button {
@@ -274,16 +278,24 @@
 
     #video_section, #new_section {
             background-color: white;
+            box-shadow: 5px 5px 10px rgb(224, 220, 220);
     }
 
     h3 {
-        color: #012970;
+        color: rgb(0, 133, 205);
         font-weight: 700;
+        font-size: clamp(25px, 3vw, 30px);
     }
 
     td {
         height: 90px;
         font-weight: 500;
+        align-content: center;
+    }
+
+    th {
+        color: gray;
+        font-weight: 700;
     }
 }
 </style>

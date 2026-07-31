@@ -29,21 +29,23 @@
                 <div class="col-6 p-0 py-2 d-flex flex-column justify-content-center align-items-center">
                     <h3>Theo dõi chúng tôi</h3>
                     <div id="social_media" class="container-fluid h-100 p-0 d-flex justify-content-center align-items-center">
-                        <a href="https://www.facebook.com/ThepXanhNamDinhFC"><img src="/pictures/Facebook.png"></a>
-                        <a href="https://www.instagram.com/officialthepxanhnamdinh"><img src="/pictures/Instagram.png"></a>
-                        <a href="https://t.me/thepxanhnamdinh"><img src="/pictures/Telegram.png"></a>
-                        <a href="https://www.tiktok.com/@thepxanhnamdinh"><img src="/pictures/Tiktok.png"></a>
+                        <a href="https://www.facebook.com/ThepXanhNamDinhFC" class="bi bi-facebook text-white"></a>
+                        <a href="https://www.instagram.com/officialthepxanhnamdinh" class="bi bi-instagram text-white"></a>
+                        <a href="https://t.me/thepxanhnamdinh" class="bi bi-telegram text-white"></a>
+                        <a href="https://www.tiktok.com/@thepxanhnamdinh" class="bi bi-tiktok text-white"></a>
                     </div>
                 </div>
 
                 <div class="col-md-4 py-md-2 pt-5 p-0">
                     <div id="contact" class="container-fluid p-0 d-flex flex-column">
                         <div class="container-fluid p-0 d-flex align-items-center">
-                            <img src="/pictures/marker.png" alt="icon marker"><p class="m-0 px-3">Số 5 Đặng Xuân Thiều, phường Vị Hoàng, TP Nam Định, Nam Định</p>
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <p class="m-0 px-3">Số 5 Đặng Xuân Thiều, phường Vị Hoàng, TP Nam Định, Nam Định</p>
                         </div>
 
                         <div class="container-fluid p-0 d-flex align-items-center">
-                            <img src="/pictures/mail.png" alt="icon marker"><p class="m-0 px-3">clbbdnamdinh@gmail.com</p>
+                            <i class="bi bi-envelope-fill"></i>
+                            <p class="m-0 px-3">clbbdnamdinh@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -66,6 +68,7 @@
 <style scoped>
     footer {
         background-color: rgb(0, 133, 205);
+        font-family: 'Barlow', san-serif;
         padding-top: 40px;
 
         #row_1 {
@@ -92,22 +95,21 @@
         #social_media {
             gap: 20px;
 
-            img {
-                max-width: 30px;
-                min-width: 20px;
+            a {
+                font-size: 28px;
             }
         }
 
         #contact {
             gap: 20px;
 
-            img {
-                height: 30px;
+            i {
+                font-size: 25px;
+                color: white;
             }
 
             p {
-                font-family: 'Barlow', sans-serif;
-                font-weight: 400;
+                font-weight: 500;
                 color: white;
             }
         }

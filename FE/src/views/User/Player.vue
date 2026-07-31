@@ -83,9 +83,6 @@ onMounted(async () => {
                 <a href="#ST" class="text-decoration-none text-body h-100">
                     <li>Tiền đạo</li>
                 </a>
-                <a href="#CO" class="text-decoration-none text-body h-100">
-                    <li>Ban huấn luyện</li>
-                </a>
             </ul>
         </div>
         <div id="title" class="container-fluid m-0 px-3 pt-5">
@@ -164,22 +161,6 @@ onMounted(async () => {
                 </RouterLink>
             </div>
         </div>
-        <div id="title" class="container-fluid m-0 p-0 pt-5 px-5 w-100 d-flex justify-content-start align-items-start">
-            <h3 id="CO">Ban huấn luyện</h3>
-        </div>
-        <!--<div id="player_menu" class="container-fluid m-0 mt-5 p-5" style="max-width: 1600px;">
-            <div v-for="coach in coachdata" :key="coach.id" id="player_card"
-                class="card w-100 border-0 d-flex flex-column">
-                <div id="card_img" class="container w-100 px-5">
-                    <img class="card-img-top px-5 position-absolute" :src=" coach.img">
-                </div>
-                <div id="card_inf" class="card-body m-0 w-100">
-                    <h3 class="card-title m-0 p-0">{{ coach.name }}</h3>
-                    <p class="card-text m-0 p-0 mt-1">{{ coach.position }}</p>
-                    <img id="national" class="position-absolute" :src="coach.national">
-                </div>
-            </div>
-        </div>-->
     </div>
     </main>
 </template>

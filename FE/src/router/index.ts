@@ -42,6 +42,8 @@ import TicketPrice from '@/views/User/TicketPrice.vue'
 import Charter from '@/views/User/Charter.vue'
 import Careers from '@/views/User/Careers.vue'
 import ContactUs from '@/views/User/ContactUs.vue'
+import TermOfUse from '@/views/User/TermOfUse.vue'
+import PrivacyPolicy from '@/views/User/PrivacyPolicy.vue'
 
 const routes = [{
   path: "/", 
@@ -71,7 +73,9 @@ const routes = [{
     {path: 'TicketDetail', component: TicketPrice},
     {path: 'Charter', component: Charter},
     {path: 'Careers', component: Careers},
-    {path: 'ContactUs', component: ContactUs}
+    {path: 'ContactUs', component: ContactUs},
+    {path: 'TermOfUse', component: TermOfUse},
+    {path: 'PrivacyPolicy', component: PrivacyPolicy}
   ]
 },
 {

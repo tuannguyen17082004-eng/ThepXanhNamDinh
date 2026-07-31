@@ -113,7 +113,7 @@ onMounted(async () => {
 
                         <div class="col-6 p-0 d-flex justify-content-end align-items-center">
                             <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                            <img id="league_logo" :src="match.leaguelg.link">
+                            <img v-if="match.leaguelg" id="league_logo" :src="match.leaguelg.link">
                         </div>
                     </div>
 

@@ -103,10 +103,10 @@ const closeMenu = () => {
 
                     <div class="col-md-6 d-flex flex-column justify-content-start align-items-start mt-3">
                         <h3 class="w-100 border-bottom py-1 px-2">THÊM</h3>
-                        <RouterLink to="/" class="text-decoration-none" v-on:click="closeMenu()">
+                        <RouterLink to="/TermOfUse" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Điều khoản sử dụng</h5>
                         </RouterLink>
-                        <RouterLink to="/" class="text-decoration-none" v-on:click="closeMenu()">
+                        <RouterLink to="/PrivacyPolicy" class="text-decoration-none" v-on:click="closeMenu()">
                             <h5 class="text-white py-3 px-2">Chính sách bảo mật</h5>
                         </RouterLink>
                         <RouterLink to="/ContactUs" class="text-decoration-none" v-on:click="closeMenu()">
