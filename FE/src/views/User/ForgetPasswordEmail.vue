@@ -57,7 +57,7 @@ const handleForgetPassword = async() => {
 <style scoped>
 #fpe_background {
     min-height: 100dvh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(../pictures/SVĐ\ Thiên\ Trường.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(/pictures/SVĐ\ Thiên\ Trường.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

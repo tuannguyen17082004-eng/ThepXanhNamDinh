@@ -41,7 +41,7 @@ module.exports.createMatch = async (req, res) => {
             leagueId = respond.public_id;
 
         } else if (leaguelg_url) {
-            const respond = await cloudinary.uploader.upload(leaguelg_url, 'match');
+            const respond = await cloudinary.uploader.upload(leaguelg_url, { folder: 'match' });
             leaguelink = respond.secure_url;
             leagueId = respond.public_id;
         }
@@ -52,7 +52,7 @@ module.exports.createMatch = async (req, res) => {
             hometeamId = respond.public_id;
 
         } else {
-            const respond = await cloudinary.uploader.upload(hometeamlg_url, 'match');
+            const respond = await cloudinary.uploader.upload(hometeamlg_url, { folder: 'match' });
             hometeamlink = respond.secure_url;
             hometeamId = respond.public_id;
         }
@@ -63,7 +63,7 @@ module.exports.createMatch = async (req, res) => {
             awayteamId = respond.public_id;
 
         } else {
-            const respond = await cloudinary.uploader.upload(awayteamlg_url, 'match');
+            const respond = await cloudinary.uploader.upload(awayteamlg_url, { folder: 'match' });
             awayteamlink = respond.secure_url;
             awayteamId = respond.public_id;
         }

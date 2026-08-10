@@ -1,7 +1,10 @@
 const UserModel = require('../models/user');
+const PermanentUserModel = require('../models/permanentUser');
 const bcript = require('bcrypt');
 const cloudinary = require('cloudinary').v2;
 const { uploadImageFile } = require('../service/uploadMedia');
+const { checkOTP } = require('../service/checkOTP');
+const { sendOTP } = require('../service/sendOTP');
 
 module.exports.getAllUsers = async (req, res) => {
     try {
@@ -42,14 +45,20 @@ module.exports.getUserById = async (req, res) => {
 
 module.exports.createUser = async (req, res) => {
     try {
-        const { name, gender, email, phone, password } = req.body;
-        if (!name || !gender || !email || !phone || !password) {
+        const { name, gender, email, phone, password, otp } = req.body;
+        if (!name || !gender || !email || !phone || !password || !otp) {
             return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");
         }
 
         const checkUser = await UserModel.findOne({ email });
         if (checkUser)
             return res.status(400).send("Email này đã được sử dụng");
+
+        const isValidOTP = await checkOTP(email, otp);
+
+        if (isValidOTP) {
+            return res.status(400).send(isValidOTP);
+        }
 
         bcript.genSalt(10, (err, salt) => {
             if (err) return res.status(400).send("Internal server error");
@@ -72,6 +81,45 @@ module.exports.createUser = async (req, res) => {
                 res.status(201).send("Tạo tài khoản thành công!");
             })
         });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Internal server error");
+    }
+}
+
+module.exports.verifyUser = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");
+        }
+
+        let checkUser = await UserModel.findOne({ email });
+        if (checkUser)
+            return res.status(400).send("Email này đã được sử dụng");
+
+        checkUser = await PermanentUserModel.findOne({ email });
+        if (checkUser) {
+            const { otp, otpExpired } = await sendOTP(email);
+
+            checkUser.otp = otp;
+            checkUser.otpExpiration = otpExpired;
+            await checkUser.save();
+
+            return res.status(200).send("Mã OTP đã được gửi đến email của bạn!");
+        }
+
+        const { otp, otpExpired } = await sendOTP(email);
+
+        const newPermanentUser = new PermanentUserModel({
+            email,
+            otp,
+            otpExpiration: otpExpired
+        });
+
+        await PermanentUserModel.create(newPermanentUser);
+        res.status(200).send("Mã OTP đã được gửi đến email của bạn!");
 
     } catch (err) {
         console.log(err);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import router from '@/router';
-import { ResetPassword } from '@/utils/AuthUtils';
+import { ResetPassword, ForgetPassword } from '@/utils/AuthUtils';
 import { useEmailStore } from '@/stores/emailStore';
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
@@ -43,6 +43,15 @@ const handleResetPassword = async() => {
 
 }
 
+const resendOTP = async() => {
+    const res = await ForgetPassword(emailStore.content);
+    if (res) {
+        toast.success(res.data, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+
 </script>
 
 <template>
@@ -57,19 +66,22 @@ const handleResetPassword = async() => {
                 <p>Điền mật khẩu mới cho tài khoản của bạn</p>
             </div>
 
-            <div class="container-fluid pb-3">
-                <h5>Mật khẩu mới</h5>
-                <input v-model="newPassword" class="form-control" type="password" placeholder="Mật khẩu mới...">
-            </div>
+            <div id="fpe_content" class="container-fluid p-0">
+                <div class="container-fluid pb-3">
+                    <h5>Mật khẩu mới</h5>
+                    <input v-model="newPassword" class="form-control" type="password" placeholder="Mật khẩu mới...">
+                </div>
 
-            <div class="container-fluid pb-3">
-                <h5>Xác nhận mật khẩu mới</h5>
-                <input v-model="confirmPassword" class="form-control" type="password" placeholder="Xác nhận mật khẩu mới...">
-            </div>
+                <div class="container-fluid pb-3">
+                    <h5>Xác nhận mật khẩu mới</h5>
+                    <input v-model="confirmPassword" class="form-control" type="password" placeholder="Xác nhận mật khẩu mới...">
+                </div>
 
-            <div class="container-fluid pb-3">
-                <h5>Mã OTP</h5>
-                <input v-model="otp" class="form-control" type="text" placeholder="Nhập mã OTP...">
+                <div class="container-fluid pb-3">
+                    <h5>Mã OTP</h5>
+                    <input v-model="otp" class="form-control" type="text" placeholder="Nhập mã OTP...">
+                    <p class="text-center text-primary pt-3 m-0" v-on:click="resendOTP" style="cursor: pointer;">Gửi lại mã xác nhận</p>
+                </div>
             </div>
 
             <div class="container-fluid p-0 py-3 d-flex justify-content-center align-items-center" style="gap: 20px;">
@@ -83,7 +95,7 @@ const handleResetPassword = async() => {
 <style scoped>
 #fpe_background {
     min-height: 100dvh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(../pictures/SVĐ\ Thiên\ Trường.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(/pictures/SVĐ\ Thiên\ Trường.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -95,6 +107,11 @@ const handleResetPassword = async() => {
         font-family: 'Barlow', sans-serif;
         background-color: rgba(255, 255, 255, 0.85);
         border-radius: 20px;
+
+        #fpe_content {
+            height: 240px;
+            overflow-y: auto;
+        }
 
         img {
             width: 100%;

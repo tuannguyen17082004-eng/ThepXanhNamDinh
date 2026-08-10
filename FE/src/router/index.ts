@@ -18,6 +18,7 @@ import NotFound from '@/views/User/NotFound.vue'
 import PlayerDetail from '@/views/User/PlayerDetail.vue'
 import Login from '@/views/User/Login.vue'
 import Register from '@/views/User/Register.vue'
+import RegisterOTP from '@/views/User/RegisterOTP.vue'
 import ForgetPasswordEmail from '@/views/User/ForgetPasswordEmail.vue'
 import ResetPassword from '@/views/User/ResetPassword.vue'
 import Profile from '@/views/User/Profile.vue'
@@ -75,7 +76,8 @@ const routes = [{
     {path: 'Careers', component: Careers},
     {path: 'ContactUs', component: ContactUs},
     {path: 'TermOfUse', component: TermOfUse},
-    {path: 'PrivacyPolicy', component: PrivacyPolicy}
+    {path: 'PrivacyPolicy', component: PrivacyPolicy},
+    {path: 'RegisterOTP', component: RegisterOTP}
   ]
 },
 {

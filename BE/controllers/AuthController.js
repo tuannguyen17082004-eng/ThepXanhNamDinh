@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user');
 const transporter = require('../config/nodemailer_config');
+const { checkOTP } = require('../service/checkOTP');
+const { sendOTP } = require('../service/sendOTP');
 
 module.exports.Login = async (req, res) => {
     try {
@@ -118,24 +120,17 @@ module.exports.ForgetPassword = async (req, res) => {
             return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");
         }
 
+        const { otp, otpExpired } = await sendOTP(email);
+
         const checkUser = await UserModel.findOne({ email });
+        
         if (!checkUser) {
             return res.status(400).send("Tài khoản không tồn tại!");
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const otpExpired = Date.now() + 5 * 60 * 1000;
-
         checkUser.otp = otp;
         checkUser.otpExpiration = otpExpired;
         await checkUser.save();
-
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: checkUser.email,
-            subject: "Mã OTP đặt lại mật khẩu",
-            html: `<p>Mã OTP của bạn là: ${otp}. Mã có hiệu lực trong 5 phút.</p>`
-        });
 
         res.status(200).send("Mã OTP đã được gửi đến email của bạn!");
 
@@ -163,16 +158,10 @@ module.exports.ResetPassword = async (req, res) => {
 
         const user = await UserModel.findOne({ email });
 
-        if (!user) {
-            return res.status(400).send("Tài khoản không tồn tại!");
-        }
+        const isValidOTP = await checkOTP(email, otp);
 
-        if (user.otp !== otp) {
-            return res.status(400).send("Mã OTP không đúng!");
-        }
-
-        if (Date.now() > user.otpExpiration) {
-            return res.status(400).send("Mã OTP đã hết hạn!");
+        if (isValidOTP) {
+            return res.status(400).send(isValidOTP);
         }
 
         bcrypt.genSalt(10, (err, salt) => {

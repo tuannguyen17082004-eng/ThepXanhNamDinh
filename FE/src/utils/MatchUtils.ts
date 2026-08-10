@@ -38,15 +38,15 @@ export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFi
         const formData = new FormData();
 
         if (leaguelg) {
-            formData.append("leaguelg", leaguelg);
+            formData.append("leaguelg_url", leaguelg);
         }
 
         if (hometeamlg) {
-            formData.append("hometeamlg", hometeamlg);
+            formData.append("hometeamlg_url", hometeamlg);
         }
 
         if (awayteamlg) {
-            formData.append("awayteamlg", awayteamlg);
+            formData.append("awayteamlg_url", awayteamlg);
         }
 
         if (result)
@@ -79,15 +79,15 @@ export const UpdateMatch = async (id: any, leagueFile: any, hometeamFile: any, a
         const formData = new FormData();
 
         if (leaguelg) {
-            formData.append("leaguelg", leaguelg);
+            formData.append("leaguelg_url", leaguelg);
         }
 
         if (hometeamlg) {
-            formData.append("hometeamlg", hometeamlg);
+            formData.append("hometeamlg_url", hometeamlg);
         }
 
         if (awayteamlg) {
-            formData.append("awayteamlg", awayteamlg);
+            formData.append("awayteamlg_url", awayteamlg);
         }
 
         if (result)

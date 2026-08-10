@@ -46,9 +46,9 @@ export const ChangePassword = async (currentPassword: any, newPassword: any) => 
     }
 } 
 
-export const Register = async (name: any, gender: any, email: any, phone: any, password: any) => {
+export const Register = async (name: any, gender: any, email: any, phone: any, password: any, otp: any) => {
     try {
-        const res = await api.post("/users", { name, gender, email, phone, password });
+        const res = await api.post("/users", { name, gender, email, phone, password, otp });
         return res;
     } 
     catch (err : any) {
@@ -66,6 +66,19 @@ export const CreateAdmin = async(name: any, gender: any, email: any, phone: any,
         return res;
 
     } catch (err : any) {
+        console.log("Something wrong at FE: " + err.response.data);
+        toast.error(err.response.data, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+
+export const VerifyUser = async (email: any) => {
+    try {
+        const res = await api.post('/users/verify', { email });
+        return res;
+
+    } catch (err: any) {
         console.log("Something wrong at FE: " + err.response.data);
         toast.error(err.response.data, {
             position: toast.POSITION.TOP_CENTER,
