@@ -1,9 +1,9 @@
 import api from '@/config/default';
 import { toast } from 'vue3-toastify'
 
-export const GetScoreboard = async () => {
+export const GetScoreboard = async (season : any) => {
     try {
-        const res = await api.get("/scoreboard", {withCredentials: true});
+        const res = await api.get("/scoreboard", { params: { season } });
         return res;
     }
     catch (err : any) {

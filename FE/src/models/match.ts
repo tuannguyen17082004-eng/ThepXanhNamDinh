@@ -18,5 +18,6 @@ export interface Match{
     },
     result: string,
     highlight: string,
-    time: string
+    time: string,
+    VNtime: string
 }

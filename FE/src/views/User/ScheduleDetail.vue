@@ -34,8 +34,8 @@ onMounted( async () => {
         <section id="schedule_detail_bg" v-if="match" class="container-fluid p-0 d-flex align-items-end">
             <div class="container-fluid p-0 d-flex flex-column">
                 <div class="container-fluid p-0 d-flex flex-column justify-content-center align-items-center">
-                    <img v-if="match.leaguelg.link" class="mb-3" id="league_logo" :src="match.leaguelg.link" alt="league logo">
-                    <h3 class="mb-1">{{ match.time }}</h3>
+                    <img v-if="match.leaguelg" class="mb-3" id="league_logo" :src="match.leaguelg.link" alt="league logo">
+                    <h3 class="mb-1">{{ match.VNtime }}</h3>
                     <h3 class="mb-3">{{ match.stadium }}</h3>
                 </div>
                 <div class="row w-100 py-4 m-0">
@@ -54,10 +54,15 @@ onMounted( async () => {
                 </div>
             </div>
         </section>
+
+        <section class="container-fluid p-0">
+            <img class="w-100 p-0" src="/pictures/Vfantasy advertisement.png">
+        </section>
+
         <section id="schedule_detail_content" class="container-fluid py-3">
             <div class="container p-0">
                 <h1>Highlight</h1>
-                <p v-if="!check" class="w-100 text-center">Không có highlight!</p>
+                <p v-if="!check" class="w-100 text-center" style="height: 300px; justify-content: center; align-items: center; display: flex;">Không có highlight!</p>
                 <video v-else :src="match?.highlight" class="w-100" style="aspect-ratio: 16 / 9;"></video>
             </div>
         </section>
@@ -66,7 +71,7 @@ onMounted( async () => {
 
 <style scoped>
 #schedule_detail_bg {
-    border-bottom: 10px rgb(0, 133, 205) solid;
+    border-bottom: 4px rgb(0, 133, 205) solid;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url("/pictures/Chi tiết trận đấu.jpg");
     background-position: bottom;
     background-repeat: no-repeat;

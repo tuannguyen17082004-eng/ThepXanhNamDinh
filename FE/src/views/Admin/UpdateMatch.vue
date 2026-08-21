@@ -15,6 +15,7 @@ const hour = ref();
 const stadium = ref();
 const hometeam = ref();
 const awayteam = ref();
+const season = ref();
 const result = ref();
 const highlight = ref();
 const league_url = ref();
@@ -43,7 +44,7 @@ const FetchData = async() => {
         awayteam.value = res.data.awayteam;
         result.value = res.data.result;
         highlight.value = res.data.highlight;
-        [hour.value, date.value] = res.data.time.split(" ");
+        [hour.value, date.value] = res.data.VNtime.split(" ");
         const [day, month, year] = date.value.split('/');
         date.value = `${year}-${month}-${day}`;
     }
@@ -102,7 +103,7 @@ const handleUpdate = async() => {
 
     time = new Date(hour.value + " " + date.value);
     
-    const res = await UpdateMatch(id, league_file.value, hometeam_file.value, awayteam_file.value, stadium.value, league.value, league_url.value, hometeam.value, hometeam_url.value, awayteam.value, awayteam_url.value, result.value, highlight.value, time);
+    const res = await UpdateMatch(id, league_file.value, hometeam_file.value, awayteam_file.value, season.value, stadium.value, league.value, league_url.value, hometeam.value, hometeam_url.value, awayteam.value, awayteam_url.value, result.value, highlight.value, time);
     if (res) {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,

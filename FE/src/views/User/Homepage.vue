@@ -49,10 +49,10 @@ const fetchNews = async () => {
 }
 
 const fetchScoreboard = async () => {
-    const res = await GetScoreboard();
+    const res = await GetScoreboard("2027");
 
     if (res) {
-        scoreboard.value = res.data;
+        scoreboard.value = res.data.scoreboard;
         const root = scoreboard.value.findIndex(team => team.img == "https://vpf.vn/wp-content/uploads/2018/10/Logo-TXND-3-sao-150x150.png");
         scoreboard.value = scoreboard.value.slice(root - 1, root + 2);
     }
@@ -60,14 +60,12 @@ const fetchScoreboard = async () => {
 }
 
 const fetchMatch = async () => {
-    const res = await GetAllMatch();
+    const res = await GetAllMatch("2027");
+    
     if (res) {
-        res.data.forEach((match: Match) => {
-            if (match.result)
-                lastmatch.value = match;
-            else matchdata.value.push(match);
-        });
-        matchdata.value = matchdata.value.slice(0, 3);
+        
+        matchdata.value = res.data.filter((match : Match) => new Date(match.time) > new Date(Date.now())).slice(0, 3);
+        lastmatch.value = res.data.filter((match : Match) => new Date(match.time) < new Date(Date.now())).reverse()[0];
         nextmatch.value = matchdata.value[0];
     }
     
@@ -117,7 +115,7 @@ onMounted(async () => {
                 <div id="previous_match" v-if="lastmatch"
                     class="container h-100 p-0 pt-2 m-0 d-flex flex-column justify-content-center align-items-center">
                     <img v-if="lastmatch.leaguelg" :src="lastmatch.leaguelg.link" style="width: auto; height: 30px;">
-                    <p class="m-0 p-0 pt-2">{{ lastmatch.time }}</p>
+                    <p class="m-0 p-0 pt-2">{{ lastmatch.VNtime }}</p>
                     <p>{{ lastmatch.stadium }}</p>
                     <div class="container m-0 p-2">
                         <div class="row m-0 p-0 w-100">
@@ -138,13 +136,13 @@ onMounted(async () => {
                 <div id="next_match" v-if="nextmatch"
                     class="container h-100 p-0 pt-2 m-0 ms-2 d-flex flex-column justify-content-center align-items-center">
                     <img v-if="nextmatch.leaguelg" :src="nextmatch.leaguelg.link" style="width: auto; height: 30px;">
-                    <p class="m-0 p-0 pt-2">{{ nextmatch.time }}</p>
+                    <p class="m-0 p-0 pt-2">{{ nextmatch.VNtime }}</p>
                     <p>{{ nextmatch.stadium }}</p>
                     <div class="container m-0 p-2 d-flex flex-row justify-content-between align-items-center">
                         <div class="row m-0 p-0 w-100">
                             <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.awayteamlg.link"></div>
                             <div class="col-sm-6 m-0 p-0 d-flex flex-row justify-content-center align-items-center">
-                                <h2 class="text-center p-0 m-0">{{ nextmatch.time.split(" ")[0] }}</h2>
+                                <h2 class="text-center p-0 m-0">{{ nextmatch.VNtime.split(" ")[0] }}</h2>
                             </div>
                             <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.hometeamlg.link"></div>
                         </div>
@@ -320,7 +318,7 @@ onMounted(async () => {
                         <div id="schedule_card" v-for="match in matchdata" :key="match._id" class="container-fluid p-0 my-2 d-flex flex-column">
                             <div class="row m-0 p-4 w-100">
                                 <div class="col-10 p-0 text-start">
-                                    <p class="m-0 p-0">{{ match.time }}</p>
+                                    <p class="m-0 p-0">{{ match.VNtime }}</p>
                                     <p class="m-0 p-0 text-truncate">{{ match.stadium }}</p>
                                 </div>
                                 <div class="col-2 p-0 ps-3 d-flex align-items-center justify-content-center">

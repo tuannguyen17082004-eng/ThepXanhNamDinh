@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { CreateMatch } from '@/utils/MatchUtils';
+import { GetAllSeason } from '@/utils/SeasonUtils';
+import { type Season } from '@/models/season';
 import router from '@/router';
 
 const league = ref();
@@ -10,6 +12,7 @@ const hour = ref();
 const stadium = ref();
 const hometeam = ref();
 const awayteam = ref();
+const season = ref();
 const result = ref();
 const highlight = ref();
 const league_url = ref();
@@ -22,6 +25,7 @@ let league_png = ref();
 let hometeam_png = ref();
 let awayteam_png = ref();
 let time;
+const seasonList = ref<Season[]>([]);
 
 const handleLeagueImg = (e : any) => {
     const file = e.target.files[0];
@@ -60,7 +64,7 @@ const handleAwayteamImg = (e : any) => {
 }
 
 const handleAdd = async() => {
-    if (!league.value || !date.value || !hour.value || !stadium.value || !hometeam.value || !awayteam.value || (!hometeam_file.value && !hometeam_url.value) || (!awayteam_file.value && !awayteam_url.value)) {
+    if (!season.value || !league.value || !date.value || !hour.value || !stadium.value || !hometeam.value || !awayteam.value || (!hometeam_file.value && !hometeam_url.value) || (!awayteam_file.value && !awayteam_url.value)) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
@@ -76,7 +80,7 @@ const handleAdd = async() => {
 
     time = new Date(hour.value + " " + date.value);
     
-    const res = await CreateMatch(league_file.value, hometeam_file.value, awayteam_file.value, stadium.value, league.value, league_url.value, hometeam.value, hometeam_url.value, awayteam.value, awayteam_url.value, result.value, highlight.value, time);
+    const res = await CreateMatch(league_file.value, hometeam_file.value, awayteam_file.value, season.value, stadium.value, league.value, league_url.value, hometeam.value, hometeam_url.value, awayteam.value, awayteam_url.value, result.value, highlight.value, time);
     if (res) {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
@@ -84,6 +88,23 @@ const handleAdd = async() => {
         router.push('/Admin/Match');
     }
 }
+
+const FetchSeason = async() => {
+    const res = await GetAllSeason();
+
+    if (!res) {
+        toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        return;
+    }
+
+    seasonList.value = res.data;
+}
+
+onMounted(() => {
+    FetchSeason();
+})
 </script>
 
 <template>
@@ -164,6 +185,18 @@ const handleAdd = async() => {
                 <div class="col-md-6 p-3">
                     <h3>Highlight:</h3>
                     <input v-model="highlight" type="text" class="form-control" placeholder="Nhập thông tin highlight...">
+                </div>
+            </div>
+
+            <div class="row w-100 m-0 p-0 d-flex justify-content-center">
+                <div class="col-md-6 p-3">
+                    <h3>Mùa giải</h3>
+
+                    <select v-model="season" class="form-control">
+                        <div v-for="season in seasonList" class="form-control p-0">
+                            <option :value="season.season">{{ season.season - 1}}-{{ season.season }}</option>
+                        </div>
+                    </select>
                 </div>
             </div>
 

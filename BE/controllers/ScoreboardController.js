@@ -1,12 +1,14 @@
-const ScoreboardModel = require('../models/scoreboard');
+const SeasonModel = require('../models/season');
 
 module.exports.GetScoreboardData = async (req, res) => {
     try {
-        const scoreboard = await ScoreboardModel.find();
-        res.status(200).json(scoreboard);
+        const { season } = req.query;
+
+        const scoreboardCheck = await SeasonModel.findOne({ season : season }).populate('scoreboard');
+        res.status(200).json(scoreboardCheck.scoreboard);
     }
     catch (err) {
-        console.log(err)
+        console.log(err);
         return res.status(500).send("Internal server error");
     }
 }

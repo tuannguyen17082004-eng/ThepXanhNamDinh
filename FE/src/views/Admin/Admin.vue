@@ -18,13 +18,14 @@
     const videos = ref<Video[]>([]);
     const users = ref<User[]>([]);
     let match = ref<Match>();
+    const season = "2027";
 
     const fetchData = async() => {
         const newData = await GetAllNews(null, null, null, null, null, null);
         const playerData = await GetAllPlayers(null);
         const videoData = await GetAllVideos(null, null, null, null);
         const userData = await GetAllUser(null, null);
-        const matchData = await GetAllMatch();
+        const matchData = await GetAllMatch(season);
 
         if (!newData || !playerData || !videoData || !userData || !matchData) {
             toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
@@ -38,10 +39,7 @@
         videos.value = videoData.data;
         users.value = userData.data;
         
-        matchData.data.forEach((matches : any) => {
-            if (!matches.result)
-                match = matches;
-        });
+        match.value = matchData.data.find((matches : Match) => new Date(matches.time) > new Date(Date.now()));
     }
 
     onMounted(() => [
@@ -111,7 +109,7 @@
 
             <div v-if="match" class="container-fluid p-0 py-3 d-flex flex-column justify-content-center align-items-center">
                 <img v-if="match.leaguelg" :src="match.leaguelg.link" style="height: 40px;">
-                <p class="m-0 pt-2">{{ match.time }}</p>
+                <p class="m-0 pt-2">{{ match.VNtime }}</p>
                 <p class="m-0">{{ match.stadium }}</p>
 
                 <div class="row w-100 m-0 p-0">
@@ -137,7 +135,7 @@
                 </div>
             </div>
 
-            <div v-else class="container-fluid p-0 d-flex justify-content-center align-items-center">
+            <div v-else class="container-fluid p-0 d-flex justify-content-center align-items-center" style="height: 300px;">
                 <h2>Không có dữ liệu!</h2>
             </div>
         </section>
@@ -157,7 +155,7 @@
                             </thead>
 
                             <tbody>
-                                <tr v-for="newdetail in news.slice(0, 5)" :key="newdetail._id">
+                                <tr v-for="newdetail in news.slice(0, 5)" :key="newdetail._id" v-on:click="() => router.push(`/Admin/News/${newdetail._id}`)" style="cursor: pointer;">
                                     <td>{{ newdetail.title }}</td>
                                     <td>{{ newdetail.time }}</td>
                                 </tr>
@@ -179,7 +177,7 @@
                             </thead>
 
                             <tbody>
-                                <tr v-for="videodetail in videos.slice(0, 5)">
+                                <tr v-for="videodetail in videos.slice(0, 5)" :key="videodetail._id" v-on:click="() => router.push(`/Admin/Video/${videodetail._id}`)" style="cursor: pointer;">
                                     <td>{{ videodetail.title }}</td>
                                     <td>{{ videodetail.time }}</td>
                                 </tr>
@@ -201,7 +199,7 @@
             height: 120px;
             background-color: white;
             font-family: 'Barlow', sans-serif;
-            box-shadow: 5px 5px 10px rgb(224, 220, 220);
+            border-radius: 10px;
 
             h4 {
                 margin: 0 10px 0 0;
@@ -237,7 +235,7 @@
 }
 
 #match_section {
-    box-shadow: 5px 5px 10px rgb(224, 220, 220);
+    border-radius: 10px;
     background-color: white;
     font-family: 'Barlow', sans-serif;
 
@@ -278,7 +276,7 @@
 
     #video_section, #new_section {
             background-color: white;
-            box-shadow: 5px 5px 10px rgb(224, 220, 220);
+            border-radius: 10px;
     }
 
     h3 {

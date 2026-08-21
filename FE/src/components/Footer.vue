@@ -22,11 +22,11 @@
 
         <section class="container-fluid p-0 py-4" style="border-bottom: 1px solid white;">
             <div class="row w-100 p-0 m-0 d-flex" style="justify-content:space-around">
-                <div class="col-2 p-0 py-2">
+                <div class="col-sm-2 p-0 py-2 d-flex justify-content-center align-items-center">
                     <img src="/pictures/logo.png" alt="logo" style="max-width: 100px; min-width: 80px; width: 100%;">
                 </div>
 
-                <div class="col-6 p-0 py-2 d-flex flex-column justify-content-center align-items-center">
+                <div class="col-sm-6 p-0 py-2 d-flex flex-column justify-content-center align-items-center">
                     <h3>Theo dõi chúng tôi</h3>
                     <div id="social_media" class="container-fluid h-100 p-0 d-flex justify-content-center align-items-center">
                         <a href="https://www.facebook.com/ThepXanhNamDinhFC" class="bi bi-facebook text-white"></a>

@@ -1,71 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted} from 'vue';
-import DataTable from 'datatables.net-vue3';
-import DataTableCore from 'datatables.net-bs5';
+import { ref, onMounted, computed } from 'vue';
 import { toast } from 'vue3-toastify'
 import { GetAllUser } from '@/utils/UserUtils';
 import { type User } from '@/models/user';
+import { DataTable, InputIcon, IconField, InputText, Skeleton, Tag } from 'primevue';
+import { FilterMatchMode } from '@primevue/core/api';
+import Column from 'primevue/column';
+import Search from '@primeicons/vue/search';
 
-DataTable.use(DataTableCore);
 const users = ref<User[]>([]);
-
-const columns = [
-    {
-        data: 'name',
-        title: 'Họ và tên',
-        className: 'col-md-3 col-6',
-        render: (data : any) => `<p class="m-2 line-clamp-2">${data}</p>`
-    },
-    {
-        data: 'isActived',
-        title: 'Trạng thái',
-        className: 'col-md-1 col-3 text-center',
-        render: (data : any) => {
-            if (data) 
-                return `<i class="bi bi-check-lg" style="color: yellow;"></i>`;
-            else
-                return `<i class="bi bi-x" style="color: red;"></i>`;
-        }
-    },
-    {
-        data: 'gender',
-        title: 'Giới tính',
-        className: 'col-md-2 col-3 d-none d-md-table-cell text-center',
-        render: (data : any) => `<p class="m-2">${data}</p>`
-    },
-    {
-        data: 'email',
-        title: 'Email',
-        className: 'col-md-3 col-6 d-none d-md-table-cell text-center',
-        render: (data : any) => `<p class="m-2 line-clamp-1">${data}</p>`
-    },
-    {
-        data: 'phone',
-        title: 'Số điện thoại',
-        className: 'col-md-2 col-3 d-none d-md-table-cell text-center',
-        render: (data : any) => `<p class="m-2 line-clamp-1">${data}</p>`
-    },
-    {
-        data: null,
-        orderable: false,
-        className: 'col-md-2 col-3 text-center',
-        render: (data : any, type : any, row : any) => {
-            return `<a href="Users/${row._id}" data-id="${row._id}">Chi tiết</a>`
-        }
-    }
-]
+const placeholders = Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }));
+let loading = ref(false);
+const first = ref(0);
+const rows = computed(() => (loading.value ? placeholders : users.value));
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
 
 const GetUser = async() => {
-    const res = await GetAllUser(null, null);
+    loading.value = true;
 
-    if (!res) {
-            toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
-                position: toast.POSITION.TOP_CENTER,
-            })
-            return;
+    setTimeout(async() => {
+        const res = await GetAllUser(null, null);
+
+        if (res) {
+            users.value = res.data;
+            loading.value = false;
         }
-
-    users.value = res.data;
+    }, 1000);
 }
 
 onMounted(() => {
@@ -88,7 +50,71 @@ onMounted(() => {
 
 
         <div id="data_table" class="container-fluid p-3 mt-4">
-            <DataTable class="table" :data="users" :columns="columns">
+            <IconField class="mb-3">
+                <InputIcon>
+                    <Search />
+                </InputIcon>
+                <InputText v-model="filters['global'].value" size="medium" placeholder="Tìm kiếm..." />
+            </IconField>
+
+            <DataTable v-model:filters="filters" :value="rows" showGridlines paginator sort-mode="multiple" scrollable
+                scroll-height="500px" removable-sort :rows="10" :first="first" filter-display="menu"
+                :global-filter-fields="['season', 'match', 'scoreboard', 'phone', 'isActived']"
+                paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+                :rowsPerPageOptions="[10, 25, 50]"
+                currentPageReportTemplate="Đang hiển thị {first} đến {last} trong tổng số {totalRecords} người dùng"
+                table-style="background-color: white;">
+                <template #empty>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 400px;">Không tìm thấy
+                        người dùng nào</div>
+                </template>
+
+                <Column field="name" header="Họ tên" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <div v-else class="container-fluid p-0 d-flex align-items-center">
+                            <p class="m-0 text-truncate">{{ data.name }}</p>
+                        </div>
+                    </template>
+                </Column>
+
+                <Column field="username" header="Tên người dùng" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0 text-center text-truncate">{{ data.username }}</p>
+                    </template>
+                </Column>
+
+                <Column field="email" header="Email" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0">{{ data.email }}</p>
+                    </template>
+                </Column>
+
+                <Column field="phone" header="Số điện thoại" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0">{{ data.phone }}</p>
+                    </template>
+                </Column>
+
+                <Column field="isActived" header="Trạng thái" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <div v-else class="container-fluid p-0 d-flex justify-content-center">
+                            <i v-if="data.isActived" class="bi bi-check-lg" style="color: yellow;"></i>
+                            <i v-else class="bi bi-x" style="color: red;"></i>
+                        </div>
+                    </template>
+                </Column>
+
+                <Column>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <RouterLink v-else :to="`Users/${data._id}`" class="text-center text-truncate m-0">Chi tiết</RouterLink>
+                    </template>
+                </Column>
             </DataTable>
         </div>
     </main>
@@ -127,41 +153,12 @@ button:hover {
     background-color: white;
     border-radius: 10px;
     font-family: 'Barlow', sans-serif;
-
-    :deep(.dt-search) {
-            display: flex;
-            gap: 10px;
-            font-weight: 600;
-    }
-
-    :deep(td) {
-        align-content: center;
-    }
-
-    :deep(td p) {
-        font-weight: 500;
-    }
+    overflow-x: scroll;
+    scrollbar-width: none;
 
     :deep(i) {
         font-size: 20px;
         -webkit-text-stroke-width: 1px;
-    }
-
-    :deep(th) {
-        font-size: 18px;
-        text-align: center;
-    }
-
-    :deep(.line-clamp-2) {
-        display: -webkit-box;
-        line-clamp: 2;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    :deep(.line-clamp-1) {
-        overflow: hidden;
     }
 }
 </style>

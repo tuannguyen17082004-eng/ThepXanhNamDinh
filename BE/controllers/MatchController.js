@@ -1,11 +1,15 @@
 const MatchModel = require('../models/match');
+const SeasonModel = require('../models/season');
 const { uploadImageFile } = require('../service/uploadMedia');
 const cloudinary = require('cloudinary').v2;
 
 module.exports.getAllMatch = async (req, res) => {
     try {
-        const matchs = await MatchModel.find().sort({time: 1});
-        res.status(200).json(matchs);
+        const { season } = req.query;
+        const seasonCheck = await SeasonModel.findOne({season: season}).populate('matchList');
+        seasonCheck.matchList.sort((a, b) => a.time - b.time);
+        
+        res.status(200).json(seasonCheck.matchList);
 
     } catch (err) {
         console.log(err);
@@ -15,7 +19,7 @@ module.exports.getAllMatch = async (req, res) => {
 
 module.exports.getMatchByID = async (req, res) => {
     try {
-        const match = await MatchModel.findById(req.params.id);
+        const match = await MatchModel.findById(req.params.id).populate('season');
         res.status(200).json(match);
 
     } catch (err) {
@@ -26,8 +30,13 @@ module.exports.getMatchByID = async (req, res) => {
 
 module.exports.createMatch = async (req, res) => {
     try {
-        const { stadium, league, leaguelg_url, hometeam, hometeamlg_url, awayteam, awayteamlg_url, result, highlight, time } = req.body;
+        const { season, stadium, league, leaguelg_url, hometeam, hometeamlg_url, awayteam, awayteamlg_url, result, highlight, time } = req.body;
         let leaguelink, leagueId, hometeamlink, hometeamId, awayteamlink, awayteamId;
+
+        const seasonCheck = await SeasonModel.findOne({season});
+
+        if (!season) 
+            return res.status(500).send("Không tìm thấy thông tin mùa giải này!");
 
         if (!stadium || !league || !hometeam || !awayteam || !time || (!req.files["hometeamLogo"] && !hometeamlg_url) || (!req.files["awayteamLogo"] && !awayteamlg_url))
             return res.status(400).send("Vui lòng điền đầy đủ thông tin!");
@@ -69,6 +78,7 @@ module.exports.createMatch = async (req, res) => {
         }
 
         const newMatch = new MatchModel({
+            season: seasonCheck._id,
             stadium,
             league,
             leaguelg: {
@@ -91,7 +101,10 @@ module.exports.createMatch = async (req, res) => {
         });
 
         await MatchModel.create(newMatch);
-        res.status(201).json("Tạo thông tin trận đấu thành công!");
+        await seasonCheck.matchList.push(newMatch._id);
+        await seasonCheck.save();
+        
+        res.status(201).send("Tạo thông tin trận đấu thành công!");
         
     } catch (err) {
         console.log(err);
@@ -187,7 +200,7 @@ module.exports.updateMatch = async (req, res) => {
             }
         );
 
-        res.status(201).json("Sửa thông tin trận đấu thành công!");
+        res.status(201).send("Sửa thông tin trận đấu thành công!");
 
     } catch (err) {
         console.log(err);

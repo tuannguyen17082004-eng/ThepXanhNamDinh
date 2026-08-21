@@ -2,8 +2,10 @@
 import { GetAllNews } from "@/utils/NewUtils";
 import { ref, onMounted } from 'vue';
 import type { News } from '@/models/news';
+import { Skeleton } from "primevue";
 
 let newsdata = ref<News[]>([]);
+let loading = ref(true);
 let page = 1;
 const limit = 9;
 let type: string | null = null;
@@ -12,14 +14,19 @@ let author: string | null = null;
 let time: string | null = null;
 
 const fetchNews = async () => {
-    const res = await GetAllNews(page, limit, type, title, author, time);
+    loading.value = true;
 
-    if (res) {
-        newsdata.value.push(...res.data);
-    }
+    setTimeout(async () => {
+        const res = await GetAllNews(page, limit, type, title, author, time);
+
+        if (res) {
+            newsdata.value.push(...res.data);
+            loading.value = false;
+        }
+    }, 500);
 }
 
-const getTypeNew = async (typef : any) => {
+const getTypeNew = async (typef: any) => {
     type = typef;
     page = 1;
     newsdata.value = [];
@@ -41,7 +48,8 @@ onMounted(async () => {
         <section id="new_title_bg" class="container-fluid m-0 p-0 w-100 d-flex justify-content-start align-items-end">
             <div class="container-fluid m-0 p-0 w-100">
                 <h1 class="m-0 p-0 px-5 pb-3">TIN TỨC CHÍNH</h1>
-                <p class="m-0 p-0 px-5 pb-3">Chúng tôi đem đến những thông tin mới nhất về clb cũng như những câu chuyện bên
+                <p class="m-0 p-0 px-5 pb-3">Chúng tôi đem đến những thông tin mới nhất về clb cũng như những câu chuyện
+                    bên
                     lề,...</p>
             </div>
         </section>
@@ -49,7 +57,7 @@ onMounted(async () => {
         <!--Phần tin tức-->
         <section class="container-fluid m-0 p-0 d-flex flex-column justify-content-center align-items-center">
             <div id="newtype_list" class="container-fluid m-0 p-0"
-            style="background-color: #f8f9fa; box-shadow: 5px 5px 5px rgb(224, 220, 220);">
+                style="background-color: #f8f9fa; box-shadow: 5px 5px 5px rgb(224, 220, 220);">
                 <ul class="m-0 p-0 d-flex flex-row">
                     <li v-on:click="getTypeNew(null)">Tất cả</li>
                     <li v-on:click="getTypeNew('Highlights')">Highlights</li>
@@ -59,35 +67,59 @@ onMounted(async () => {
                     <li v-on:click="getTypeNew('Thông tin trận đấu')">Thông tin trận đấu</li>
                 </ul>
             </div>
-            <div v-if="newsdata.length != 0" class="container-fluid d-flex flex-column align-items-center">
+
+            <div v-if="loading" class="container-fluid p-0">
                 <div id="new_menu" class="container-fluid my-3 m-0 p-3 w-100"
-                style=" max-width: 1600px; grid-template-columns: repeat(auto-fill, 400px);">
-                    <div id="new_card" v-for="news in newsdata" :key="news._id" class="card" style="max-width: 400px;">
-                        <RouterLink :to="`/News/${news._id}`" class="text-decoration-none text-body">
-                        <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
-                            <img class="w-100" :src="news.img.link">
+                    style=" max-width: 1600px; grid-template-columns: repeat(auto-fill, 400px);">
+                    <div v-for="i in 9" class="card w-100" style="max-width: 400px; border: none;">
+                        <div class="card-img-top p-0" style="aspect-ratio: 16 / 9;">
+                            <Skeleton border-radius="8px" height="220px"></Skeleton>
                         </div>
-                        <div class="card-body p-0" style="overflow: hidden; height: 130px;">
-                            <h4 class="m-0 px-2 pt-3 p-0">{{ news.title }}</h4>
-                            <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center" style="bottom: 5px;">
-                                <span class="bi bi-clock pe-1"></span>
-                                {{ news.type }} | {{ news.time }}</p>
+
+                        <div class="card-body p-0 mt-2 d-flex flex-column"
+                            style="height: 130px; justify-content: space-between;">
+                            <Skeleton border-radius="5px" height="30px" width="80%"></Skeleton>
+                            <Skeleton border-radius="2px" height="15px" width="50%" class="mb-4"></Skeleton>
                         </div>
-                        </RouterLink>
                     </div>
                 </div>
-                <button id="button" type="button" class="btn btn-lg m-3" v-on:click="moreNews()">Đọc thêm</button>
             </div>
-            <div id="no_item" v-else class="container-fluid my-5 d-flex justify-content-center align-items-center">
-                <h1>Không có tin tức nào phù hợp với danh mục này!</h1>
+
+            <div v-else class="container-fluid p-0">
+                <div v-if="newsdata.length != 0" class="container-fluid d-flex flex-column align-items-center">
+                    <div id="new_menu" class="container-fluid my-3 m-0 p-3 w-100"
+                        style=" max-width: 1600px; grid-template-columns: repeat(auto-fill, 400px);">
+                        <div id="new_card" v-for="news in newsdata" :key="news._id" class="card">
+                            <RouterLink :to="`/News/${news._id}`" class="text-decoration-none text-body">
+                                <div class="card-img-top p-0" style="overflow: hidden; aspect-ratio: 16 / 9;">
+                                    <img class="w-100" :src="news.img.link">
+                                </div>
+                                <div class="card-body p-0" style="overflow: hidden; height: 130px;">
+                                    <h4 class="m-0 px-2 pt-3 p-0">{{ news.title }}</h4>
+                                    <p class="m-0 p-2 pb-0 position-absolute d-flex align-items-center"
+                                        style="bottom: 5px;">
+                                        <span class="bi bi-clock pe-1"></span>
+                                        {{ news.type }} | {{ news.time }}
+                                    </p>
+                                </div>
+                            </RouterLink>
+                        </div>
+                    </div>
+                    <button id="button" type="button" class="btn btn-lg m-3" v-on:click="moreNews()">Đọc thêm</button>
+                </div>
+                <div id="no_item" v-else class="container-fluid my-5 d-flex justify-content-center align-items-center">
+                    <h1>Không có tin tức nào phù hợp với danh mục này!</h1>
+                </div>
             </div>
         </section>
 
 
         <!--Quảng cáo-->
-        <section id="advertisement" class="container-fluid py-3 px-3 d-flex justify-content-center align-items-center" style="gap: 20px; flex-wrap: wrap;">
-                <img src="/pictures/Ocany advertisement.webp" alt="Quảng cáo Ocany" class="w-100" style="max-width: 250px;">
-                <img src="/pictures/Jogarbola advertisement.jpg" alt="Quảng cáo Jogarbola" class="w-100" style="max-width: 250px;">
+        <section id="advertisement" class="container-fluid py-3 px-3 d-flex justify-content-center align-items-center"
+            style="gap: 20px; flex-wrap: wrap;">
+            <img src="/pictures/Ocany advertisement.webp" alt="Quảng cáo Ocany" class="w-100" style="max-width: 250px;">
+            <img src="/pictures/Jogarbola advertisement.jpg" alt="Quảng cáo Jogarbola" class="w-100"
+                style="max-width: 250px;">
         </section>
     </main>
 </template>
@@ -160,6 +192,8 @@ onMounted(async () => {
 
 #new_menu {
     #new_card {
+        max-width: 400px;
+
         h4 {
             color: rgb(0, 133, 205);
         }
@@ -182,7 +216,9 @@ onMounted(async () => {
 
 @media screen and (max-width: 575px) {
     #new_title_bg {
-        h1, p {
+
+        h1,
+        p {
             padding-left: 20px !important;
         }
     }

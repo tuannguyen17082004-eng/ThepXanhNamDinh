@@ -6,7 +6,7 @@
         <div id="not_found_content" class="container-fluid d-flex flex-column justify-content-center align-items-center">
             <h1>404</h1>
             <h2 class="pb-3 text-center">Không tìm thấy trang</h2>
-            <p class="text-center">Có vẻ trang bạn muốn tìm không khả dụng ngay lúc này. Hãy thử nhập lại URL, hoặc đợi đến khi thằng developer đủ thông minh để tạo ra trang nhé!</p>
+            <p class="text-center">Có vẻ trang bạn muốn tìm không khả dụng ngay lúc này. Hãy thử nhập lại URL, hoặc đợi đến khi thằng developer đủ thông minh để tạo ra trang này nhé!</p>
         </div>
     </section>
 </template>

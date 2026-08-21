@@ -10,6 +10,7 @@ const scoreboardRouter = require('./routes/ScoreboardRouter');
 const matchRouter = require('./routes/MatchRouter');
 const userRouter = require('./routes/UserRouter');
 const authRouter = require('./routes/AuthRouter');
+const seasonRouter = require('./routes/SeasonRouter');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 const { crawlScoreboardData } = require('./middleware/CrawlScoreboardData');
@@ -41,15 +42,16 @@ app.use('/api/scoreboard', scoreboardRouter);
 app.use('/api/match', matchRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/season', seasonRouter);
 
 app.listen(3000, '0.0.0.0', () => {
     console.log('Server is running');
 });
 
-crawlScoreboardData();
+crawlScoreboardData(2027);
 
 cron.schedule('* 6 * * *', () => {
-    crawlScoreboardData();
+    crawlScoreboardData(2027);
 })
 
 

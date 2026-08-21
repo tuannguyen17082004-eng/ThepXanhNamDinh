@@ -1,12 +1,12 @@
 import api from '@/config/default';
 import { toast } from 'vue3-toastify';
 
-export const GetAllMatch = async() => {
+export const GetAllMatch = async(season: any) => {
     try {
-        const res = await api.get("/match");
+        const res = await api.get("/match", { params: { season }});
         
         res.data.forEach((match : any) => {
-            match.time = new Date(match.time).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })
+            match.VNtime = new Date(match.time).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })
         });
 
         return res;
@@ -22,7 +22,7 @@ export const GetAllMatch = async() => {
 export const GetMatchDetail = async (id : any) => {
     try {
         const res = await api.get("/match/" + id);
-        res.data.time = new Date(res.data.time).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })
+        res.data.VNtime = new Date(res.data.time).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })
         return res;
 
     } catch (err : any) {
@@ -33,7 +33,7 @@ export const GetMatchDetail = async (id : any) => {
     }
 }
 
-export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFile: any, stadium : any, league : any, leaguelg : any, hometeam : any, hometeamlg : any, awayteam : any, awayteamlg : any, result : any, highlights : any, time : any) => {
+export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFile: any, season: any, stadium : any, league : any, leaguelg : any, hometeam : any, hometeamlg : any, awayteam : any, awayteamlg : any, result : any, highlights : any, time : any) => {
     try {
         const formData = new FormData();
 
@@ -59,6 +59,7 @@ export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFi
         formData.append("hometeamLogo", hometeamFile);
         formData.append("leagueLogo", leagueFile);
         formData.append("stadium", stadium);
+        formData.append("season", season);
         formData.append("league", league);
         formData.append("hometeam", hometeam);
         formData.append("awayteam", awayteam);
@@ -74,7 +75,7 @@ export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFi
     }
 }
 
-export const UpdateMatch = async (id: any, leagueFile: any, hometeamFile: any, awayteamFile: any, stadium : any, league : any, leaguelg : any, hometeam : any, hometeamlg : any, awayteam : any, awayteamlg : any, result : any, highlights : any, time : any) => {
+export const UpdateMatch = async (id: any, leagueFile: any, hometeamFile: any, awayteamFile: any, season : any, stadium : any, league : any, leaguelg : any, hometeam : any, hometeamlg : any, awayteam : any, awayteamlg : any, result : any, highlights : any, time : any) => {
     try {
         const formData = new FormData();
 
@@ -100,6 +101,7 @@ export const UpdateMatch = async (id: any, leagueFile: any, hometeamFile: any, a
         formData.append("hometeamLogo", hometeamFile);
         formData.append("leagueLogo", leagueFile);
         formData.append("stadium", stadium);
+        formData.append("season", season);
         formData.append("league", league);
         formData.append("hometeam", hometeam);
         formData.append("awayteam", awayteam);

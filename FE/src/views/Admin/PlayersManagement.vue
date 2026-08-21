@@ -1,66 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import DataTable from 'datatables.net-vue3';
-import DataTableCore from 'datatables.net-bs5';
+import { ref, onMounted, computed } from 'vue';
 import { GetAllPlayers } from '@/utils/PlayerUtils';
 import { type Player } from '@/models/player';
-import { toast } from 'vue3-toastify';
-
-DataTable.use(DataTableCore);
+import { DataTable, InputIcon, IconField, InputText, Skeleton, Tag } from 'primevue';
+import { FilterMatchMode } from '@primevue/core/api';
+import Column from 'primevue/column';
+import Search from '@primeicons/vue/search';
 
 const players = ref<Player[]>([]);
+const placeholders = Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }));
+let loading = ref(false);
+const first = ref(0);
+const rows = computed(() => (loading.value ? placeholders : players.value));
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
 
-const columns = [
-  { 
-    data: 'fullname',
-    title: 'Họ và tên',
-    className: 'col-md-3 col-6',
-    render: (data : any) => `<p class="m-2">${data}</p>`
-  },
-  { 
-    data: 'nationality.link', 
-    title: 'Quốc tịch', 
-    className: 'text-center col-2 h-100 d-none d-sm-table-cell',
-    render: (data : any) => `<img src="${data}" class="m-1" style="height: 35px; width: 55px;"/>`
-  },
-  {
-    data: 'birth',
-    title: 'Ngày sinh',
-    className: 'text-center col-3 d-none d-sm-table-cell',
-    render: (data : any) => `<p class="m-2">${data}</p>`
-  },
-  {
-    data: 'position',
-    title: 'Vị trí',
-    className: 'text-center col-2 col-md-1',
-    render: (data : any) => `<p class="m-2">${data}</p>`
-  },
-  {
-    data: 'number',
-    title: 'Số áo',
-    className: 'text-center col-2 col-md-1',
-    render: (data : any) => `<p class="m-2">${data}</p>`
-  },
-  {
-    data: null,
-    orderable: false,
-    className: 'col-2 text-center',
-    render: (data : any, type : any, row : any) => {
-      return `<a href="Players/${row._id}" class="m-2 p-0" data-id="${row._id}">Chi tiết</button>`
-    }
-  }
-];
 
 const GetPlayers = async () => {
+  loading.value = true;
+
+  setTimeout(async() => {
     const res = await GetAllPlayers(null);
-    if (!res) {
-            toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
-                position: toast.POSITION.TOP_CENTER,
-            })
-            return;
-        }
-      
-    players.value = res.data;
+
+    if (res) {
+      players.value = res.data;
+      loading.value = false;
+    }
+  }, 1000);     
 }
 
 onMounted( async() => {
@@ -83,7 +50,69 @@ onMounted( async() => {
         </div>
 
         <div id="data_table" class="container-fluid p-3 mt-4">
-            <DataTable class="table" :data="players" :columns="columns">
+            <IconField class="mb-3">
+                <InputIcon>
+                    <Search />
+                </InputIcon>
+                <InputText v-model="filters['global'].value" size="medium" placeholder="Tìm kiếm..." />
+            </IconField>
+
+            <DataTable v-model:filters="filters" :value="rows" showGridlines paginator sort-mode="multiple" scrollable
+                scroll-height="500px" removable-sort :rows="10" :first="first" filter-display="menu"
+                :global-filter-fields="['fullname', 'placeBirth', 'position', 'number', 'birth']"
+                paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+                :rowsPerPageOptions="[10, 25, 50]"
+                currentPageReportTemplate="Đang hiển thị {first} đến {last} trong tổng số {totalRecords} cầu thủ"
+                table-style="background-color: white;">
+                <template #empty>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 400px;">Không tìm thấy
+                        cầu thủ nào</div>
+                </template>
+
+                <Column field="fullname" header="Họ tên" style="min-width: 180px;" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0">{{ data.fullname }}</p>
+                    </template>
+                </Column>
+
+                <Column field="placeBirth" header="Nơi sinh" style="min-width: 200px;" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <div v-else class="container-fluid p-0 d-flex align-items-center">
+                            <img v-if="data.nationality" :src="data.nationality.link" class="me-3" alt="Quốc tịch">
+                            <p v-if="data.bio" class="m-0">{{ data.bio.placeBirth }}</p>
+                        </div>
+                    </template>
+                </Column>
+
+                <Column field="birth" header="Ngày sinh" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0 text-center">{{ data.birth }}</p>
+                    </template>
+                </Column>
+
+                <Column field="number" header="Số áo" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0 text-center">{{ data.number }}</p>
+                    </template>
+                </Column>
+
+                <Column field="position" header="Vị trí" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0 text-center">{{ data.position }}</p>
+                    </template>
+                </Column>
+
+                <Column style="min-width: 100px;">
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <RouterLink v-else :to="`Players/${data._id}`" class="text-center m-0">Chi tiết</RouterLink>
+                    </template>
+                </Column>
             </DataTable>
         </div>
     </main>
@@ -120,25 +149,14 @@ button:hover {
 
 #data_table {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     font-family: 'Barlow', sans-serif;
+    overflow-x: scroll;
+    scrollbar-width: none;
 
-    :deep(td) {
-      align-content: center;
-    }
-
-    :deep(.dt-search) {
-            display: flex;
-            gap: 10px;
-            font-weight: 600;
-    }
-
-    :deep(td p) {
-        font-weight: 500;
-    }
-
-    :deep(th) {
-        font-size: 18px;
+    img {
+        height: 20px;
+        aspect-ratio: 14 / 9;
     }
 }
 </style>

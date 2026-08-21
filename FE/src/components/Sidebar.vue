@@ -33,6 +33,11 @@
                     <i class="bi bi-person"><span class="px-2">Người dùng</span></i>
                 </RouterLink>
             </li>
+            <li class="nav-item">
+                <RouterLink to="/Admin/Season" class="text-decoration-none w-100 h-100 d-flex align-items-center">
+                    <i class="bi bi-globe"><span class="px-2">Mùa giải</span></i>
+                </RouterLink>
+            </li>
         </ul>
     </aside>
 </template>
@@ -44,7 +49,8 @@
     background-color: white;
     height: 100dvh;
     padding-top: 80px;
-    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
 
     ul {
         list-style: none;

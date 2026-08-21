@@ -36,7 +36,7 @@ onMounted(async () => {
 
         <section class="container-fluid p-0" style="background-color: rgb(0, 133, 205);">
             <div id="pd-btn" class="container-fluid py-3 px-4 d-flex justify-content-start align-items-center">
-                <RouterLink to="/Squad" class="text-decoration-none d-flex align-items-center">
+                <RouterLink to="/Squad" class="text-decoration-none d-flex align-items-center" style="width: max-content;">
                     <i class="bi bi-arrow-left p-0 px-2"></i>
                     <button class="btn btn-lg p-0 text-white">Quay lại</button>
                 </RouterLink>

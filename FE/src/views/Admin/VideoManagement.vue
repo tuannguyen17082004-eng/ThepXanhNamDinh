@@ -1,71 +1,97 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import DataTable from 'datatables.net-vue3';
-import DataTableCore from 'datatables.net-bs5';
+import { ref, onMounted, computed } from 'vue';
 import { toast } from 'vue3-toastify';
 import { GetAllVideos } from '@/utils/VideoUtils';
 import { type Video } from '@/models/video';
-
-DataTable.use(DataTableCore);
+import { DataTable, InputIcon, IconField, InputText, Skeleton, Tag } from 'primevue';
+import { FilterMatchMode } from '@primevue/core/api';
+import Column from 'primevue/column';
+import Search from '@primeicons/vue/search';
 
 const video = ref<Video[]>([]);
+const placeholders = Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }));
+let loading = ref(false);
+const first = ref(0);
+const rows = computed(() => (loading.value ? placeholders : video.value));
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
 
-const columns = [
-    {
-        data: 'title',
-        title: 'Tiêu đề',
-        className: 'col-6',
-        render: (data : any) => `<p class="m-2 line-clamp-2">${data}</p>`
-    },
-    {
-        data: 'time',
-        title: 'Ngày đăng',
-        className: 'text-center col-4',
-        render: (data : any) => `<p class="m-2">${data}</p>`
-    },
-    {
-        data: null,
-        orderable: false,
-        className: 'col-2 text-center',
-        render: (data : any, type : any, row : any) => {
-            return `<a href='Video/${row._id}' data-id="${row._id}">Chi tiết</button>`
+const GetVideo = async () => {
+    loading.value = true;
+
+    setTimeout(async () => {
+        const res = await GetAllVideos(null, null, null, null);
+
+        if (res) {
+            video.value = res.data;
+            loading.value = false;
         }
-    }
-]
-
-const GetVideo = async() => {
-    const res = await GetAllVideos(null, null, null, null);
-    
-    if (!res) {
-            toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
-                position: toast.POSITION.TOP_CENTER,
-            })
-            return;
-        }
-
-    video.value = res.data;
+    }, 1000);
 }
 
-onMounted(async() => {
+onMounted(async () => {
     await GetVideo();
 })
 </script>
 
 <template>
     <main class="container-fluid m-0" style="padding-top: 85px; min-height: 100dvh;">
-        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+        <div class="container-fluid px-3 py-4 d-flex align-items-center"
+            style="background-color: white; border-radius: 10px;">
             <div id="title_video" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Quản lý video</h5>
                 <p class="m-0 pt-1">Quản lý thông tin video trên hệ thống</p>
             </div>
 
             <RouterLink to="Video/Add" class="container-fluid p-0" style="width: max-content;">
-              <button class="btn btn-md m-0"><span class="bi bi-plus-lg pe-1"></span>Thêm</button>
+                <button class="btn btn-md m-0"><span class="bi bi-plus-lg pe-1"></span>Thêm</button>
             </RouterLink>
         </div>
-        
+
         <div id="data_table" class="container-fluid p-3 mt-4">
-            <DataTable class="table" :data="video" :columns="columns">
+            <IconField class="mb-3">
+                <InputIcon>
+                    <Search />
+                </InputIcon>
+                <InputText v-model="filters['global'].value" size="medium" placeholder="Tìm kiếm..." />
+            </IconField>
+
+            <DataTable v-model:filters="filters" :value="rows" showGridlines paginator sort-mode="multiple" scrollable
+                scroll-height="500px" removable-sort :rows="10" :first="first" filter-display="menu"
+                :global-filter-fields="['title']"
+                paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
+                :rowsPerPageOptions="[10, 25, 50]"
+                currentPageReportTemplate="Đang hiển thị {first} đến {last} trong tổng số {totalRecords} video"
+                table-style="background-color: white;">
+                <template #empty>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 400px;">Không tìm thấy
+                        video nào</div>
+                </template>
+
+                <Column field="title" header="Tiêu đề" style="min-width: 280px;" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <div v-else class="container p-0 d-flex align-items-center">
+                            <img v-if="data.poster" :src="data.poster.link" class="me-3" alt="Logo giải đấu">
+                            <p class="m-0" style="max-width: 40vw;">{{ data.title }}</p>
+                        </div>
+                    </template>
+                </Column>
+
+                <Column field="time" header="Ngày đăng" sortable>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <p v-else class="m-0 text-truncate">{{ data.time }}</p>
+                    </template>
+                </Column>
+
+                <Column>
+                    <template #body="{ data }">
+                        <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
+                        <RouterLink v-else :to="`Video/${data._id}`" class="text-center m-0 text-truncate">Chi tiết</RouterLink>
+                    </template>
+                </Column>
             </DataTable>
         </div>
     </main>
@@ -88,48 +114,28 @@ onMounted(async() => {
 }
 
 button {
-  width: 100px;
-  background-color: rgb(0, 133, 205);
-  color: white;
-  font-family: 'Barlow', sans-serif;
-  font-weight: 500;
+    width: 100px;
+    background-color: rgb(0, 133, 205);
+    color: white;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
 }
 
 button:hover {
-  background-color: rgb(0, 133, 205);
-  color: white;
+    background-color: rgb(0, 133, 205);
+    color: white;
 }
 
 #data_table {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     font-family: 'Barlow', sans-serif;
+    overflow-x: scroll;
+    scrollbar-width: none;
 
-    :deep(.dt-search) {
-            display: flex;
-            gap: 10px;
-            font-weight: 600;
-    }
-    
-    :deep(td) {
-        align-content: center;
-    }
-
-    :deep(td p) {
-        font-weight: 500;
-    }
-
-    :deep(th) {
-        font-size: 18px;
-        text-align: center;
-    }
-
-    :deep(.line-clamp-2) {
-        display: -webkit-box;
-        line-clamp: 2;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+    img {
+        height: 40px;
+        aspect-ratio: 16 / 9;
     }
 }
 </style>

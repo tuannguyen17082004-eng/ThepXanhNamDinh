@@ -10,7 +10,7 @@
             </div>
         </section>
 
-        <section id="introduction_content" class="container-fluid p-0 d-flex flex-column align-items-center">
+        <section id="introduction_content" class="container-fluid p-0">
             <div class="row w-100 m-0 p-4">
                 <div class="col-md-6 px-md-3 p-0 d-flex flex-column align-items-center justify-content-center">
                     <p class="mt-3">Câu lạc bộ Bóng đá Thép Xanh Nam Định là một trong những đội bóng giàu truyền thống và có lượng người hâm mộ đông đảo nhất Việt Nam. Đội bóng có trụ sở tại thành phố Nam Định, thi đấu tại V.League 1 – giải đấu cao nhất của bóng đá Việt Nam. Với lịch sử phát triển lâu đời cùng bản sắc riêng, Thép Xanh Nam Định luôn là niềm tự hào của người dân thành Nam và là biểu tượng của tinh thần đoàn kết, ý chí vươn lên trong thể thao.</p>
@@ -23,19 +23,20 @@
             </div>
 
             <div class="row w-100 m-0 p-4" style="background-color: rgb(0, 133, 205); color: white;">
-                <div class="col-md-6 p-sm-4" style="aspect-ratio: 16 / 9; overflow: hidden; background-image: url('/pictures/San 0.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                <div class="col-md-6 py-4 py-md-0">
+                    <img class="px-lg-3 h-100" src="/pictures/San 0.jpg" alt="2023-24" style="object-fit: cover; overflow: hidden;">
                 </div>
 
                 <div class="col-md-6 px-md-3 p-0 d-flex flex-column align-items-center justify-content-center">
                     <p>Sân vận động Thiên Trường là sân nhà của Thép Xanh Nam Định và được xem là một trong những sân vận động có bầu không khí sôi động nhất Việt Nam. Với sức chứa hơn 30.000 chỗ ngồi, nơi đây luôn ngập tràn sắc vàng của người hâm mộ trong mỗi trận đấu. Sự cổ vũ cuồng nhiệt từ các cổ động viên đã trở thành nguồn động lực to lớn, góp phần tạo nên bản sắc và sức mạnh tinh thần của đội bóng.</p>
 
-                    <div class="row p-0 m-0 w-100">
-                        <div class="col-6 p-0" style="aspect-ratio: 16 / 9; overflow: hidden;">
-                            <img src="/pictures/San 1.jpg" style="width: 100%;">
+                    <div class="row p-0 h-100 m-0 w-100">
+                        <div class="col-6 p-0">
+                            <img src="/pictures/San 1.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden;">
                         </div>
 
-                        <div class="col-6 ps-3 p-0" style="aspect-ratio: 16 / 9; overflow: hidden;">
-                            <img src="/pictures/San 2.jpg" style="width: 100%;">
+                        <div class="col-6 ps-3 p-0">
+                            <img src="/pictures/San 2.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden;">
                         </div>
                     </div>
                 </div>
@@ -94,6 +95,10 @@
         width: 100%;
         font-size: clamp(15px, 3vw, 20px);
         font-weight: 400;
+    }
+
+    img {
+        width: 100%;
     }
 }
 </style>

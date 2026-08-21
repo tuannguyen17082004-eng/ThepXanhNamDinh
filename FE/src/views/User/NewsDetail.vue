@@ -62,6 +62,7 @@ watch(id, async (newId) => {
                     <p>{{ news.time }}</p>
                 </div>
             </div>
+            
             <div id="news-content" class="container-fluid">
                 <p style="color: #012970; font-weight: 700;">Nguồn: {{ news.author }}</p>
                 <p id="content">{{ news.content }}</p>
