@@ -49,7 +49,6 @@
         </div>
         
         <div class="container d-flex align-items-center justify-content-end m-0 me-3 p-0" style="width: max-content;">
-            <i class="bi bi-bell"></i>
             <i class="bi bi-list" v-on:click="handleSidebar"></i>
             <div class="container p-0" style="height: 40px; overflow: hidden; aspect-ratio: 1 / 1; cursor: pointer;" v-on:click="() => router.push('/Profile')">
                 <img :src="a?.avatar.link" class="h-100 w-100 object-fit-cover" style="border-radius: 50%;">
