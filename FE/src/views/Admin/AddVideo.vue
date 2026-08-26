@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { CreateVideo } from '@/utils/VideoUtils';
+import Loading from '@/components/Loading.vue';
 import router from '@/router';
 
 const title = ref();
@@ -11,6 +12,7 @@ const video_link = ref();
 const video_file_2 = ref();
 let video_preview = ref();
 let video_png = ref();
+let isLoading = ref(false);
 
 const handleImg = (e : any) => {
     const file = e.target.files[0];
@@ -37,10 +39,12 @@ const handleVideo = (e : any) => {
 }
 
 const handleAdd = async () => {
+    isLoading.value = true;
     if (!title.value) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -48,6 +52,7 @@ const handleAdd = async () => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -55,6 +60,7 @@ const handleAdd = async () => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải video!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -64,12 +70,14 @@ const handleAdd = async () => {
             position: toast.POSITION.TOP_CENTER,
         });
         router.push('/Admin/Video');
+        isLoading.value = false;
     }
 }
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_video" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thêm video</h5>

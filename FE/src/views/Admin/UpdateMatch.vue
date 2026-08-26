@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import router from '@/router';
 import { useRoute } from 'vue-router';
 import { UpdateMatch, DeleteMatch, GetMatchDetail } from '@/utils/MatchUtils';
+import Loading from '@/components/Loading.vue';
 
 const route = useRoute();
 const id = route.params.id;
@@ -28,6 +29,7 @@ let league_png = ref();
 let hometeam_png = ref();
 let awayteam_png = ref();
 let time;
+let isLoading = ref(false);
 
 const FetchData = async() => {
     const res = await GetMatchDetail(id);
@@ -87,10 +89,12 @@ const handleAwayteamImg = (e : any) => {
 }
 
 const handleUpdate = async() => {
+    isLoading.value = true;
     if (!league.value || !date.value || !hour.value || !stadium.value || !hometeam.value || !awayteam.value) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -98,6 +102,7 @@ const handleUpdate = async() => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -109,6 +114,7 @@ const handleUpdate = async() => {
             position: toast.POSITION.TOP_CENTER,
         })
         router.push('/Admin/Match');
+        isLoading.value = false;
     }
 }
 
@@ -122,6 +128,7 @@ const handleDelete = async() => {
         confirmButtonText: "Chắc chắn rồi",
         cancelButtonText: "Chưa chắc lắm?"
     }).then(async (result) => {
+        isLoading.value = true;
         if (result.isConfirmed) {
             const res = await DeleteMatch(id);
 
@@ -130,6 +137,7 @@ const handleDelete = async() => {
                     position: toast.POSITION.TOP_CENTER,
                 });
                 router.push("/Admin/Match");
+                isLoading.value = false;
             }
         }
     });
@@ -141,7 +149,8 @@ onMounted(async() => {
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_video" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Cập nhật thông tin trận đấu</h5>

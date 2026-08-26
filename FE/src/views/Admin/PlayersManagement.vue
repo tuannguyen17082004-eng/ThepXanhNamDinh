@@ -37,7 +37,7 @@ onMounted( async() => {
 </script>
 
 <template>
-    <main class="container-fluid m-0" style="padding-top: 85px; min-height: 100dvh;">
+    <main class="container-fluid m-0" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_player" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Quản lý cầu thủ</h5>

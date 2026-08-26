@@ -6,7 +6,7 @@ import { Skeleton } from 'primevue';
 
 const videolist = ref<Video[]>([]);
 let loading = ref(false);
-const limit = 9;
+const limit = 12;
 let page = 1;
 const time = null, title = null;
 
@@ -50,7 +50,7 @@ onMounted(async () => {
             style="border-top: 10px solid rgb(0, 133, 205);">
             <div v-if="loading" class="container-fluid p-0">
                 <div id="video_menu" class="container-fluid my-3 m-0 p-3">
-                    <div v-for="i in 9" class="card w-100" style="max-width: 400px; border: none;">
+                    <div v-for="i in 6" class="card w-100" style="max-width: 400px; border: none;">
                         <div class="card-img-top p-0" style="aspect-ratio: 16 / 9;">
                             <Skeleton border-radius="8px" height="220px"></Skeleton>
                         </div>

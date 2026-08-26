@@ -2,8 +2,10 @@
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { AddPlayer } from '@/utils/PlayerUtils';
+import Loading from '@/components/Loading.vue';
 import router from '@/router';
 
+let isLoading = ref(false);
 const firstname = ref();
 const lastname = ref();
 const number = ref();
@@ -59,10 +61,12 @@ const handleBackground = (e : any) => {
 }
 
 const handleAdd = async() => {
+    isLoading.value = true;
     if (!firstname.value || !lastname.value || !number.value || !position.value || !height.value || !dateofbirth.value || !placeofbirth.value || !bio.value) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -70,6 +74,7 @@ const handleAdd = async() => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -79,14 +84,16 @@ const handleAdd = async() => {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         })
-        router.push("/Admin/Players")
+        router.push("/Admin/Players");
+        isLoading.value = false;
     }
 }
 
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_player" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thêm cầu thủ</h5>

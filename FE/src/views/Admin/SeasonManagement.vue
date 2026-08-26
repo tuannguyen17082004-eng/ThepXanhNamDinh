@@ -8,6 +8,7 @@ import { DataTable, InputIcon, IconField, InputText, Skeleton, Button } from 'pr
 import { FilterMatchMode } from '@primevue/core/api';
 import Column from 'primevue/column';
 import Search from '@primeicons/vue/search';
+import Loading from '@/components/Loading.vue';
 
 const seasonList = ref<Season[]>([]);
 const season = ref();
@@ -18,6 +19,7 @@ const rows = computed(() => (loading.value ? placeholders : seasonList.value));
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
+let isLoading = ref(false);
 
 const FetchSeason = async () => {
     loading.value = true;
@@ -33,6 +35,7 @@ const FetchSeason = async () => {
 }
 
 const AddSeason = async (season : any) => {
+    isLoading.value = true;
     const res = await CreateSeason(season);
 
     if (res) {
@@ -40,16 +43,19 @@ const AddSeason = async (season : any) => {
             position: toast.POSITION.TOP_CENTER,
         })
         await FetchSeason();
+        isLoading.value = false;
     }
 }
 
 const DelSeason = async (id: any) => {
+    isLoading.value = true;
     const res = await GetSeasonByID(id);
 
     if (!res) {
         toast.error('Không tìm thấy thông tin mùa giải này!', {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -62,6 +68,7 @@ const DelSeason = async (id: any) => {
         confirmButtonText: "Chắc chắn rồi",
         cancelButtonText: "Chưa chắc lắm?"
     }).then(async (result) => {
+        isLoading.value = true;
         if (result.isConfirmed) {
             const res = await DeleteSeason(id);
 
@@ -70,6 +77,7 @@ const DelSeason = async (id: any) => {
                     position: toast.POSITION.TOP_CENTER,
                 });
                 await FetchSeason();
+                isLoading.value = false;
             }
         }
     });
@@ -81,7 +89,8 @@ onMounted(async() => {
 </script>
 
 <template>
-    <main class="container-fluid m-0" style="padding-top: 85px; min-height: 100dvh;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid m-0" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center"
             style="background-color: white; border-radius: 10px;">
             <div id="title_season" class="container-fluid p-0 pe-5 m-0">

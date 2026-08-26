@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import Swal from 'sweetalert2';
 import { GetUserInformation, DisableUser, DeleteUser } from '@/utils/UserUtils';
+import Loading from '@/components/Loading.vue';
 import { type User } from '@/models/user';
 import router from '@/router';
 import { useRoute } from 'vue-router';
@@ -10,6 +11,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const id = route.params.id;
 const user = ref<User>();
+let isLoading = ref(false);
 
 const FetchUserByID = async (id: any) => {
     const res = await GetUserInformation(id);
@@ -38,6 +40,7 @@ const handleDisable = async () => {
             cancelButtonText: "Chưa chắc lắm?"
         })
         .then(async(result) => {
+            isLoading.value = true;
             if (result.isConfirmed) {
                 const res = await DisableUser(id);
 
@@ -45,7 +48,8 @@ const handleDisable = async () => {
                     toast.success(res.data, {
                         position: toast.POSITION.TOP_CENTER,
                     })
-                    router.push('/Admin/Users')
+                    router.push('/Admin/Users');
+                    isLoading.value = false;
                 }
             }
         })
@@ -61,6 +65,7 @@ const handleDisable = async () => {
             cancelButtonText: "Chưa chắc lắm?"
         })
         .then(async(result) => {
+            isLoading.value = true;
             if (result.isConfirmed) {
                 const res = await DisableUser(id);
 
@@ -68,7 +73,8 @@ const handleDisable = async () => {
                     toast.success(res.data, {
                         position: toast.POSITION.TOP_CENTER,
                     })
-                    router.push('/Admin/Users')
+                    router.push('/Admin/Users');
+                    isLoading.value = false;
                 }
             }
         })
@@ -86,6 +92,7 @@ const handleDelete = async () => {
         cancelButtonText: "Chưa chắc lắm?"
     })
     .then(async(result) => {
+        isLoading.value = true;
         if (result.isConfirmed) {
             const res = await DeleteUser(id);
 
@@ -94,6 +101,7 @@ const handleDelete = async () => {
                     position: toast.POSITION.TOP_CENTER,
                 })
                 router.push('/Admin');
+                isLoading.value = false;
             }
         }
     })
@@ -105,7 +113,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh;">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_user" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thông tin người dùng</h5>

@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { AddNews } from '@/utils/NewUtils';
+import Loading from '@/components/Loading.vue';
 import router from '@/router';
 
 const title = ref();
@@ -11,6 +12,7 @@ const content = ref();
 const news_url = ref();
 const news_file = ref();
 let news_png = ref();
+let isLoading = ref(false);
 
 const handleImg = (e : any) => {
     const file = e.target.files[0];
@@ -25,10 +27,12 @@ const handleImg = (e : any) => {
 }
 
 const handleAdd = async () => {
+    isLoading.value = true;
     if (!title.value || !type.value || !author.value || !content.value) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -36,21 +40,25 @@ const handleAdd = async () => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
     const res = await AddNews(news_file.value, news_url.value, title.value, type.value, author.value, content.value);
+
     if (res) {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         })
-        router.push("/Admin/News")
+        router.push("/Admin/News");
+        isLoading.value = false;
     }
 }
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_news" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thêm tin tức</h5>

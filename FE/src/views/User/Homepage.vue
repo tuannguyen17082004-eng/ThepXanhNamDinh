@@ -129,7 +129,7 @@ onMounted(async () => {
                 </div>
 
                 <div v-else id="previous_match" class="container m-0 p-2 d-flex justify-content-center align-items-center h-100">
-                    <h5>Không có dữ liệu!</h5>
+                    <h5 class="m-0">Không có dữ liệu!</h5>
                 </div>
 
                 <!--Trận tiếp theo-->
@@ -150,7 +150,7 @@ onMounted(async () => {
                 </div>
 
                 <div v-else id="next_match" class="container m-0 ms-2 p-2 d-flex justify-content-center align-items-center h-100">
-                    <h5>Không có dữ liệu!</h5>
+                    <h5 class="m-0">Không có dữ liệu!</h5>
                 </div>
 
                 <!--Bảng xếp hạng-->

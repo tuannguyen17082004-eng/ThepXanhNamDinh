@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import router from '@/router';
 import { useRoute } from 'vue-router';
 import { UpdateVideo, DeleteVideo, GetVideoById } from '@/utils/VideoUtils';
+import Loading from '@/components/Loading.vue';
 
 const route = useRoute();
 const id = route.params.id;
@@ -16,6 +17,7 @@ const video_link = ref();
 const video_file_2 = ref();
 let video_preview = ref();
 let video_png = ref();
+let isLoading = ref(false);
 
 const handleImg = (e : any) => {
     const file = e.target.files[0];
@@ -52,10 +54,12 @@ const FetchVideoById = async (id: any) => {
 }
 
 const handleUpdate = async () => {
+    isLoading.value = true;
     if (!title.value) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -63,6 +67,7 @@ const handleUpdate = async () => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -70,6 +75,7 @@ const handleUpdate = async () => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải video!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -79,6 +85,7 @@ const handleUpdate = async () => {
             position: toast.POSITION.TOP_CENTER,
         });
         router.push("/Admin/Video");
+        isLoading.value = false;
     }
 }
 
@@ -92,6 +99,7 @@ const handleDelete = async () => {
         confirmButtonText: "Chắc chắn rồi",
         cancelButtonText: "Chưa chắc lắm?"
     }).then(async (result) => {
+        isLoading.value = true;
         if (result.isConfirmed) {
             const res = await DeleteVideo(id);
 
@@ -100,6 +108,7 @@ const handleDelete = async () => {
                     position: toast.POSITION.TOP_CENTER,
                 });
                 router.push("/Admin/Video");
+                isLoading.value = false;
             }
         }
     });
@@ -111,7 +120,8 @@ onMounted( async () => {
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_video" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Cập nhật video</h5>

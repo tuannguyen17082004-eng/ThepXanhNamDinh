@@ -7,7 +7,7 @@ import { Skeleton } from "primevue";
 let newsdata = ref<News[]>([]);
 let loading = ref(true);
 let page = 1;
-const limit = 9;
+const limit = 12;
 let type: string | null = null;
 let title: string | null = null;
 let author: string | null = null;
@@ -71,7 +71,7 @@ onMounted(async () => {
             <div v-if="loading" class="container-fluid p-0">
                 <div id="new_menu" class="container-fluid my-3 m-0 p-3 w-100"
                     style=" max-width: 1600px; grid-template-columns: repeat(auto-fill, 400px);">
-                    <div v-for="i in 9" class="card w-100" style="max-width: 400px; border: none;">
+                    <div v-for="i in 6" class="card w-100" style="max-width: 400px; border: none;">
                         <div class="card-img-top p-0" style="aspect-ratio: 16 / 9;">
                             <Skeleton border-radius="8px" height="220px"></Skeleton>
                         </div>

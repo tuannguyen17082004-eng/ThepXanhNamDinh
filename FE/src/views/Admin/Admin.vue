@@ -48,8 +48,8 @@
 </script>
 
 <template>
-    <main class="container-fluid m-0 px-3" style="padding-top: 70px; min-height: 100dvh;">
-        <section id="number_section" class="row w-100 p-0 m-0 mt-2">
+    <main class="container-fluid m-0 px-3" style="height: 100dvh;">
+        <section id="number_section" class="row w-100 p-0 m-0">
             <div class="row col-xl-6 p-0 m-0">
                 <div id="number_card" class="col-sm-6 pt-3 p-0 py-sm-2 pe-sm-2">
                     <div id="card_content" class="container-fluid p-3">

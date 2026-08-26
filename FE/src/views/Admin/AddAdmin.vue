@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { CreateAdmin } from '@/utils/AuthUtils';
+import Loading from '@/components/Loading.vue';
 import router from '@/router';
 
 const name = ref()
@@ -9,12 +10,15 @@ const email = ref()
 const password = ref()
 const gender = ref()
 const phone = ref()
+let isLoading = ref(false);
 
 const handleSubmit = async () => {
+    isLoading.value = true;
     if (!name.value || !email.value || !password.value || !gender.value || !phone.value) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -23,13 +27,15 @@ const handleSubmit = async () => {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         router.push('/Admin');
     }
 }
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_user" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thêm tài khoản quản lý</h5>

@@ -4,6 +4,7 @@ import { toast } from 'vue3-toastify';
 import { CreateMatch } from '@/utils/MatchUtils';
 import { GetAllSeason } from '@/utils/SeasonUtils';
 import { type Season } from '@/models/season';
+import Loading from '@/components/Loading.vue';
 import router from '@/router';
 
 const league = ref();
@@ -25,6 +26,7 @@ let league_png = ref();
 let hometeam_png = ref();
 let awayteam_png = ref();
 let time;
+let isLoading = ref(false);
 const seasonList = ref<Season[]>([]);
 
 const handleLeagueImg = (e : any) => {
@@ -64,10 +66,12 @@ const handleAwayteamImg = (e : any) => {
 }
 
 const handleAdd = async() => {
+    isLoading.value = true;
     if (!season.value || !league.value || !date.value || !hour.value || !stadium.value || !hometeam.value || !awayteam.value || (!hometeam_file.value && !hometeam_url.value) || (!awayteam_file.value && !awayteam_url.value)) {
         toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -75,6 +79,7 @@ const handleAdd = async() => {
         toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
             position: toast.POSITION.TOP_CENTER,
         })
+        isLoading.value = false;
         return;
     }
 
@@ -86,6 +91,7 @@ const handleAdd = async() => {
             position: toast.POSITION.TOP_CENTER,
         })
         router.push('/Admin/Match');
+        isLoading.value = false;
     }
 }
 
@@ -108,7 +114,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="container-fluid p-3" style="margin-top: 70px; min-height: 100dvh;">
+    <Loading v-if="isLoading"/>
+    <main class="container-fluid p-3" style="height: 100dvh">
         <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
             <div id="title_video" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thêm thông tin trận đấu</h5>
