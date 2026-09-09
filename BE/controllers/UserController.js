@@ -43,6 +43,29 @@ module.exports.getUserById = async (req, res) => {
     }
 }
 
+module.exports.getProfile = async (req, res) => {
+    try {
+        const userFind = await UserModel.findById(req.data.id);
+
+        res.status(200).json(user = {
+            id: userFind._id,
+            name: userFind.name,
+            gender: userFind.gender,
+            email: userFind.email,
+            phone: userFind.phone,
+            city: userFind.city,
+            country: userFind.country,
+            avatar: userFind.avatar,
+            role: userFind.role,
+            isActived: userFind.isActived
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Internal server error");
+    }
+}
+
 module.exports.createUser = async (req, res) => {
     try {
         const { name, gender, email, phone, password, otp } = req.body;
@@ -129,8 +152,10 @@ module.exports.verifyUser = async (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
     try {
-        const { name, gender, email, phone, city, country } = req.body;
-        const user = await UserModel.findById(req.params.id);
+        let { id, name, gender, email, phone, city, country } = req.body;
+        
+        if (!id) id = req.data.id;
+        const user = await UserModel.findById(req.data.id);
 
         if (!user) {
             return res.status(404).send("Không tìm thấy tài khoản!");
@@ -138,7 +163,7 @@ module.exports.updateUser = async (req, res) => {
 
         let avatarLink = user.avatar.link, avatarId = user.avatar.id;
 
-        if (!name || !gender || !email || !phone || !city || !country || !req.file) {
+        if (!name || !gender || !email || !phone || !city || !country) {
             return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");
         }
 
@@ -152,7 +177,7 @@ module.exports.updateUser = async (req, res) => {
         }
 
         const updatedUser = await UserModel.findByIdAndUpdate(
-            req.params.id,
+            req.data.id,
             {
                 name,
                 gender,
@@ -194,7 +219,9 @@ module.exports.disableUser = async (req, res) => {
 
 module.exports.deleteUser = async (req, res) => {
     try {
-        const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+        let id = req.params.id;
+        if (!id) id = req.data.id;
+        const deletedUser = await UserModel.findByIdAndDelete(id);
         res.status(200).send("Xóa tài khoản thành công!");
     } 
     catch (err) 

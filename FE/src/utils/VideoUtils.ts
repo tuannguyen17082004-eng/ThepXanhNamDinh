@@ -55,7 +55,7 @@ export const CreateVideo = async(linkFile : any, posterFile : any, video_url : a
         const formData = new FormData();
 
         if (video_url)
-            formData.append("link_url", video_url);
+            formData.append("video_url", video_url);
 
         if (poster_url)
             formData.append("poster_url", poster_url);

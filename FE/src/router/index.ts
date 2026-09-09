@@ -28,6 +28,9 @@ import NewsManagement from '@/views/Admin/NewsManagement.vue'
 import PlayersManagement from '@/views/Admin/PlayersManagement.vue'
 import VideoManagement from '@/views/Admin/VideoManagement.vue'
 import UserManagement from '@/views/Admin/UserManagement.vue'
+import ClubManagement from '@/views/Admin/ClubManagement.vue'
+import AddClub from '@/views/Admin/AddClub.vue'
+import UpdateClub from '@/views/Admin/UpdateClub.vue'
 import SeasonManagement from '@/views/Admin/SeasonManagement.vue'
 import ChangePassword from '@/views/User/ChangePassword.vue'
 import AddPlayer from '@/views/Admin/AddPlayer.vue'
@@ -102,6 +105,9 @@ const routes = [{
     {path: 'Match', component: MatchManagement},
     {path: 'Match/Add', component: AddMatch},
     {path: 'Match/:id', component: UpdateMatch},
+    {path: 'Club', component: ClubManagement},
+    {path: 'Club/Add', component: AddClub},
+    {path: 'Club/:id', component: UpdateClub},
     {path: 'Season', component: SeasonManagement}
   ]
 }]

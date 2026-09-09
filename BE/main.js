@@ -11,8 +11,10 @@ const matchRouter = require('./routes/MatchRouter');
 const userRouter = require('./routes/UserRouter');
 const authRouter = require('./routes/AuthRouter');
 const seasonRouter = require('./routes/SeasonRouter');
+const clubRouter = require('./routes/ClubRouter');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
+const passport = require('./config/passport_config');
 const { crawlScoreboardData } = require('./middleware/CrawlScoreboardData');
 
 dotenv.config();
@@ -35,6 +37,7 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
+app.use(passport.initialize());
 app.use('/api/players', playerRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/videos', videoRouter);
@@ -43,7 +46,7 @@ app.use('/api/match', matchRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/season', seasonRouter);
-
+app.use('/api/club', clubRouter);
 app.listen(3000, '0.0.0.0', () => {
     console.log('Server is running');
 });

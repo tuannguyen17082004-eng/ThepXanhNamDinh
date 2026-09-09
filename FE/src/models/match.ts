@@ -1,3 +1,5 @@
+import { Club } from "./club";
+
 export interface Match{
     _id: string,
     stadium: string,
@@ -6,16 +8,8 @@ export interface Match{
         link: string,
         id: string
     },
-    hometeam: string,
-    hometeamlg: {
-        link: string,
-        id: string
-    },
-    awayteam: string,
-    awayteamlg: {
-        link: string,
-        id: string
-    },
+    hometeam: Club,
+    awayteam: Club,
     result: string,
     highlight: string,
     time: string,

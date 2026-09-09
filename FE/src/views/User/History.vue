@@ -15,7 +15,7 @@
             </div>
 
             <div class="row p-0 m-0 w-100 px-4">
-                <div class="col-lg-6 p-0">
+                <div class="col-lg-6 p-0 d-flex flex-column justify-content-center">
                     <h3>Thời kỳ hoàng kim và chức vô địch đầu tiên</h3>
 
                     <p>Năm 1965, câu lạc bộ chính thức được thành lập với tên gọi Thanh niên Nam Hà (thời gian này Nam Hà gồm tỉnh Hà Nam và Nam Định nhập lại), đến năm 1978 đổi tên thành Công nghiệp Hà Nam Ninh. Đây là tiền thân của đội Nam Định ngày nay. Bắt đầu đá ở hạng cao nhất mùa giải 1983, nhưng chỉ sau hai mùa đội đã nhảy vọt từ chỗ không được ai đánh giá cao thoáng chốc trở thành tên tuổi lớn của bóng đá nước nhà. Dẫn dắt đội lên ngôi vô địch khi đó là HLV Lâm Ngọc Lập, một HLV rất “dị”, người duy nhất vô địch quốc gia (VĐQG) cả bóng đá nam lẫn bóng đá nữ. Sau này ông Lập nhận lời giúp đỡ đội bóng nữ Than Quảng Ninh và dẫn dắt đội đoạt chức VĐQG. “Chiếc Cup VĐQG năm 1985 giờ ông Lập vẫn giữ trong nhà, nhất quyết không giao kỷ vật vô giá này cho ai”, ông Mẫn nói. Đây cũng là chức vô địch quốc gia đầu tiên của Câu lạc bộ. “Cứ nhắc đến Công nghiệp Hà Nam Ninh là người ta nhớ về một đội bóng nghèo, một đội bóng của những người công nhân, chơi đẹp và chơi kỹ thuật. Nhắc đến đội bóng này là nhắc về chức vô địch lịch sử năm 1985. Một mùa giải mà chúng tôi bất bại, không thua một trận đấu nào, khi thời gian đó sở hữu một dàn cầu thủ đồng đều, chất lượng…”, cựu danh thủ Đặng Gia Mẫn bùi ngùi nhắc lại ký ức của 30 năm trước.</p>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="row p-0 m-0 w-100 px-4">
-                <div class="col-lg-6 p-0">
+                <div class="col-lg-6 p-0 d-flex flex-column justify-content-center">
                     <p>Chức vô địch mùa giải năm 1985 còn được nhớ đến khi nó gắn với một sự cố lùm xùm về dàn xếp tỷ số giữa Công an Hà Nội và Thể Công để cùng vào bán kết loại Cảng Sài Gòn ở bảng B, sau đó Tổng cục Thể dục thể thao đã yêu cầu cả Thể Công và Công an Hà Nội rút lui. Hai đội bảng A vào chung kết và Công nghiệp Hà Nam Ninh đã đánh bại Sở Công nghiệp TP.HCM 3-1 để lên ngôi. Ông Mẫn nhớ lại, đó là trận chung kết máu lửa vì Sở Công nghiệp khi đó rất mạnh, nhưng các cầu thủ phía ông đã chơi đầy quả cảm, tấn công không biết mệt mỏi để cuối cùng giành chiến thắng xứng đáng.</p>
 
                     <p>Chỉ một chức vô địch, tên tuổi của bóng đá thành Nam đã nổi như cồn và nhiều cầu thủ của đội cũng phần nào “đổi đời” khi được ca tụng bước ra từ bóng tối. Thế nhưng đội lại chỉ tồn tại một thời gian ngắn ngủi. Theo cựu danh thủ Nguyễn Văn Dũng thì nguyên nhân đầu tiên vẫn là tiền. Niềm đam mê thì cả đội có thừa nhưng đúng là khi nhà máy phải nuôi cầu thủ hết ngày này qua tháng nọ chỉ để thi đấu thì đó là gánh nặng cho tất cả các công ty thời bao cấp. Chính vì thế sau hai mùa giải VĐQG tiếp theo vẫn duy trì phần nào phong độ thì đến năm 1988 đội bóng buộc phải giải tán. Các cầu thủ đều buồn bã, tứ tán mỗi người một phương, người tiếp tục theo đuổi bóng đá, người đi làm việc khác.</p>
@@ -71,7 +71,7 @@
                     <img src="/pictures/Mikado Nam Định.jpg" alt="Mikado Nam Định" class=" px-lg-3 h-100" style="object-fit: cover; overflow: hidden;">
                 </div>
 
-                <div class="col-lg-6 p-0 pt-3 pt-lg-0">
+                <div class="col-lg-6 p-0 pt-3 pt-lg-0 d-flex flex-column justify-content-center">
                     <h3>Giai đoạn khủng hoảng và sự hồi sinh</h3>
 
                     <p>Tại mùa giải hạng Nhất đầu tiên, Mikado tài trợ và tên gọi cùng biểu trưng Mikado Nam Định được sử dụng trở lại. Khủng hoảng tiếp tục đeo bám đội khi Mikado Nam Định tiếp tục xuống chơi tại giải hạng Nhì 2012. Tại giải hạng Nhì 2012 Mikado Nam Định đã thất bại trong cuộc đua thăng hạng nhất sau thất bại trên chấm phạt đền trước đội trẻ Khánh Hòa ở bán kết. Mikado vẫn tiếp tục tài trợ nhưng đã rút lui sau khi kết thúc mùa giải.</p>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="row p-0 pt-3 px-4 m-0 w-100">
-                <div class="col-lg-6 p-0 pt-3">
+                <div class="col-lg-6 p-0 pt-3 d-flex flex-column justify-content-center">
                     <h3>Kỷ nguyên mới</h3>
 
                     <p>Mùa giải đầu tiên trở lại V.League, Nam Định đứng thứ 13 trên bảng xếp hạng và phải thi đấu trận play-off với câu lạc bộ Hà Nội B (nay là Hồng Lĩnh Hà Tĩnh) để tranh tấm vé duy nhất cho một suất thi đấu ở V.League 2019. Đội đã giành chiến thắng với tỷ số 5-3 sau loạt sút phạt đền 11m (hòa 0-0 sau 90 phút), qua đó tiếp tục ở lại V.League mùa bóng sang năm. Năm 2019, đội ra mắt nhà tài trợ mới Công ty cổ phần Dược phẩm Nam Hà và đổi tên thành Câu lạc bộ Bóng đá Dược Nam Hà Nam Định để thi đấu tại V.League 2019. Tại mùa giải này, đội đã có trận hòa 2-2 trước Hoàng Anh Gia Lai.</p>
@@ -102,7 +102,7 @@
             </div>
 
             <div class="row p-0 pt-3 px-4 m-0 w-100">
-                <div class="col-lg-6 p-0 pt-3">
+                <div class="col-lg-6 p-0 pt-3 d-flex flex-column justify-content-center">
                     <p>Năm 2023, câu lạc bộ được đổi tên thành Thép Xanh Nam Định dựa theo nhà tài trợ chính. Kết thúc mùa giải 2023, đội xếp hạng 5 chung cuộc. Bước sang mùa giải 2023-24, đội bóng có được khởi đầu tốt, sớm vươn lên vị trí dẫn đầu từ những vòng đấu đầu tiên và giữ vững ngôi đầu đến cuối mùa giải. Tại vòng 25, đội bóng giành chiến thắng 5-1 trước Khánh Hòa trên sân nhà Thiên Trường và giành ngôi vô địch V.League 1 sớm một vòng đấu. Đây là chức vô địch V.League đầu tiên và là chức vô địch quốc gia thứ hai trong lịch sử câu lạc bộ, kết thúc 39 năm chờ đợi kể từ danh hiệu năm 1985.</p>
             
                     <p>Ở mùa giải 2024-25, Thép Xanh Nam Định vô địch sớm trước một vòng đấu. Khép lại 26 vòng, đội bóng thành Nam đạt 57 điểm, hơn 8 điểm so với đội đứng thứ 2 là Hà Nội FC. Lần thứ 2 liên tiếp đoàn quân của HLV Vũ Hồng Việt vô địch tuyệt đối và đi vào lịch sử bóng đá Việt Nam với tư cách là một trong những CLB bảo vệ thành công ngôi vô địch V.League. Thực tế, hành trình lên ngôi của Thép Xanh Nam Định đã không dễ dàng nếu các đối thủ cạnh tranh có được phong độ ổn định và thể hiện được hết sức mạnh. Hà Nội FC, CAHN, Thể Công Viettel... đều gặp không ít vấn đề ở mùa giải năm nay. Sân Thiên Trường trong ngày Thép Xanh Nam Định đá trận cuối LPBank V-League 2024/25 không còn một chỗ trống. Dù đội nhà vô địch sớm trước một vòng đấu, nhưng được trực tiếp chứng kiến các cầu thủ nâng Cúp luôn mang lại cảm xúc đặc biệt với người hâm mộ. Chiến thắng 1-0 trước Hà Tĩnh càng khiến bữa tiệc của Thép Xanh Nam Định trở nên trọn vẹn. Màn pháo hoa ăn mừng, màn rước Cúp và những tiếng bài hát dành cho nhà vô địch khiến buổi tối 22/6 không thể nào quên với những ai có mặt trên sân Thiên Trường, đặc biệt là thầy trò HLV Vũ Hồng Việt.</p>

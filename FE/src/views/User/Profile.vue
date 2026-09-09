@@ -2,15 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { Logout } from '@/utils/AuthUtils';
-import { GetUserInformation } from '@/utils/UserUtils';
+import { GetProfile } from '@/utils/UserUtils';
 import { type User } from '@/models/user';
 import router from '@/router';
 
 const u = ref<User>();
 
 const GetUser = async () => {
-    const id = localStorage.getItem("bruh");
-    const res = await GetUserInformation(id);
+    const res = await GetProfile();
 
     if (res)
         u.value = res.data;
@@ -47,7 +46,7 @@ onMounted(async () => {
                     </div>
                     <div class="container p-0 px-3 d-flex flex-column justify-content-center">
                         <h5>{{ u.name }}</h5>
-                        <p class="m-0">{{ u.email }}</p>
+                        <p class="m-0 text-ellipsis">{{ u.email }}</p>
                     </div>
                 </div>
 
@@ -154,6 +153,7 @@ onMounted(async () => {
             }
 
             p {
+                text-overflow: ellipsis;
                 font-size: clamp(15px, 2vw, 17px);
                 font-weight: 400;
                 height: max-content;

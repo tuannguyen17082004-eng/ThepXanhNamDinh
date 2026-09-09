@@ -6,7 +6,6 @@ export const Login = async (email: any, password: any) => {
     try {
         const res = await api.post("/auth/login", { email, password }, { withCredentials: true });
 
-        localStorage.setItem("bruh", res.data.id);
         return res;
     } 
     catch (err : any) {
@@ -21,9 +20,20 @@ export const Logout = async () => {
     try {
         const res = await api.post("/auth/logout", { withCredentials: true });
 
-        localStorage.clear();
         return res;
     } 
+    catch (err : any) {
+        console.log("Something wrong at FE:" + err.response.data);
+        toast.error(err.response.data, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+
+export const GoogleLogin = async () => {
+    try {
+        window.location.href = `${import.meta.env.VITE_BE_PORT}/auth/google`;
+    }
     catch (err : any) {
         console.log("Something wrong at FE:" + err.response.data);
         toast.error(err.response.data, {

@@ -8,15 +8,15 @@ const matchSchema = new mongoose.Schema({
         link: { type: String, require: true },
         id: { type: String, require: true }
     },
-    hometeam: {type: String, require: true},
-    hometeamlg: {
-        link: { type: String, require: true },
-        id: { type: String, require: true }
+    hometeam: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Club',
+        require: true
     },
-    awayteam: { type: String, require: true },
-    awayteamlg: {
-        link: { type: String, require: true },
-        id: { type: String, require: true }
+    awayteam: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Club',
+        require: true
     },
     result: { type: String },
     highlight: { type: String },

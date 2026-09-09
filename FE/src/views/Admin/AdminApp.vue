@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SidebarLayout, SidebarBackdrop, SidebarTrigger, SidebarSpacer, SidebarAside, SidebarPanel, Sidebar, SidebarHeader, SidebarMain, SidebarContent, SidebarFooter } from 'primevue';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { GetUserInformation } from '@/utils/UserUtils';
+import { ref, onMounted } from 'vue';
+import { GetProfile } from '@/utils/UserUtils';
 import { type User } from '@/models/user';
 import router from '@/router';
 
@@ -26,8 +26,7 @@ const CheckSidebar = () => {
 }
 
 const GetUser = async () => {
-    const id = localStorage.getItem('bruh');
-    const res = await GetUserInformation(id);
+    const res = await GetProfile();
     a.value = res?.data;
 }
 
@@ -102,6 +101,12 @@ onMounted(async () => {
                                             <i class="bi bi-globe"><span class="px-2">Mùa giải</span></i>
                                         </RouterLink>
                                     </li>
+                                    <li class="nav-item">
+                                        <RouterLink to="/Admin/Club"
+                                            class="text-decoration-none w-100 h-100 d-flex align-items-center">
+                                            <i class="bi bi-card-list"><span class="px-2">Dữ liệu CLB</span></i>
+                                        </RouterLink>
+                                    </li>
                                 </ul>
                             </div>
                         </SidebarContent>
@@ -119,7 +124,7 @@ onMounted(async () => {
                         <RouterLink to="/Profile" class="text-decoration-none w-100 h-100 d-flex align-items-center">
                             <img :src="a?.avatar.link" class="h-100 object-fit-cover"
                                 style="aspect-ratio: 1 / 1; border-radius: 50%;">
-                            <p class="m-0 mx-2" style="color: #012970;">{{ a?.name }}</p>
+                            <p class="m-0 mx-2 d-none d-sm-block" style="color: #012970;">{{ a?.name }}</p>
                         </RouterLink>
                     </div>
                 </header>

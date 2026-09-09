@@ -10,8 +10,8 @@ module.exports.GetAllNews = async (req, res) => {
         if (type) filter.type = type;
         if (author) filter.author = author;
 
-        const news = await NewModel.find(filter).sort({time: -1}).skip((page - 1) * limit).limit(limit);
-        res.status(200).json(news);
+        const newsList = await NewModel.find(filter).sort({time: -1}).skip((page - 1) * limit).limit(limit);
+        res.status(200).json(newsList);
 
     } catch (err) {
         console.log(err);

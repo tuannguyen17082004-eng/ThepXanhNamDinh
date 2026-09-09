@@ -19,7 +19,7 @@ const news_file = ref();
 let news_png = ref();
 let isLoading = ref(false);
 
-const handleImg = (e : any) => {
+const handleImg = (e: any) => {
     const file = e.target.files[0];
     if (!file) {
         news_png.value = null;
@@ -62,18 +62,20 @@ const handleUpdate = async () => {
     }
 
     const res = await UpdateNews(id, news_file.value, news_url.value, title.value, type.value, author.value, content.value);
+    
     if (res) {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         })
         router.push("/Admin/News");
-        isLoading.value = false;
+
     }
+    isLoading.value = false;
 }
 
 const handleDelete = async () => {
     Swal.fire({
-        html: `Bạn chắc chắn muốn xóa cầu thủ này chứ?`,
+        html: `Bạn chắc chắn muốn xóa tin tức này chứ?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: '#0085CD',
@@ -96,22 +98,24 @@ const handleDelete = async () => {
     });
 }
 
-onMounted( async() => {
+onMounted(async () => {
     FetchNewsByID(id);
 })
 </script>
 
 <template>
-    <Loading v-if="isLoading"/>
+    <Loading v-if="isLoading" />
     <main class="container-fluid p-3" style="height: 100dvh">
-        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+        <div class="container-fluid px-3 py-4 d-flex align-items-center"
+            style="background-color: white; border-radius: 10px;">
             <div id="title_news" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Cập nhật tin tức</h5>
                 <p class="m-0 pt-1">Nhập đầy đủ thông tin cần thiết</p>
             </div>
 
             <RouterLink to="/Admin/News" class="container-fluid p-0" style="width: max-content;">
-              <button id="back_btn" class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay lại</button>
+                <button id="back_btn" class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay
+                    lại</button>
             </RouterLink>
         </div>
 
@@ -147,7 +151,7 @@ onMounted( async() => {
             <div class="row w-100 m-0 p-0 d-flex justify-content-center">
                 <div class="col-sm-6 p-3">
                     <h3>Ảnh (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img :src="news_png" id="selfie_png" width="200" class="my-2"> 
+                    <img :src="news_png" id="selfie_png" width="200" class="my-2">
                     <input type="file" class="form-control mb-3" @change="handleImg">
                     <input v-model="news_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>

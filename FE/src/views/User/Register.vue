@@ -47,7 +47,7 @@
                 <div id="register_content" class="container-fluid p-0">
                     <div class="container-fluid py-3">
                         <h5 class="pb-2">Email*</h5>
-                        <input v-model="email" class="form-control" type="email" placeholder="Email...">
+                        <input v-model="email" class="form-control" type="email" placeholder="Example@gmail.com">
                     </div>
                     <div class="container-fluid py-3">
                         <h5 class="pb-2">Họ tên*</h5>

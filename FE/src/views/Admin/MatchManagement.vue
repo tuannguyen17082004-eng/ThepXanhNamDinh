@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { toast } from 'vue3-toastify';
 import { GetAllMatch } from '@/utils/MatchUtils';
 import { GetAllSeason } from '@/utils/SeasonUtils';
@@ -132,14 +132,14 @@ onMounted(async () => {
                 <Column field="hometeam" header="Đội nhà" sortable>
                     <template #body="{ data }">
                         <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
-                        <p v-else class="m-0 text-truncate">{{ data.hometeam }}</p>
+                        <p v-else class="m-0 text-truncate">{{ data.hometeam.name }}</p>
                     </template>
                 </Column>
 
                 <Column field="awayteam" header="Đội khách" sortable>
                     <template #body="{ data }">
                         <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
-                        <p v-else class="m-0 text-truncate">{{ data.awayteam }}</p>
+                        <p v-else class="m-0 text-truncate">{{ data.awayteam.name }}</p>
                     </template>
                 </Column>
 

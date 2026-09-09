@@ -20,8 +20,8 @@ module.exports.crawlScoreboardData = async (season) => {
     const win = $(el).find("td").eq(3).text().trim();
     const draw = $(el).find("td").eq(4).text().trim();
     const loss = $(el).find("td").eq(5).text().trim();
-    const goaldiff = $(el).find("td").eq(6).text().trim();
-    const point = $(el).find("td").eq(9).text().trim();
+    const goaldiff = $(el).find("td").eq(7).text().trim();
+    const point = $(el).find("td").eq(11).text().trim();
 
     scoreboard.push({position, img, team, match, win, draw, loss, goaldiff, point});
   }

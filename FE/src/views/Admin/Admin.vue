@@ -114,8 +114,8 @@
 
                 <div class="row w-100 m-0 p-0">
                     <div class="col-4 p-0 m-0 d-flex flex-column justify-content-center align-items-center">
-                        <img class="w-100 p-3" :src="match.hometeamlg.link" style="max-width: 100px; max-height: 100px;">
-                        <h4 class="text-truncate w-100 text-center">{{ match.hometeam }}</h4>
+                        <img class="w-100 p-3" :src="match.hometeam.logo.link" style="max-width: 100px; max-height: 100px;">
+                        <h4 class="text-truncate w-100 text-center">{{ match.hometeam.name }}</h4>
                     </div>
 
                     <div class="col-4 p-0 m-0 d-flex flex-column justify-content-center align-items-center">
@@ -123,8 +123,8 @@
                     </div>
 
                     <div class="col-4 p-0 m-0 d-flex flex-column justify-content-center align-items-center">
-                        <img class="w-100 p-3" :src="match.awayteamlg.link" style="max-width: 100px; max-height: 100px;">
-                        <h4 class="text-truncate w-100 text-center">{{ match.awayteam }}</h4>
+                        <img class="w-100 p-3" :src="match.awayteam.logo.link" style="max-width: 100px; max-height: 100px;">
+                        <h4 class="text-truncate w-100 text-center">{{ match.awayteam.name }}</h4>
                     </div>
                 </div>
 

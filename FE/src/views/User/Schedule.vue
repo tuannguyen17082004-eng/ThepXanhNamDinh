@@ -109,8 +109,8 @@ onMounted(async () => {
             <div v-if="match" id="next_match" class="container-fluid px-4 pb-4">
                 <div class="row w-100 m-0">
                     <div class="col-4 p-0 px-2 d-flex justify-content-center justify-content-md-end align-items-center flex-md-row" style="flex-direction: column-reverse;">
-                        <h1 class="p-0 me-md-3 mt-2 mt-md-0 text-center">{{ match.hometeam }}</h1>
-                        <img id="team_logo" :src="match.hometeamlg.link">
+                        <h1 class="p-0 me-md-3 mt-2 mt-md-0 text-center">{{ match.hometeam.name }}</h1>
+                        <img id="team_logo" :src="match.hometeam.logo.link">
                     </div>
 
                     <div class="col-4 p-0 d-flex flex-column">
@@ -124,8 +124,8 @@ onMounted(async () => {
                     </div>
 
                     <div class="col-4 p-0 px-2 d-flex justify-content-center justify-content-md-start align-items-center flex-column flex-md-row">
-                        <img id="team_logo" :src="match.awayteamlg.link">
-                        <h1 class="p-0 ms-md-3 mt-2 mt-md-0 text-center">{{ match.awayteam }}</h1>
+                        <img id="team_logo" :src="match.awayteam.logo.link">
+                        <h1 class="p-0 ms-md-3 mt-2 mt-md-0 text-center">{{ match.awayteam.name }}</h1>
                     </div>
                 </div>
 
@@ -142,6 +142,7 @@ onMounted(async () => {
 
         <section ref="schedule" id="schedule_content"
             class="container-fluid pt-3 justify-content-center align-items-center">
+            <p class="text-center">Lịch trình các trận đấu có thể thay đổi</p>
             <div class="container-fluid p-0" v-if="matchdata.length > 0" v-for="month in months">
                 <div class="container-fluid p-0"
                     v-if="matchdata.filter(x => x.VNtime.slice(9, 11) == month).length != 0">
@@ -167,8 +168,8 @@ onMounted(async () => {
                         <div class="row m-0">
                             <div id="schedule_col1"
                                 class="col-md-5 p-0 pb-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
-                                <h1 class="px-md-3 m-0 text-truncate w-100 text-md-end">{{ match.hometeam }}</h1>
-                                <img id="team_logo" :src="match.hometeamlg.link">
+                                <h1 class="px-md-3 m-0 text-truncate w-100 text-md-end">{{ match.hometeam.name }}</h1>
+                                <img id="team_logo" :src="match.hometeam.logo.link">
                             </div>
 
                             <div class="col-md-2 p-0 d-none d-md-flex justify-content-center align-items-center">
@@ -178,8 +179,8 @@ onMounted(async () => {
 
                             <div id="schedule_col2"
                                 class="col-md-5 p-0 pb-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
-                                <img id="team_logo" :src="match.awayteamlg.link">
-                                <h1 class="px-md-3 m-0 text-truncate w-100">{{ match.awayteam }}</h1>
+                                <img id="team_logo" :src="match.awayteam.logo.link">
+                                <h1 class="px-md-3 m-0 text-truncate w-100">{{ match.awayteam.name }}</h1>
                             </div>
                         </div>
                     </div>
@@ -230,8 +231,8 @@ onMounted(async () => {
                             <div id="schedule_col1"
                                 class="col-4 p-0 pb-md-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
                                 <h1 class="px-md-3 my-3 m-0 w-100 text-md-end text-center text-truncate">{{
-                                    match.hometeam }}</h1>
-                                <img id="team_logo" :src="match.hometeamlg.link">
+                                    match.hometeam.name }}</h1>
+                                <img id="team_logo" :src="match.hometeam.logo.link">
                             </div>
 
                             <div class="col-4 p-0 d-flex justify-content-center align-items-center">
@@ -240,9 +241,9 @@ onMounted(async () => {
 
                             <div id="schedule_col2"
                                 class="col-4 p-0 pb-md-3 px-3 px-md-0 d-flex justify-content-center align-items-center">
-                                <img id="team_logo" :src="match.awayteamlg.link">
+                                <img id="team_logo" :src="match.awayteam.logo.link">
                                 <h1 class="px-md-3 my-3 m-0 w-100 text-md-start text-center text-truncate">{{
-                                    match.awayteam }}</h1>
+                                    match.awayteam.name }}</h1>
                             </div>
                         </div>
 

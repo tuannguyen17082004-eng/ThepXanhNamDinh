@@ -54,7 +54,12 @@ const fetchScoreboard = async () => {
     if (res) {
         scoreboard.value = res.data.scoreboard;
         const root = scoreboard.value.findIndex(team => team.img == "https://vpf.vn/wp-content/uploads/2018/10/Logo-TXND-3-sao-150x150.png");
-        scoreboard.value = scoreboard.value.slice(root - 1, root + 2);
+        if (root == 0) 
+            scoreboard.value = scoreboard.value.slice(root, 3);
+        else if (root == scoreboard.value.length - 1)
+            scoreboard.value = scoreboard.value.slice(root - 2, root + 1);
+        else
+            scoreboard.value = scoreboard.value.slice(root - 1, root + 2);
     }
 
 }
@@ -119,11 +124,11 @@ onMounted(async () => {
                     <p>{{ lastmatch.stadium }}</p>
                     <div class="container m-0 p-2">
                         <div class="row m-0 p-0 w-100">
-                            <div class="col-sm-3 p-0 m-0"> <img :src="lastmatch.hometeamlg.link"></div>
+                            <div class="col-sm-3 p-0 m-0"> <img :src="lastmatch.hometeam.logo.link"></div>
                             <div class="col-sm-6 p-0 m-0 d-flex flex-row justify-content-center align-items-center">
                                 <h1 class="text-center p-0 m-0">{{ lastmatch.result }}</h1>
                             </div>
-                            <div class="col-sm-3 p-0 m-0"><img :src="lastmatch.awayteamlg.link"></div>
+                            <div class="col-sm-3 p-0 m-0"><img :src="lastmatch.awayteam.logo.link"></div>
                         </div>
                     </div>
                 </div>
@@ -140,11 +145,11 @@ onMounted(async () => {
                     <p>{{ nextmatch.stadium }}</p>
                     <div class="container m-0 p-2 d-flex flex-row justify-content-between align-items-center">
                         <div class="row m-0 p-0 w-100">
-                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.awayteamlg.link"></div>
+                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.awayteam.logo.link"></div>
                             <div class="col-sm-6 m-0 p-0 d-flex flex-row justify-content-center align-items-center">
                                 <h2 class="text-center p-0 m-0">{{ nextmatch.VNtime.split(" ")[0] }}</h2>
                             </div>
-                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.hometeamlg.link"></div>
+                            <div class="col-sm-3 m-0 p-0"><img :src="nextmatch.hometeam.logo.link"></div>
                         </div>
                     </div>
                 </div>
@@ -327,18 +332,18 @@ onMounted(async () => {
                             </div>
                             <div class="row m-0 p-0 px-1 pb-3 w-100">
                                 <div class="col-10 p-0 px-3 text-start d-flex align-items-center">
-                                    <h1 class="m-0 p-0 text-truncate">{{ match.awayteam }}</h1>
+                                    <h1 class="m-0 p-0 text-truncate">{{ match.awayteam.name }}</h1>
                                 </div>
                                 <div class="col-2 p-0 pe-3 d-flex justify-content-center">
-                                    <img id="team" :src="match.awayteamlg.link">
+                                    <img id="team" :src="match.awayteam.logo.link">
                                 </div>
                             </div>
                             <div class="row m-0 p-0 px-1 pb-4 w-100">
                                 <div class="col-10 p-0 px-3 text-start d-flex align-items-center">
-                                    <h1 class="m-0 p-0 text-truncate">{{ match.hometeam }}</h1>
+                                    <h1 class="m-0 p-0 text-truncate">{{ match.hometeam.name }}</h1>
                                 </div>
                                 <div class="col-2 p-0 pe-3 d-flex justify-content-center">
-                                    <img id="team" :src="match.hometeamlg.link">
+                                    <img id="team" :src="match.hometeam.logo.link">
                                 </div>
                             </div>
                         </div>

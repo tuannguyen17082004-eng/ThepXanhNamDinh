@@ -1,35 +1,35 @@
 <script setup lang="ts">
-    import router from '@/router';
-    import { ref } from 'vue';
-    import { Login } from '@/utils/AuthUtils';
-    import { toast } from 'vue3-toastify';
+import router from '@/router';
+import { ref } from 'vue';
+import { Login, GoogleLogin } from '@/utils/AuthUtils';
+import { toast } from 'vue3-toastify';
 
-    const email = ref();
-    const password = ref();
+const email = ref();
+const password = ref();
 
-    const handleLogin = async () => {
-        if (!email.value || !password.value) {
-            toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
-                position: toast.POSITION.TOP_CENTER,    
-            })
-            return;
-        }
-        
-        const res = await Login(email.value, password.value);
+const handleLogin = async () => {
+    if (!email.value || !password.value) {
+        toast.error("Hãy nhập đầy đủ thông tin cần thiết", {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        return;
+    }
 
-        if (res) {
-            toast.success("Đăng nhập thành công!", {
-                position: toast.POSITION.TOP_CENTER,
-            })
+    const res = await Login(email.value, password.value);
 
-            if (res.data.role === "admin") {
-                router.push('/Admin')
-            } else {
-                router.push('/')
-            }
+    if (res) {
+        toast.success("Đăng nhập thành công!", {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        if (res.data.role === "admin") {
+            router.push('/Admin')
+        } else {
+            router.push('/')
         }
     }
-    
+}
+
 </script>
 
 
@@ -39,18 +39,18 @@
 
         <!--Đăng nhập-->
         <div class="col-md-6 col-12 h-100 m-0 p-0 d-flex justify-content-center align-items-center">
-            <form id="login_form" class="container w-75 py-md-5 py-4" @submit.prevent="handleLogin">
+            <form id="login_form" class="container w-75 py-md-4 py-3" @submit.prevent="handleLogin">
                 <div class="container-fluid py-3 d-flex justify-content-center align-items-center">
-                    <img src="/pictures/logo.png">
+                    <img id="logo" src="/pictures/logo.png">
                     <h2 class="px-3">Đăng nhập</h2>
                 </div>
                 <div class="container-fluid py-3">
                     <h5 class="pb-2">Email*</h5>
-                    <input v-model="email" class="form-control" type="email" placeholder="Email...">
+                    <input v-model="email" class="form-control" type="email" placeholder="Example@gmail.com">
                 </div>
                 <div class="container-fluid py-3">
                     <h5 class="pb-2">Mật khẩu*</h5>
-                    <input v-model="password" class="form-control" type="password" placeholder="Password...">
+                    <input v-model="password" class="form-control" type="password" placeholder="Password">
                 </div>
                 <div class="container-fluid p-0 d-flex justify-content-center">
                     <RouterLink to="/ForgetPasswordEmail" style="width: max-content;">
@@ -59,11 +59,19 @@
                 </div>
                 <div class="container-fluid p-0 d-flex justify-content-center align-items-center" style="gap: 20px;">
                     <button id="login_btn" class="btn btn-primary" type="submit">Đăng nhập</button>
-                    <button id="register_btn" class="btn btn-primary" type="button" v-on:click="router.push('/Register')">Đăng ký</button>
+                    <button id="register_btn" class="btn btn-primary" type="button"
+                        v-on:click="router.push('/Register')">Đăng ký</button>
+                </div>
+
+                <div class="container-fluid p-0 pt-3 d-flex flex-column justify-content-center align-items-center">
+                    <h5>Hoặc</h5>
+                    <button id="google_btn" class="btn btn-primary d-flex justify-content-center align-items-center"
+                        type="button" v-on:click="GoogleLogin"><img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000"
+                            style="width: 20px;" class="me-2">Đăng nhập với Google</button>
                 </div>
             </form>
         </div>
-        
+
 
     </main>
 </template>
@@ -85,7 +93,7 @@
         border-radius: 20px;
 
 
-        img {
+        #logo {
             width: 100%;
             max-width: 80px;
             min-width: 60px;
@@ -112,6 +120,13 @@
             width: 110px;
             background-color: white;
             color: rgb(0, 133, 205);
+            border: 2px solid rgb(0, 133, 205);
+            font-weight: 500;
+        }
+
+        #google_btn {
+            background-color: white;
+            color: #012970;
             border: 2px solid rgb(0, 133, 205);
             font-weight: 500;
         }

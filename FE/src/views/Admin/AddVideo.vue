@@ -14,7 +14,7 @@ let video_preview = ref();
 let video_png = ref();
 let isLoading = ref(false);
 
-const handleImg = (e : any) => {
+const handleImg = (e: any) => {
     const file = e.target.files[0];
     if (!file) {
         video_png.value = null;
@@ -26,7 +26,7 @@ const handleImg = (e : any) => {
     video_png.value = URL.createObjectURL(file);
 }
 
-const handleVideo = (e : any) => {
+const handleVideo = (e: any) => {
     const file = e.target.files[0];
     if (!file) {
         video_preview.value = null;
@@ -65,27 +65,29 @@ const handleAdd = async () => {
     }
 
     const res = await CreateVideo(video_file_2.value, video_file.value, video_link.value, video_url.value, title.value);
+    
     if (res) {
         toast.success(res.data, {
             position: toast.POSITION.TOP_CENTER,
         });
         router.push('/Admin/Video');
-        isLoading.value = false;
     }
+    isLoading.value = false;
 }
 </script>
 
 <template>
-    <Loading v-if="isLoading"/>
+    <Loading v-if="isLoading" />
     <main class="container-fluid p-3" style="height: 100dvh">
-        <div class="container-fluid px-3 py-4 d-flex align-items-center" style="background-color: white; border-radius: 10px;">
+        <div class="container-fluid px-3 py-4 d-flex align-items-center"
+            style="background-color: white; border-radius: 10px;">
             <div id="title_video" class="container-fluid p-0 pe-5 m-0">
                 <h5 class="m-0">Thêm video</h5>
                 <p class="m-0 pt-1">Nhập đầy đủ thông tin cần thiết</p>
             </div>
 
             <RouterLink to="/Admin/Video" class="container-fluid p-0" style="width: max-content;">
-              <button class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay lại</button>
+                <button class="btn btn-md m-0"><span class="bi bi-arrow-left pe-1"></span>Quay lại</button>
             </RouterLink>
         </div>
 
@@ -98,7 +100,7 @@ const handleAdd = async () => {
             <div class="row w-100 m-0 p-0 d-flex">
                 <div class="col-md-6 p-3">
                     <h3 class="w-100">Ảnh (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img v-if="video_png" :src="video_png" width="200" class="my-2"> 
+                    <img v-if="video_png" :src="video_png" width="200" class="my-2">
                     <input type="file" class="form-control mb-3" @change="handleImg">
                     <input v-model="video_url" type="url" class="form-control" placeholder="Nhập URL...">
                 </div>
@@ -137,15 +139,15 @@ const handleAdd = async () => {
 }
 
 button {
-  width: 100px;
-  color: #012970;
-  font-family: 'Barlow', sans-serif;
-  font-weight: 600;
+    width: 100px;
+    color: #012970;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
 }
 
 button:hover {
-  background-color: rgb(0, 133, 205);
-  color: white;
+    background-color: rgb(0, 133, 205);
+    color: white;
 }
 
 #add_form {

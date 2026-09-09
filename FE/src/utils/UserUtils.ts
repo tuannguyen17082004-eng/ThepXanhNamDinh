@@ -27,6 +27,19 @@ export const GetUserInformation = async(id : any) => {
     }
 }
 
+export const GetProfile = async() => {
+    try {
+        const res = await api.get(`/users/profile`, { withCredentials: true });
+        return res;
+    } 
+    catch (err : any) {
+        console.log("Something wrong at FE: " + err.response.data);
+        toast.error(err.response.data, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+
 export const UpdateUser = async (id: any, name: any, gender: any, email: any, phone: any, city: any, country: any, avatar: any) => {
     try {
         const formData = new FormData();

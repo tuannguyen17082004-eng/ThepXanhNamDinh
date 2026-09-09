@@ -1,14 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user');
-const transporter = require('../config/nodemailer_config');
 const { checkOTP } = require('../service/checkOTP');
 const { sendOTP } = require('../service/sendOTP');
 
 module.exports.Login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
         if (!email || !password)
             return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");
 
@@ -26,7 +25,7 @@ module.exports.Login = async (req, res) => {
                 return res.status(400).send("Internal server error");
             }
 
-            if (!result) { 
+            if (!result) {
                 return res.status(400).send("Email hoặc mật khẩu không đúng");
             }
 
@@ -45,9 +44,8 @@ module.exports.Login = async (req, res) => {
                 role: checkUser.role
             });
         });
-    } 
-    catch (err) 
-    {
+    }
+    catch (err) {
         console.log(err);
         return res.status(500).send("Internal server error");
     }
@@ -61,21 +59,74 @@ module.exports.Logout = async (req, res) => {
             secure: false
         });
         res.status(200).send("Đăng xuất thành công!");
-    } 
-    catch (err) 
-    {
+    }
+    catch (err) {
         console.log(err);
+        return res.status(500).send("Internal server error");
+    }
+}
+
+module.exports.GoogleLogin = async (req, res) => {
+    try {
+        let checkUser = await UserModel.findOne({ GoogleID: req.user.id });
+        let User;
+
+        if (!checkUser) {
+            const checkByEmail = await UserModel.findOne({ email: req.user.emails[0].value });
+            if (checkByEmail) {
+                checkByEmail.GoogleID = req.user.id;
+                checkByEmail.avatar.link = req.user.photos[0].value;
+                await checkByEmail.save();
+                User = checkByEmail;
+
+            } else {
+                const newUser = new UserModel({
+                    name: req.user.displayName,
+                    email: req.user.emails[0].value,
+                    GoogleID: req.user.id,
+                    gender: "",
+                    phone: "",
+                    password: "",
+                    avatar: {
+                        link: req.user.photos[0].value
+                    }
+                })
+                User = await UserModel.create(newUser);
+            }
+
+            let token = jwt.sign({ id: User._id, role: User.role }, process.env.JWT_KEY);
+
+            res.cookie('token', token, {
+                httpOnly: true,
+                sameSite: "lax",
+                secure: false,
+                maxAge: 24 * 60 * 60 * 1000
+            });
+
+            res.redirect(process.env.GOOGLE_ORIGINS);  // Nhớ sau này thay
+        }
+
+        let token = jwt.sign({ id: checkUser._id, role: checkUser.role }, process.env.JWT_KEY);
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false,
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        res.redirect(process.env.GOOGLE_ORIGINS);
+
+    } catch (err) {
+        console.log(err);
+        res.redirect(process.env.GOOGLE_ORIGINS + '/Login');
         return res.status(500).send("Internal server error");
     }
 }
 
 module.exports.ChangePassword = async (req, res) => {
     try {
-        const { currentPassword, newPassword, id } = req.body;
-
-        if (!id) {
-            return res.status(400).send("Vui lòng đăng nhập lại!");
-        }
+        const { currentPassword, newPassword } = req.body;
 
         if (!currentPassword || !newPassword) {
             return res.status(400).send("Vui lòng nhập đầy đủ thông tin!");
@@ -85,7 +136,7 @@ module.exports.ChangePassword = async (req, res) => {
             return res.status(400).send("Mật khẩu mới không được trùng với mật khẩu hiện tại!");
         }
 
-        const checkUser = await UserModel.findById(id);
+        const checkUser = await UserModel.findById(req.data.id);
         if (!checkUser) {
             return res.status(400).send("Không tìm thấy người dùng");
         }
@@ -123,7 +174,7 @@ module.exports.ForgetPassword = async (req, res) => {
         const { otp, otpExpired } = await sendOTP(email);
 
         const checkUser = await UserModel.findOne({ email });
-        
+
         if (!checkUser) {
             return res.status(400).send("Tài khoản không tồn tại!");
         }
@@ -214,9 +265,8 @@ module.exports.CreateAdmin = async (req, res) => {
                 res.status(201).send("Tạo tài khoản admin thành công!");
             })
         });
-    } 
-    catch (err)
-    {
+    }
+    catch (err) {
         console.log(err);
         return res.status(500).send("Internal server error");
     }

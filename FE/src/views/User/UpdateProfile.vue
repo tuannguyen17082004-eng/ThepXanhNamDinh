@@ -1,11 +1,10 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
     import { toast } from 'vue3-toastify';
-    import { GetUserInformation, UpdateUser, DeleteUser } from '@/utils/UserUtils';
+    import { GetProfile, UpdateUser, DeleteUser } from '@/utils/UserUtils';
     import router from '@/router';
     import Swal from 'sweetalert2';
 
-    const id = localStorage.getItem("bruh");
     const name = ref();
     const email = ref();
     const phone = ref();
@@ -28,7 +27,7 @@
     }
 
     const GetUserById = async() => {
-        const res = await GetUserInformation(id);
+        const res = await GetProfile();
 
         if (res) {
             name.value = res.data.name;
@@ -49,7 +48,7 @@
             return;
         }
 
-        const res = await UpdateUser(id, name.value, gender.value, email.value, phone.value, city.value, country.value, user_file.value);
+        const res = await UpdateUser(null, name.value, gender.value, email.value, phone.value, city.value, country.value, user_file.value);
         if (res) {
             toast.success(res.data, {
                 position: toast.POSITION.TOP_CENTER,
@@ -69,7 +68,7 @@
             cancelButtonText: "Chưa chắc lắm?"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await DeleteUser(id);
+                const res = await DeleteUser(null);
 
                 if (res) {
                     toast.success(res.data, {

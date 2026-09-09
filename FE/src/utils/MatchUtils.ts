@@ -33,20 +33,12 @@ export const GetMatchDetail = async (id : any) => {
     }
 }
 
-export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFile: any, season: any, stadium : any, league : any, leaguelg : any, hometeam : any, hometeamlg : any, awayteam : any, awayteamlg : any, result : any, highlights : any, time : any) => {
+export const CreateMatch = async (leagueFile: any, season: any, stadium : any, league : any, leaguelg : any, hometeam : any, awayteam : any, result : any, highlights : any, time : any) => {
     try {
         const formData = new FormData();
 
         if (leaguelg) {
             formData.append("leaguelg_url", leaguelg);
-        }
-
-        if (hometeamlg) {
-            formData.append("hometeamlg_url", hometeamlg);
-        }
-
-        if (awayteamlg) {
-            formData.append("awayteamlg_url", awayteamlg);
         }
 
         if (result)
@@ -55,8 +47,6 @@ export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFi
         if (highlights)
             formData.append("highlights", highlights);
 
-        formData.append("awayteamLogo", awayteamFile);
-        formData.append("hometeamLogo", hometeamFile);
         formData.append("leagueLogo", leagueFile);
         formData.append("stadium", stadium);
         formData.append("season", season);
@@ -75,20 +65,12 @@ export const CreateMatch = async (leagueFile: any, hometeamFile: any, awayteamFi
     }
 }
 
-export const UpdateMatch = async (id: any, leagueFile: any, hometeamFile: any, awayteamFile: any, season : any, stadium : any, league : any, leaguelg : any, hometeam : any, hometeamlg : any, awayteam : any, awayteamlg : any, result : any, highlights : any, time : any) => {
+export const UpdateMatch = async (id: any, leagueFile: any, season : any, stadium : any, league : any, leaguelg : any, hometeam : any, awayteam : any, result : any, highlights : any, time : any) => {
     try {
         const formData = new FormData();
 
         if (leaguelg) {
             formData.append("leaguelg_url", leaguelg);
-        }
-
-        if (hometeamlg) {
-            formData.append("hometeamlg_url", hometeamlg);
-        }
-
-        if (awayteamlg) {
-            formData.append("awayteamlg_url", awayteamlg);
         }
 
         if (result)
@@ -97,8 +79,6 @@ export const UpdateMatch = async (id: any, leagueFile: any, hometeamFile: any, a
         if (highlights)
             formData.append("highlights", highlights);
 
-        formData.append("awayteamLogo", awayteamFile);
-        formData.append("hometeamLogo", hometeamFile);
         formData.append("leagueLogo", leagueFile);
         formData.append("stadium", stadium);
         formData.append("season", season);
