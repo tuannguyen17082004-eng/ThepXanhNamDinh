@@ -12,6 +12,7 @@ const userRouter = require('./routes/UserRouter');
 const authRouter = require('./routes/AuthRouter');
 const seasonRouter = require('./routes/SeasonRouter');
 const clubRouter = require('./routes/ClubRouter');
+const touramentRouter = require('./routes/TouramentRouter');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 const passport = require('./config/passport_config');
@@ -47,6 +48,7 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/season', seasonRouter);
 app.use('/api/club', clubRouter);
+app.use('/api/tourament', touramentRouter);
 app.listen(3000, '0.0.0.0', () => {
     console.log('Server is running');
 });

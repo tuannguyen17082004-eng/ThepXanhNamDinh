@@ -17,32 +17,34 @@
             <div class="row w-100" style="max-width: 1200px;">
                 <div class="col-sm-6 ps-3">
                     <h4>V.League 1</h4>
-                    <p>1985, 2023–24, 2024–25</p>
+                    <p>Vô địch - 1985, 2023–24, 2024–25</p>
+                    <p class="mb-4">Á quân - 2000-2001, 2004</p>
                     <h4>V.League 2</h4>
-                    <p>1981, 2017</p>
-                    <h4>V.League 3</h4>
-                    <p>2014</p>
+                    <p class="mb-4">Vô địch - 1981, 2017</p>
+                    <h4>Giải hạng hai</h4>
+                    <p class="mb-4">Vô địch - 2014</p>
                     <h4>Cúp Quốc Gia</h4>
-                    <p>2007</p>
+                    <p class="mb-4">Vô địch - 2007</p>
                     <h4>Siêu cúp Quốc Gia</h4>
-                    <p>2024</p>
+                    <p>Vô địch - 2024</p>
+                    <p class="mb-4">Á quân - 2007, 2025</p>
                     <h4>Vô địch Quốc Gia U-21</h4>
-                    <p>2004, 2011</p>
+                    <p class="mb-4">Vô địch - 2004, 2011</p>
                     <h4>Vô địch Quốc Gia U-15</h4>
-                    <p>2008</p>
+                    <p class="mb-4">Vô địch - 2008</p>
                     <h4>Vô địch Quốc Gia U-13</h4>
-                    <p>2025</p>
+                    <p class="mb-4">Vô địch - 2025</p>
                     <h4>Giải vô địch bóng đá Đông Dương</h4>
-                    <p>1943, 1945</p>
+                    <p class="mb-4">Vô địch - 1943, 1945</p>
                     <h4>Giải bóng đá Viettel mở rộng</h4>
-                    <p>2022</p>
+                    <p class="mb-4">Vô địch - 2022</p>
                 </div>
 
                 <div class="col-sm-6 d-flex flex-column justify-content-center align-items-center">
                     <div id="picture"
                         class="pt-5 container d-flex flex-column justify-content-center align-items-center">
                         <img src="/pictures/vô địch.jpg">
-                        <p class="p-0 m-0 pt-2">Chức vô địch V.League 2023/2024</p>
+                        <p class="p-0 m-0 pt-2">Chức vô địch V.League 1 2023/2024</p>
                     </div>
 
                     <div id="picture"
@@ -88,13 +90,12 @@
         margin: 0;
         margin-bottom: 5px;
         padding-left: 10px;
-        color: rgb(0, 133, 205);
+        color: #012970;
         font-weight: 700;
     }
 
     p {
         margin: 0;
-        margin-bottom: 25px;
         padding-left: 10px;
         font-weight: 600;
     }

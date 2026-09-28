@@ -31,6 +31,8 @@ import UserManagement from '@/views/Admin/UserManagement.vue'
 import ClubManagement from '@/views/Admin/ClubManagement.vue'
 import AddClub from '@/views/Admin/AddClub.vue'
 import UpdateClub from '@/views/Admin/UpdateClub.vue'
+import AddTourament from '@/views/Admin/AddTourament.vue'
+import UpdateTourament from '@/views/Admin/UpdateTourament.vue'
 import SeasonManagement from '@/views/Admin/SeasonManagement.vue'
 import ChangePassword from '@/views/User/ChangePassword.vue'
 import AddPlayer from '@/views/Admin/AddPlayer.vue'
@@ -108,6 +110,8 @@ const routes = [{
     {path: 'Club', component: ClubManagement},
     {path: 'Club/Add', component: AddClub},
     {path: 'Club/:id', component: UpdateClub},
+    {path: 'Tourament/Add', component: AddTourament},
+    {path: 'Tourament/:id', component: UpdateTourament},
     {path: 'Season', component: SeasonManagement}
   ]
 }]

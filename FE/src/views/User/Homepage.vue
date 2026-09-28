@@ -119,7 +119,7 @@ onMounted(async () => {
                 class="container m-0 p-2 d-flex flex-row justify-content-center align-items-center">
                 <div id="previous_match" v-if="lastmatch"
                     class="container h-100 p-0 pt-2 m-0 d-flex flex-column justify-content-center align-items-center">
-                    <img v-if="lastmatch.leaguelg" :src="lastmatch.leaguelg.link" style="width: auto; height: 30px;">
+                    <img v-if="lastmatch.league.logo" :src="lastmatch.league.logo.link" style="width: auto; height: 30px;">
                     <p class="m-0 p-0 pt-2">{{ lastmatch.VNtime }}</p>
                     <p>{{ lastmatch.stadium }}</p>
                     <div class="container m-0 p-2">
@@ -140,7 +140,7 @@ onMounted(async () => {
                 <!--Trận tiếp theo-->
                 <div id="next_match" v-if="nextmatch"
                     class="container h-100 p-0 pt-2 m-0 ms-2 d-flex flex-column justify-content-center align-items-center">
-                    <img v-if="nextmatch.leaguelg" :src="nextmatch.leaguelg.link" style="width: auto; height: 30px;">
+                    <img v-if="nextmatch.league.logo" :src="nextmatch.league.logo.link" style="width: auto; height: 30px;">
                     <p class="m-0 p-0 pt-2">{{ nextmatch.VNtime }}</p>
                     <p>{{ nextmatch.stadium }}</p>
                     <div class="container m-0 p-2 d-flex flex-row justify-content-between align-items-center">
@@ -327,7 +327,7 @@ onMounted(async () => {
                                     <p class="m-0 p-0 text-truncate">{{ match.stadium }}</p>
                                 </div>
                                 <div class="col-2 p-0 ps-3 d-flex align-items-center justify-content-center">
-                                    <img v-if="match.leaguelg" id="league" :src="match.leaguelg.link">
+                                    <img v-if="match.league.logo" id="league" :src="match.league.logo.link">
                                 </div>
                             </div>
                             <div class="row m-0 p-0 px-1 pb-3 w-100">

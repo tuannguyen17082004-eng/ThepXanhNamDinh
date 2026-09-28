@@ -89,7 +89,10 @@ onMounted(async () => {
                 <Column>
                     <template #body="{ data }">
                         <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
-                        <RouterLink v-else :to="`Video/${data._id}`" class="text-center m-0 text-truncate">Chi tiết</RouterLink>
+                        <div v-else class="container-fluid p-0 d-flex justify-content-center">
+                            <RouterLink :to="`Video/${data._id}`" class="text-center m-0 text-truncate">Chi tiết</RouterLink>
+                        </div>
+                        
                     </template>
                 </Column>
             </DataTable>
@@ -119,11 +122,6 @@ button {
     color: white;
     font-family: 'Barlow', sans-serif;
     font-weight: 500;
-}
-
-button:hover {
-    background-color: rgb(0, 133, 205);
-    color: white;
 }
 
 #data_table {

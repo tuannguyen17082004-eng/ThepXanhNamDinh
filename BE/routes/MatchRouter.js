@@ -6,8 +6,8 @@ const isAdmined = require('../middleware/isAdmin');
 const upload = require('../config/multer_config');
 
 router.get('/', getAllMatch);
-router.post('/', isLogined, isAdmined, upload.single('leagueLogo'), createMatch);
-router.put('/:id', isLogined, isAdmined, upload.single('leagueLogo'), updateMatch);
+router.post('/', isLogined, isAdmined, upload.single('league'), createMatch);
+router.put('/:id', isLogined, isAdmined, upload.single('league'), updateMatch);
 router.get('/:id', getMatchByID);
 router.delete('/:id', isLogined, isAdmined, deleteMatch);
 

@@ -1,13 +1,10 @@
 import { Club } from "./club";
+import { Tourament } from "./tourament";
 
 export interface Match{
     _id: string,
     stadium: string,
-    league: string,
-    leaguelg: {
-        link: string,
-        id: string
-    },
+    league: Tourament,
     hometeam: Club,
     awayteam: Club,
     result: string,

@@ -4,8 +4,10 @@ import { toast } from 'vue3-toastify';
 import { CreateMatch } from '@/utils/MatchUtils';
 import { GetAllClub } from '@/utils/ClubUtils';
 import { GetAllSeason } from '@/utils/SeasonUtils';
+import { GetAllTourament } from '@/utils/TouramentUtils';
 import { type Season } from '@/models/season';
 import { type Club } from '@/models/club';
+import { type Tourament } from '@/models/tourament';
 import Select from 'primevue/select';
 import Loading from '@/components/Loading.vue';
 import router from '@/router';
@@ -19,13 +21,11 @@ const awayteam = ref();
 const season = ref();
 const result = ref();
 const highlight = ref();
-const league_url = ref();
-const league_file = ref();
-let league_png = ref();
 let time;
 let isLoading = ref(false);
 const seasonList = ref<Season[]>([]);
 const clubList = ref<Club[]>([]);
+const touramentList = ref<Tourament[]>([]);
 
 const FetchAllClub = async () => {
     const res = await GetAllClub();
@@ -40,16 +40,17 @@ const FetchAllClub = async () => {
     clubList.value = res.data;
 }
 
-const handleLeagueImg = (e: any) => {
-    const file = e.target.files[0];
-    if (!file) {
-        league_png.value = null;
-        league_file.value = null;
+const FetchAllTourament = async () => {
+    const res = await GetAllTourament();
+
+    if (!res) {
+        toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
+            position: toast.POSITION.TOP_CENTER,
+        })
         return;
     }
 
-    league_file.value = file;
-    league_png.value = URL.createObjectURL(file);
+    touramentList.value = res.data;
 }
 
 const handleAdd = async () => {
@@ -62,16 +63,8 @@ const handleAdd = async () => {
         return;
     }
 
-    if (league_file.value && league_url.value) {
-        toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
-            position: toast.POSITION.TOP_CENTER,
-        })
-        isLoading.value = false;
-        return;
-    }
-
     time = new Date(hour.value + " " + date.value);
-    const res = await CreateMatch(league_file.value, season.value.season, stadium.value, league.value, league_url.value, hometeam.value._id, awayteam.value._id, result.value, highlight.value, time);
+    const res = await CreateMatch(season.value.season, stadium.value, league.value._id, hometeam.value._id, awayteam.value._id, result.value, highlight.value, time);
 
     if (res) {
         toast.success(res.data, {
@@ -98,6 +91,7 @@ const FetchSeason = async () => {
 onMounted(() => {
     FetchSeason();
     FetchAllClub();
+    FetchAllTourament();
 })
 </script>
 
@@ -119,20 +113,6 @@ onMounted(() => {
         <form id="add_form" class="container-fluid p-3 mt-4" @submit.prevent="handleAdd">
             <div class="row w-100 m-0 p-0 d-flex">
                 <div class="col-md-6 p-3">
-                    <h3 class="w-100">Logo giải đấu (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img v-if="league_png" :src="league_png" width="200" class="my-2">
-                    <input type="file" class="form-control mb-3" @change="handleLeagueImg">
-                    <input v-model="league_url" type="url" class="form-control" placeholder="Nhập URL...">
-                </div>
-
-                <div class="col-md-6 p-3">
-                    <h3>Giải đấu:</h3>
-                    <input v-model="league" type="text" class="form-control" placeholder="Nhập tên giải đấu...">
-                </div>
-            </div>
-
-            <div class="row w-100 m-0 p-0 d-flex">
-                <div class="col-md-6 p-3">
                     <h3>Ngày thi đấu:</h3>
                     <input v-model="date" type="date" class="form-control mb-3">
                     <input v-model="hour" type="time" class="form-control">
@@ -141,6 +121,46 @@ onMounted(() => {
                 <div class="col-md-6 p-3">
                     <h3>Sân vận động:</h3>
                     <input v-model="stadium" type="text" class="form-control" placeholder="Nhập tên sân vận động...">
+                </div>
+            </div>
+
+            <div class="row w-100 m-0 p-0 d-flex justify-content-center">
+                <div class="col-md-6 p-3">
+                    <h3>Mùa giải</h3>
+
+                    <Select v-model="season" :options="seasonList" showClear placeholder="Chọn mùa giải" class="w-100">
+                        <template #value="season">
+                            <div v-if="season.value">
+                                <p class="m-0">{{ season.value.season -1 }} - {{ season.value.season }}</p>
+                            </div>
+                        </template>
+
+                        <template #option="season">
+                            <div v-if="season.option">
+                                <p class="m-0">{{ season.option.season -1 }} - {{ season.option.season }}</p>
+                            </div>
+                        </template>
+                    </Select>
+                </div>
+
+                <div class="col-md-6 p-3">
+                    <h3>Giải đấu</h3>
+
+                    <Select v-model="league" :options="touramentList" showClear placeholder="Chọn mùa giải" class="w-100">
+                        <template #value="league">
+                            <div v-if="league.value" class="d-flex align-items-center">
+                                <img class="me-2" v-if="league.value.logo" :src="league.value.logo.link" style="height: 30px;" alt="logo CLB">
+                                <p class="m-0">{{ league.value.name }}</p>
+                            </div>
+                        </template>
+
+                        <template #option="league">
+                            <div v-if="league.option" class="d-flex align-items-center">
+                                <img class="me-2" v-if="league.option.logo" :src="league.option.logo.link" style="height: 30px;" alt="logo CLB">
+                                <p class="m-0">{{ league.option.name }}</p>
+                            </div>
+                        </template>
+                    </Select>
                 </div>
             </div>
 
@@ -198,26 +218,6 @@ onMounted(() => {
                     <h3>Highlight:</h3>
                     <input v-model="highlight" type="text" class="form-control"
                         placeholder="Nhập thông tin highlight...">
-                </div>
-            </div>
-
-            <div class="row w-100 m-0 p-0 d-flex justify-content-center">
-                <div class="col-md-6 p-3">
-                    <h3>Mùa giải</h3>
-
-                    <Select v-model="season" :options="seasonList" showClear placeholder="Chọn mùa giải" class="w-100">
-                        <template #value="season">
-                            <div v-if="season.value">
-                                <p class="m-0">{{ season.value.season -1 }} - {{ season.value.season }}</p>
-                            </div>
-                        </template>
-
-                        <template #option="season">
-                            <div v-if="season.option">
-                                <p class="m-0">{{ season.option.season -1 }} - {{ season.option.season }}</p>
-                            </div>
-                        </template>
-                    </Select>
                 </div>
             </div>
 

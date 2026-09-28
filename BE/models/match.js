@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const matchSchema = new mongoose.Schema({
     season : { type: mongoose.Schema.Types.ObjectId, ref: 'Season' },
     stadium: { type: String, require: true },
-    league: { type: String, require: true },
-    leaguelg: {
-        link: { type: String, require: true },
-        id: { type: String, require: true }
-    },
+    league: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tourament',
+        require: true
+     },
     hometeam: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Club',

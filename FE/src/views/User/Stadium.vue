@@ -49,7 +49,7 @@
 
             <div id="img" class="row p-0 m-0 w-100">
                     <img class="col-sm-4 p-0" src="/pictures/SVĐ Thiên Trường 2.jpg">
-                    <img class="col-sm-4 p-0" src="/pictures/SVĐ Thiên Trường 4.jpg">
+                    <img class="col-sm-4 p-0" src="/pictures/SVĐ Thiên Trường 3.jpg">
                     <img class="col-sm-4 p-0" src="/pictures/SVĐ Thiên Trường 6.jpg">
             </div>
 
@@ -75,8 +75,8 @@
 #stadium_image_background {
     height: 100dvh;
     overflow: hidden;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url(/pictures/SVĐ\ Thiên\ Trường\ 5.jpg);
-    background-position: center;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url(/pictures/SVĐ\ Thiên\ Trường\ 4.jpg);
+    background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
 

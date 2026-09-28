@@ -33,13 +33,9 @@ export const GetMatchDetail = async (id : any) => {
     }
 }
 
-export const CreateMatch = async (leagueFile: any, season: any, stadium : any, league : any, leaguelg : any, hometeam : any, awayteam : any, result : any, highlights : any, time : any) => {
+export const CreateMatch = async (season: any, stadium : any, league : any, hometeam : any, awayteam : any, result : any, highlights : any, time : any) => {
     try {
         const formData = new FormData();
-
-        if (leaguelg) {
-            formData.append("leaguelg_url", leaguelg);
-        }
 
         if (result)
             formData.append("result", result);
@@ -47,7 +43,6 @@ export const CreateMatch = async (leagueFile: any, season: any, stadium : any, l
         if (highlights)
             formData.append("highlights", highlights);
 
-        formData.append("leagueLogo", leagueFile);
         formData.append("stadium", stadium);
         formData.append("season", season);
         formData.append("league", league);
@@ -65,13 +60,9 @@ export const CreateMatch = async (leagueFile: any, season: any, stadium : any, l
     }
 }
 
-export const UpdateMatch = async (id: any, leagueFile: any, season : any, stadium : any, league : any, leaguelg : any, hometeam : any, awayteam : any, result : any, highlights : any, time : any) => {
+export const UpdateMatch = async (id: any, season : any, stadium : any, league : any, hometeam : any, awayteam : any, result : any, highlights : any, time : any) => {
     try {
         const formData = new FormData();
-
-        if (leaguelg) {
-            formData.append("leaguelg_url", leaguelg);
-        }
 
         if (result)
             formData.append("result", result);
@@ -79,7 +70,6 @@ export const UpdateMatch = async (id: any, leagueFile: any, season : any, stadiu
         if (highlights)
             formData.append("highlights", highlights);
 
-        formData.append("leagueLogo", leagueFile);
         formData.append("stadium", stadium);
         formData.append("season", season);
         formData.append("league", league);

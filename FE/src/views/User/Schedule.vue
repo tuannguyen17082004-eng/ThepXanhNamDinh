@@ -15,7 +15,8 @@ const matchdata = ref<Match[]>([]);
 const scoredata = ref<Match[]>([]);
 const months = ["08", "09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07"];
 let match = ref<Match>();
-let season = ref(2027);
+let seasonMatch = ref(2027);
+let seasonScoreboard = ref(2027);
 const matches = ref([]);
 const seasonList = ref<Season[]>([]);
 
@@ -47,7 +48,7 @@ const FetchLastMatch = async (season: any) => {
     const res = await GetAllMatch(season);
 
     if (res) {
-        scoredata.value = res.data.filter((match: Match) => new Date(match.time) < new Date(Date.now())).reverse();
+        scoredata.value = res.data.filter((match: Match) => new Date(match.time) < new Date(Date.now()));
     }
 }
 
@@ -91,9 +92,9 @@ const showMatch = () => {
 
 onMounted(async () => {
     showContent('a');
-    await fetchScoreboard(season.value);
+    await fetchScoreboard(seasonScoreboard.value);
     await fetchNextMatch(2027);
-    await FetchLastMatch(season.value);
+    await FetchLastMatch(seasonMatch.value);
     showMatch();
     await fetchAllSeason();
 })
@@ -115,8 +116,8 @@ onMounted(async () => {
 
                     <div class="col-4 p-0 d-flex flex-column">
                         <div class="container-fluid p-0 mb-4 d-flex flex-column flex-md-row justify-content-center align-items-center">
-                            <img class="me-2" v-if="match.leaguelg" :src="match.leaguelg.link" id="league_logo"><span
-                                class="m-0 text-center" style="height: max-content;">{{ match.league }}</span>
+                            <img class="me-2" v-if="match.league.logo" :src="match.league.logo.link" id="league_logo"><span
+                                class="m-0 text-center" style="height: max-content;">{{ match.league.name }}</span>
                         </div>
                         <h2 class="text-center my-2">{{ match.VNtime.slice(0,5) }}</h2>
                         <p class="text-center my-2 mt-4 m-0">{{ match.VNtime.slice(5) }}</p>
@@ -160,8 +161,8 @@ onMounted(async () => {
                             </div>
 
                             <div class="col-6 p-0  px-3 px-md-0 d-flex justify-content-end align-items-center">
-                                <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                                <img v-if="match.leaguelg" id="league_logo" :src="match.leaguelg.link">
+                                <p class="m-0 px-3 d-md-block d-none">{{ match.league.name }}</p>
+                                <img v-if="match.league.logo" id="league_logo" :src="match.league.logo.link">
                             </div>
                         </div>
 
@@ -198,7 +199,7 @@ onMounted(async () => {
             <div class="container-fluid p-0 d-flex justify-content-end align-items-center" style="max-width: 100vw;">
                 <p class="pe-3 m-0">Mùa giải</p>
 
-                <select v-model="season" v-on:change="async () => { await FetchLastMatch(season); showMatch() }">
+                <select v-model="seasonMatch" v-on:change="async () => { await FetchLastMatch(seasonMatch); showMatch() }">
                     <div v-for="season in seasonList" class="form-control p-0">
                         <option :value="season.season">{{ season.season - 1 }}-{{ season.season }}</option>
                     </div>
@@ -222,8 +223,8 @@ onMounted(async () => {
                             </div>
 
                             <div class="col-6 p-0  px-3 px-md-0 d-flex justify-content-end align-items-center">
-                                <p class="m-0 px-3 d-md-block d-none">{{ match.league }}</p>
-                                <img v-if="match.leaguelg" id="league_logo" :src="match.leaguelg.link">
+                                <p class="m-0 px-3 d-md-block d-none">{{ match.league.name }}</p>
+                                <img v-if="match.league.logo" id="league_logo" :src="match.league.logo.link">
                             </div>
                         </div>
 
@@ -270,7 +271,7 @@ onMounted(async () => {
                 style="max-width: 100vw;">
                 <p class="pe-3 m-0">Mùa giải</p>
 
-                <select v-model="season" v-on:change="fetchScoreboard(season)">
+                <select v-model="seasonScoreboard" v-on:change="fetchScoreboard(seasonScoreboard)">
                     <div v-for="season in seasonList" class="form-control p-0">
                         <option :value="season.season">{{ season.season - 1 }}-{{ season.season }}</option>
                     </div>

@@ -34,22 +34,22 @@ onMounted( async () => {
         <section id="schedule_detail_bg" v-if="match" class="container-fluid p-0 d-flex align-items-end">
             <div class="container-fluid p-0 d-flex flex-column">
                 <div class="container-fluid p-0 d-flex flex-column justify-content-center align-items-center">
-                    <img v-if="match.leaguelg" class="mb-3" id="league_logo" :src="match.leaguelg.link" alt="league logo">
+                    <img v-if="match.league.logo" class="mb-3" id="league_logo" :src="match.league.logo.link" alt="league logo">
                     <h3 class="mb-1">{{ match.VNtime }}</h3>
                     <h3 class="mb-3">{{ match.stadium }}</h3>
                 </div>
                 <div class="row w-100 py-4 m-0">
                     <div class="col-4 d-flex flex-column justify-content-end align-items-center">
-                        <img id="team_logo" :src="match.hometeamlg.link">
-                        <h2 class="d-none d-md-block">{{ match.hometeam }}</h2>
+                        <img id="team_logo" :src="match.hometeam.logo.link">
+                        <h2 class="d-none d-md-block">{{ match.hometeam.name }}</h2>
                     </div>
                     <div class="col-4 d-flex flex-column justify-content-center align-items-center">
                         <h3>FT</h3>
                         <h1 class="px-md-4 py-md-2 px-3 py-1">{{ match.result }}</h1>
                     </div>
                     <div class="col-4 d-flex flex-column justify-content-end align-items-center">
-                        <img id="team_logo" :src="match.awayteamlg.link">
-                        <h2 class="d-none d-md-block">{{ match.awayteam }}</h2>
+                        <img id="team_logo" :src="match.awayteam.logo.link">
+                        <h2 class="d-none d-md-block">{{ match.awayteam.name }}</h2>
                     </div>
                 </div>
             </div>

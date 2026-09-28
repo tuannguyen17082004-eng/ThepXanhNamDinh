@@ -75,7 +75,7 @@ onMounted(async () => {
             <div class="container p-0 d-flex flex-column flex-sm-row">
                 <p class="pe-3 m-0">Mùa giải</p>
 
-                <select v-model="season" v-on:change="async() => await FetchMatch()">
+                <select v-model="season" v-on:change="async () => await FetchMatch()">
                     <div v-for="season in seasonList" class="form-control p-0">
                         <option :value="season.season">{{ season.season - 1 }}-{{ season.season }}</option>
                     </div>
@@ -95,22 +95,23 @@ onMounted(async () => {
         <div id="data_table" class="container-fluid p-3">
             <DataTable v-model:filters="filters" :value="rows" showGridlines paginator sort-mode="multiple" scrollable
                 scroll-height="500px" removable-sort :rows="10" :first="first" filter-display="menu"
-                :global-filter-fields="['league', 'stadium', 'hometeam', 'awayteam']"
+                :global-filter-fields="['league.name', 'stadium', 'hometeam.name', 'awayteam.name']"
                 paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport"
                 :rowsPerPageOptions="[10, 25, 50]"
                 currentPageReportTemplate="Đang hiển thị {first} đến {last} trong tổng số {totalRecords} trận"
                 table-style="background-color: white;">
                 <template #empty>
                     <div class="d-flex justify-content-center align-items-center" style="height: 400px;">Không tìm thấy
-                        tin tức nào</div>
+                        trận đấu nào</div>
                 </template>
 
                 <Column field="league" header="Giải đấu" style="min-width: 180px;" sortable>
                     <template #body="{ data }">
                         <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
                         <div v-else class="container-fluid p-0 d-flex justify-content-center align-items-center">
-                            <img v-if="data.leaguelg" :src="data.leaguelg.link" class="me-3" alt="Logo giải đấu">
-                            <p class="m-0">{{ data.league }}</p>
+                            <img class="me-2" v-if="data.league.logo" :src="data.league.logo.link" style="height: 30px;"
+                                alt="logo CLB">
+                            <p class="m-0">{{ data.league.name }}</p>
                         </div>
                     </template>
                 </Column>
@@ -153,7 +154,10 @@ onMounted(async () => {
                 <Column>
                     <template #body="{ data }">
                         <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
-                        <RouterLink v-else :to="`Match/${data._id}`" class="text-center m-0 text-truncate">Chi tiết</RouterLink>
+                        <div v-else class="container-fluid p-0 d-flex justify-content-center">
+                            <RouterLink :to="`Match/${data._id}`" class="text-center m-0 text-truncate">Chi tiết
+                            </RouterLink>
+                        </div>
                     </template>
                 </Column>
             </DataTable>
@@ -183,11 +187,6 @@ button {
     color: white;
     font-family: 'Barlow', sans-serif;
     font-weight: 500;
-}
-
-button:hover {
-    background-color: rgb(0, 133, 205);
-    color: white;
 }
 
 #season_choose {

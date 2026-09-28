@@ -6,7 +6,9 @@ import router from '@/router';
 import { useRoute } from 'vue-router';
 import { UpdateMatch, DeleteMatch, GetMatchDetail } from '@/utils/MatchUtils';
 import { GetAllClub } from '@/utils/ClubUtils';
+import { GetAllTourament } from '@/utils/TouramentUtils';
 import { type Club } from '@/models/club';
+import { Tourament } from '@/models/tourament';
 import Loading from '@/components/Loading.vue';
 import Select from 'primevue/select';
 
@@ -22,12 +24,10 @@ const awayteam = ref();
 const season = ref();
 const result = ref();
 const highlight = ref();
-const league_url = ref();
-const league_file = ref();
-let league_png = ref();
 let time;
 let isLoading = ref(false);
 const clubList = ref<Club[]>([]);
+const touramentList = ref<Tourament[]>([]);
 
 const FetchAllClub = async () => {
     const res = await GetAllClub();
@@ -42,35 +42,33 @@ const FetchAllClub = async () => {
     clubList.value = res.data;
 }
 
+const FetchAllTourament = async () => {
+    const res = await GetAllTourament();
+
+    if (!res) {
+        toast.error("Có lỗi xảy ra khi lấy dữ liệu!", {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        return;
+    }
+
+    touramentList.value = res.data;
+}
+
 const FetchData = async () => {
     const res = await GetMatchDetail(id);
 
     if (res) {
-        if (res.data.leaguelg)
-            league_png.value = res.data.leaguelg.link;
-
-        league.value = res.data.league;
         stadium.value = res.data.stadium;
         hometeam.value = res.data.hometeam;
         awayteam.value = res.data.awayteam;
+        league.value = res.data.league;
         result.value = res.data.result;
         highlight.value = res.data.highlight;
         [hour.value, date.value] = res.data.VNtime.split(" ");
         const [day, month, year] = date.value.split('/');
         date.value = `${year}-${month}-${day}`;
     }
-}
-
-const handleLeagueImg = (e: any) => {
-    const file = e.target.files[0];
-    if (!file) {
-        league_png.value = null;
-        league_file.value = null;
-        return;
-    }
-
-    league_file.value = file;
-    league_png.value = URL.createObjectURL(file);
 }
 
 const handleUpdate = async () => {
@@ -83,17 +81,9 @@ const handleUpdate = async () => {
         return;
     }
 
-    if (league_file.value && league_url.value) {
-        toast.error("Chỉ được chọn 1 trong 2 phương thức tải ảnh!", {
-            position: toast.POSITION.TOP_CENTER,
-        })
-        isLoading.value = false;
-        return;
-    }
-
     time = new Date(hour.value + " " + date.value);
 
-    const res = await UpdateMatch(id, league_file.value, season.value, stadium.value, league.value, league_url.value, hometeam.value._id, awayteam.value._id, result.value, highlight.value, time);
+    const res = await UpdateMatch(id, season.value, stadium.value, league.value._id, hometeam.value._id, awayteam.value._id, result.value, highlight.value, time);
 
     if (res) {
         toast.success(res.data, {
@@ -133,6 +123,7 @@ const handleDelete = async () => {
 onMounted(() => {
     FetchData();
     FetchAllClub();
+    FetchAllTourament();
 })
 </script>
 
@@ -153,20 +144,6 @@ onMounted(() => {
         </div>
 
         <form id="add_form" class="container-fluid p-3 mt-4" @submit.prevent="handleUpdate">
-            <div class="row w-100 m-0 p-0 d-flex">
-                <div class="col-md-6 p-3">
-                    <h3 class="w-100">Logo giải đấu (chọn trên máy hoặc nhập link ảnh):</h3>
-                    <img v-if="league_png" :src="league_png" width="200" class="my-2">
-                    <input type="file" class="form-control mb-3" @change="handleLeagueImg">
-                    <input v-model="league_url" type="url" class="form-control" placeholder="Nhập URL...">
-                </div>
-
-                <div class="col-md-6 p-3">
-                    <h3>Giải đấu:</h3>
-                    <input v-model="league" type="text" class="form-control" placeholder="Nhập tên giải đấu...">
-                </div>
-            </div>
-
             <div class="row w-100 m-0 p-0 d-flex">
                 <div class="col-md-6 p-3">
                     <h3>Ngày thi đấu:</h3>
@@ -234,6 +211,28 @@ onMounted(() => {
                     <h3>Highlight:</h3>
                     <input v-model="highlight" type="text" class="form-control"
                         placeholder="Nhập thông tin highlight...">
+                </div>
+            </div>
+
+            <div class="row w-100 m-0 p-0 d-flex justify-content-center">
+                <div class="col-md-6 p-3">
+                    <h3>Giải đấu</h3>
+
+                    <Select v-model="league" :options="touramentList" showClear placeholder="Chọn mùa giải" class="w-100">
+                        <template #value="league">
+                            <div v-if="league.value" class="d-flex align-items-center">
+                                <img class="me-2" v-if="league.value.logo" :src="league.value.logo.link" style="height: 30px;" alt="logo CLB">
+                                <p class="m-0">{{ league.value.name }}</p>
+                            </div>
+                        </template>
+
+                        <template #option="league">
+                            <div v-if="league.option" class="d-flex align-items-center">
+                                <img class="me-2" v-if="league.option.logo" :src="league.option.logo.link" style="height: 30px;" alt="logo CLB">
+                                <p class="m-0">{{ league.option.name }}</p>
+                            </div>
+                        </template>
+                    </Select>
                 </div>
             </div>
 

@@ -156,7 +156,9 @@ onMounted(async() => {
                 <Column>
                     <template #body="{ data }">
                         <Skeleton v-if="loading" height="30px" border-radius="15px"></Skeleton>
-                        <Button v-else v-on:click="DelSeason(data._id)">Xóa</Button>
+                        <div v-else class="container-fluid p-0 d-flex justify-content-center">
+                            <Button v-on:click="DelSeason(data._id)">Xóa</Button>
+                        </div>
                     </template>
                 </Column>
             </DataTable>
@@ -186,11 +188,6 @@ button {
     color: white;
     font-family: 'Barlow', sans-serif;
     font-weight: 500;
-}
-
-button:hover {
-    background-color: rgb(0, 133, 205);
-    color: white;
 }
 
 #season_add {

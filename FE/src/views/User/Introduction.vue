@@ -23,20 +23,20 @@
             </div>
 
             <div class="row w-100 m-0 p-4" style="background-color: rgb(0, 133, 205); color: white;">
-                <div class="col-md-6 py-4 py-md-0">
-                    <img class="px-lg-3 h-100" src="/pictures/San 0.jpg" alt="2023-24" style="object-fit: cover; overflow: hidden;">
+                <div class="col-md-6 py-4 py-md-0 px-lg-3 p-0">
+                    <img class="h-100" src="/pictures/SVĐ Thiên Trường 4.jpg" alt="2023-24" style="object-fit: cover; overflow: hidden;">
                 </div>
 
-                <div class="col-md-6 px-md-3 p-0 d-flex flex-column align-items-center justify-content-center">
+                <div class="col-md-6 p-0 d-flex flex-column align-items-center justify-content-center">
                     <p>Sân vận động Thiên Trường là sân nhà của Thép Xanh Nam Định và được xem là một trong những sân vận động có bầu không khí sôi động nhất Việt Nam. Với sức chứa hơn 30.000 chỗ ngồi, nơi đây luôn ngập tràn sắc vàng của người hâm mộ trong mỗi trận đấu. Sự cổ vũ cuồng nhiệt từ các cổ động viên đã trở thành nguồn động lực to lớn, góp phần tạo nên bản sắc và sức mạnh tinh thần của đội bóng.</p>
 
                     <div class="row p-0 h-100 m-0 w-100">
                         <div class="col-6 p-0">
-                            <img src="/pictures/San 1.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden;">
+                            <img src="/pictures/SVĐ Thiên Trường 2.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden;">
                         </div>
 
                         <div class="col-6 ps-3 p-0">
-                            <img src="/pictures/San 2.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden;">
+                            <img src="/pictures/SVĐ Thiên Trường 3.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden;">
                         </div>
                     </div>
                 </div>
